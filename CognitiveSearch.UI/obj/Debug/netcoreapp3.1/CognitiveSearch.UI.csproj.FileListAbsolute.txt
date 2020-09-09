@@ -54,3 +54,4 @@ C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI
 C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.genruntimeconfig.cache
 C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\Razor\Views\Video\Index.cshtml.g.cs
 C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\Razor\Views\Video\Search.cshtml.g.cs
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\Razor\Views\QuestionAndAnswer\Index.cshtml.g.cs
