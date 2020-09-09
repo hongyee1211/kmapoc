@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using CognitiveSearch.UI.Models;
+using System.Net.Http;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -55,6 +56,32 @@ namespace CognitiveSearch.UI.Controllers
         public IActionResult Index()
         {
             CheckDocSearchInitialized();
+
+            //get access token
+            var apiUrl = "https://api.videoindexer.ai";
+            var accountId = "ee451cff-6729-4f57-86d3-e6f779d295a5";
+            var location = "trial"; // replace with the account's location, or with “trial” if this is a trial account
+            var apiKey = "f0d1a0262df74dc994cb8efa87f28dba";
+
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.ServicePointManager.SecurityProtocol | System.Net.SecurityProtocolType.Tls12;
+
+            // create the http client
+            var handler = new HttpClientHandler();
+            handler.AllowAutoRedirect = false;
+            var client = new HttpClient(handler);
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apiKey);
+
+            // obtain account access token
+            var accountAccessTokenRequestResult = client.GetAsync($"{apiUrl}/auth/{location}/Accounts/{accountId}/AccessToken?allowEdit=true").Result;
+            var accountAccessToken = accountAccessTokenRequestResult.Content.ReadAsStringAsync().Result.Replace("\"", "");
+            Debug.WriteLine(accountAccessToken);
+
+            //list the videos
+            var searchRequestResult = client.GetAsync($"{apiUrl}/{location}/Accounts/{accountId}/Videos?accessToken={accountAccessToken}").Result;
+            var searchResult = searchRequestResult.Content.ReadAsStringAsync().Result;
+            Debug.WriteLine("");
+            Debug.WriteLine("Search:");
+            Debug.WriteLine(searchResult);
 
             return View();
         }
