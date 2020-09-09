@@ -744,3 +744,11 @@ iframe {
 b {
     color: #FFBE4F;
 }
+
+.panel-body {
+    color: #fff;
+}
+
+a {
+    color: #00a19c !important;
+}
