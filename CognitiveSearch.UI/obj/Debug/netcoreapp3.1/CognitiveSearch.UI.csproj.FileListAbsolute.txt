@@ -114,3 +114,5 @@ C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.genruntimeconfig.cache
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\libman.json
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\ptsg-5ekacogqna01 - Web Deploy\profile.arm.json
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\ptsg-5ekacogqna01 - Web Deploy\profile.arm.json
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\libman.json
