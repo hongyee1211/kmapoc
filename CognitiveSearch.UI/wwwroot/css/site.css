@@ -749,7 +749,7 @@ b {
     color: #fff;
 }
 
-#result div {
+#result div, .video_content {
     width: 50%;
     color: #fff;
     background-color: #666;

@@ -5,7 +5,6 @@
     ViewData["Title"] = "Video Indexer";
 }
 
-<script src="lodash.js"></script>
 <script>
 
     $(function () {
@@ -15,6 +14,7 @@
 
         function getData() {
             var _mySearchField = document.getElementById("mySearchField");
+            var pivotsHTML = "";
             $.ajax({
                 url: "https://api.videoindexer.ai/Auth/trial/Accounts/ee451cff-6729-4f57-86d3-e6f779d295a5/AccessToken?allowEdit=False",
                 type: "GET",
@@ -38,20 +38,41 @@
                             },
                             success: function (data) {
                                 var mainContainer = document.getElementById("result");
-                                for (var i = 0; i < data.results.length; i++) {
-                                    var div = document.createElement("div");
-                                    div.innerHTML = data.results[i].name;
-                                    mainContainer.appendChild(div);
+                                if (data.results.length > 0) {
+                                    for (var i = 0; i < data.results.length; i++) {
+                                        @*var div = document.createElement("div");
+                                        div.innerHTML = data.results[i].name;
+                                        mainContainer.appendChild(div);*@
+
+                                        pivotsHTML += '<div id="VideoContent" class="video_content">';
+                                        @*pivotsHTML += '<button id="idMyModal" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">' + data.results[i].name + '</button>';*@
+                                        @*pivotsHTML += '<button onclick="openModel()" class="btn btn-info btn-lg">' + data.results[i].name +'</i></button>';*@
+                                        pivotsHTML += data.results[i].name;
+                                        pivotsHTML += '</div>';
+
+                                        @*$('#myModal').modal('show');*@
+                                        $('#VideoContentContainer').html(pivotsHTML);
+                                    }
+                                } else {
+                                    pivotsHTML = "";
+                                    $('#VideoContentContainer').html(pivotsHTML);
                                 }
                             }
-
                         });
                     })
                 }
             });
         }
-
     });
+
+    function openModel() {
+        $('#myModal').modal('show');
+        @*document.getElementById("myModal").style.display = "block";*@
+    }
+
+    function closeModel() {
+        document.getElementById("myModal").style.display = "none";
+    }
 </script>
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -67,7 +88,22 @@
 
     </div>
     <div class="col-md-10">
-        <div id="result"></div>
+        <div id="VideoContentContainer">
+            <!--Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                     Modal content
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-control-group">
+                                <button onclick="closeModel()"><i class="ms-Icon ms-Icon--Clear"></i></button>
+                            </div>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
