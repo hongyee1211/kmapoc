@@ -748,3 +748,13 @@ b {
 .panel-body {
     color: #fff;
 }
+
+#result div {
+    width: 50%;
+    color: #fff;
+    background-color: #666;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
