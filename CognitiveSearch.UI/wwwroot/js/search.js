@@ -111,7 +111,7 @@ function Update(viewModel) {
     //Filters
     UpdateFilterReset();
 
-    InitLayout();
+    //InitLayout();
 
     UpdateLocationBar();
 

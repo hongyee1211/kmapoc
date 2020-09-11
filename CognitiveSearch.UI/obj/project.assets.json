@@ -5955,19 +5955,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hongyee.gow\\.nuget\\packages\\": {}
+    "C:\\Users\\izzat.rizalkhong\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
+      "projectUniqueName": "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
       "projectName": "CognitiveSearch.UI",
-      "projectPath": "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
-      "packagesPath": "C:\\Users\\hongyee.gow\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\obj\\",
+      "projectPath": "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
+      "packagesPath": "C:\\Users\\izzat.rizalkhong\\.nuget\\packages\\",
+      "outputPath": "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\hongyee.gow\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\izzat.rizalkhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
