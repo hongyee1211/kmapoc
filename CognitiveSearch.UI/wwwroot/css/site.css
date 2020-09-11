@@ -753,8 +753,21 @@ b {
     width: 50%;
     color: #fff;
     background-color: #666;
-    padding: 20px;
+    /*padding: 20px;*/
     border-radius: 10px;
     margin-bottom: 20px;
+}
+
+.viSearchMatches {
+    display: flex;
+    align-items: start;
+    margin: 2px 0px;
+}
+
+.viName {
+    border-bottom: #fff 1px solid;
+}
+.viName, .viSearchMatchesContent {
+    padding: 20px;
 }
 
