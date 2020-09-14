@@ -5,6 +5,8 @@
     ViewData["Title"] = "Video Indexer";
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
 
     $(function () {
@@ -40,17 +42,11 @@
                                 var mainContainer = document.getElementById("result");
                                 if (data.results.length > 0) {
                                     for (var i = 0; i < data.results.length; i++) {
-                                        @*var div = document.createElement("div");
-                                        div.innerHTML = data.results[i].name;
-                                        mainContainer.appendChild(div);*@
-
                                         pivotsHTML += '<div id="VideoContent" class="video_content">';
-                                        @*pivotsHTML += '<button id="idMyModal" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">' + data.results[i].name + '</button>';*@
-                                        @*pivotsHTML += '<button onclick="openModel()" class="btn btn-info btn-lg">' + data.results[i].name +'</i></button>';*@
                                         pivotsHTML += '<div id="viName" class="viName">';
-                                        pivotsHTML += '<h4>' + data.results[i].name + '</h4>';
+                                        pivotsHTML += '<button id="idMyModal" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="background-color: transparent; border: none;"><h4>' + data.results[i].name + '</h4></button>';
                                         pivotsHTML += '</div>';
-                                        
+
                                         if (data.results[i].searchMatches.length > 0) {
                                             pivotsHTML += '<div id="viSearchMatchesContent" class="viSearchMatchesContent">';
                                             for (var j = 0; j < data.results[i].searchMatches.length; j++) {
@@ -58,7 +54,7 @@
                                                 var startTime = data.results[i].searchMatches[j].startTime.substring(0, 8);
                                                 var videoText = data.results[i].searchMatches[j].text.replace(data.results[i].searchMatches[j].exactText, "<b>" + data.results[i].searchMatches[j].exactText + '</b>');
                                                 pivotsHTML += '<div style="background-color: #00a19c; padding:3px 5px;">' + startTime + '</div>';
-                                                pivotsHTML += '<div style="width: 5%;"/>';
+                                                pivotsHTML += '<div style="width: 5%;"></div>';
                                                 pivotsHTML += '<div style="width: 80%; padding:3px 0px;">' + videoText + '</div>';
                                                 pivotsHTML += '</div>';
                                             }
@@ -67,8 +63,6 @@
 
                                         pivotsHTML += '</div>';
 
-
-                                        @*$('#myModal').modal('show');*@
                                         $('#VideoContentContainer').html(pivotsHTML);
                                     }
                                 } else {
@@ -82,15 +76,6 @@
             });
         }
     });
-
-    function openModel() {
-        $('#myModal').modal('show');
-        @*document.getElementById("myModal").style.display = "block";*@
-    }
-
-    function closeModel() {
-        document.getElementById("myModal").style.display = "none";
-    }
 </script>
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -106,18 +91,13 @@
 
     </div>
     <div class="col-md-10">
-        <div id="VideoContentContainer">
-            <!--Modal -->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
-                     Modal content
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="modal-control-group">
-                                <button onclick="closeModel()"><i class="ms-Icon ms-Icon--Clear"></i></button>
-                            </div>
-                            <h4 class="modal-title">Modal Header</h4>
-                        </div>
+        <div id="VideoContentContainer"></div>
+        <!--Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
