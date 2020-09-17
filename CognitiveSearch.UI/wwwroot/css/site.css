@@ -127,6 +127,7 @@ audio {
     position: relative;
     height: 100%;
     width: 100%;
+    /*display: list-item;*/
 }
 
 .content-results {
@@ -769,5 +770,16 @@ b {
 }
 .viName, .viSearchMatchesContent {
     padding: 20px;
+}
+.profileContainer {
+    float: right;
+    margin-bottom: -100%;
+    padding: 0.1em 1em;
+    width: 15em;
+    background-color: #000;
+    display: none;
+    border: #666 1px solid;
+    border-top: none;
+    height: 4.5em;
 }
 

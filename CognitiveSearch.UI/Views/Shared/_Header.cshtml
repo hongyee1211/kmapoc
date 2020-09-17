@@ -1,6 +1,33 @@
 @using CognitiveSearch.UI.Configuration
 @inject AppConfig AppConfig
 
+<script>
+    function getProfile() {
+        var pivotsHTML = "";
+
+        var x = document.getElementById("profileContainer");
+        if (x.style.display === "none") {
+            $.ajax({
+                url: `${"https://run.mocky.io/v3/3892c677-04bd-4d20-bf65-a0f4b5dcea53"}`,
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    pivotsHTML += '<div style="color: #fff;"><h5>' + data.username + '</h5></div>';
+                    pivotsHTML += '<div style="color: #00a19c;"><h6>' + data.position + '</h6></div>';
+
+                    return $('#profileContainer').html(pivotsHTML);
+                }
+            });
+
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+
+        $('#profileContainer').html(pivotsHTML);
+    }
+</script>
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-bg">
     <div class="container-fluid">
@@ -27,23 +54,29 @@
                             <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Home" asp-action="Search">Document Search</a>
                         </li>
                         <!--<li class="nav-item">
-                            <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Home" asp-action="Search">Document Entities</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Home" asp-action="Search">Image Search</a>
-                        </li>-->
+                    <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Home" asp-action="Search">Document Entities</a>
+                </li>
+                <li class="nav-item">
+                    <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Home" asp-action="Search">Image Search</a>
+                </li>-->
                         <li class="nav-item">
                             <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Video" asp-action="Index">Video Search</a>
                         </li>
                         @*<li class="nav-item">
-            <a id="customize-page" class="navbar-text navbar-text-color" asp-area="" asp-controller="Admin" asp-action="Customize">Customize</a>
-        </li>
-        <li class="nav-item">
-            <a id="upload-data-page" class="navbar-text navbar-text-color" asp-area="" asp-controller="Admin" asp-action="UploadData">Upload Files</a>
-        </li>*@
+                        <a id="customize-page" class="navbar-text navbar-text-color" asp-area="" asp-controller="Admin" asp-action="Customize">Customize</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="upload-data-page" class="navbar-text navbar-text-color" asp-area="" asp-controller="Admin" asp-action="UploadData">Upload Files</a>
+                    </li>*@
                     </ul>
                 </div>
             }
+
+            <div id="navbarNav" style="float:right;margin-top:-40px;">
+                <img onclick="javascript:getProfile()" src="~/images/profile_icon.svg" height="30" id="navbar-img" alt="@AppConfig.Organization.Name logo" title="@AppConfig.Organization.Name logo" class="logo-container logo-sgv" asp-append-version="true" />
+            </div>
+            <div id="profileContainer" class="profileContainer">
+            </div>
         </div>
 
     </div>
