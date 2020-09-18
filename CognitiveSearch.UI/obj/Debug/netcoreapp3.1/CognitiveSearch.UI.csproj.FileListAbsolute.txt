@@ -81,8 +81,6 @@ C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Windo
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.csprojAssemblyReference.cache
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.AssemblyInfoInputs.cache
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.AssemblyInfo.cs
-C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.csproj.CoreCompileInputs.cache
-C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cache
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.RazorAssemblyInfo.cache
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.RazorAssemblyInfo.cs
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.TagHelpers.input.cache
@@ -175,3 +173,27 @@ C:\Users\hongyee.gow\Desktop\New folder\kmapoc\CognitiveSearch.UI\obj\Debug\netc
 C:\Users\hongyee.gow\Desktop\New folder\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.dll
 C:\Users\hongyee.gow\Desktop\New folder\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.pdb
 C:\Users\hongyee.gow\Desktop\New folder\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.genruntimeconfig.cache
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\ptsg-5ekacogqna01 - Web Deploy1\profile.arm.json
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\ptsg-5ekacogqna01-dev - Web Deploy\profile.arm.json
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Azure.Core.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Azure.Identity.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Azure.Security.KeyVault.Certificates.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Azure.Security.KeyVault.Secrets.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Identity.Web.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Identity.Web.UI.Views.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Identity.Web.UI.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.csproj.CoreCompileInputs.cache
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cs
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cache

@@ -50,6 +50,14 @@
               "target": "Package",
               "version": "[10.1.0, )"
             },
+            "Microsoft.Identity.Web": {
+              "target": "Package",
+              "version": "[0.4.0-preview, )"
+            },
+            "Microsoft.Identity.Web.UI": {
+              "target": "Package",
+              "version": "[0.4.0-preview, )"
+            },
             "Microsoft.VisualStudio.Web.BrowserLink": {
               "target": "Package",
               "version": "[2.2.0, )"
