@@ -11,36 +11,45 @@ namespace CognitiveSearch.UI
         private string[] facets = new string[]
         {
             // Add UI facets here in order
-            //"people", 
-            //"locations",
-            //"organizations",
-            //"keyphrases"
+            "people", 
+            "locations",
+            "organizations",
+            "keyphrases"
         };
 
         private string[] tags = new string[]
         {
             // Add tags fields here in order
-            //"people", 
-            //"locations",
-            //"organizations",
-            //"keyphrases"
+            "people", 
+            "locations",
+            "organizations",
+            "keyphrases"
         };
 
         private string[] resultFields = new string[]
         {
-            "metadata_storage_path",
+            "content",
+            "metadata_storage_content_type",
             "metadata_storage_name",
-            "metadata_title",
+            "metadata_storage_path",
+            "metadata_storage_file_extension",
+            "metadata_content_type",
 
             // Add fields needed to display results cards
 
             // NOTE: if you customize the resultFields, be sure to include metadata_storage_name,
             // metadata_storage_path as those fields are needed for the UI to work properly
-            //"people",
-            //"locations",
-            //"organizations",
-            "keyPhrases"
-            //"geoLocation"
+            "people",
+            "locations",
+            "organizations",
+            "keyPhrases",
+            "language",
+            "translated_text",
+            "merged_content",
+            "text",
+            "layoutText",
+            "imageTags",
+            "imageCaption"
         };
 
         public List<SearchField> Facets { get; set; }

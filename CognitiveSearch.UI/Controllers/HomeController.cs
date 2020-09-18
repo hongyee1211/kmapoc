@@ -6,19 +6,37 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Identity.Web;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
 using CognitiveSearch.UI.Models;
+using CognitiveSearch.UI.Services.GraphOperations;
+using CognitiveSearch.UI.Services.ARM;
+using CognitiveSearch.UI.Infrastructure;
 
 namespace CognitiveSearch.UI.Controllers
 {
     public class HomeController : Controller
     {
+        readonly ITokenAcquisition tokenAcquisition;
+        private readonly IGraphApiOperations graphApiOperations;
+        private readonly IArmOperations armOperations;
+
         private IConfiguration _configuration { get; set; }
         private DocumentSearchClient _docSearch { get; set; }
         private string _configurationError { get; set; }
 
-        public HomeController(IConfiguration configuration)
+        public HomeController(
+            IConfiguration configuration,
+            ITokenAcquisition tokenAcquisition,
+            IGraphApiOperations graphApiOperations,
+            IArmOperations armOperations)
         {
+            this.tokenAcquisition = tokenAcquisition;
+            this.graphApiOperations = graphApiOperations;
+            this.armOperations = armOperations;
+
             _configuration = configuration;
             InitializeDocSearch();
         }
