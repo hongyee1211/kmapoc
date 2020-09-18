@@ -9,12 +9,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
 
-    function myFunction(accountId, id) {
+    function myFunction(accountId, id, accessToken) {
         var pivotsHTML = "";
 
         if (accountId != "") {
-            pivotsHTML += '<iframe width="852" height="480" src="https://www.videoindexer.ai/embed/player/' + accountId + '/' + id + '/?&locale=en&location=Trial" frameborder="0" allowfullscreen></iframe>';
-            pivotsHTML += '<iframe width="580" height="600" src="https://www.videoindexer.ai/embed/insights/' + accountId + '/' + id + '/?&locale=en&location=Trial" frameborder="0" allowfullscreen></iframe>';
+            pivotsHTML += '<iframe width="1200" height="720" src="https://www.videoindexer.ai/embed/player/' + accountId + '/' + id + '?accessToken=' + accessToken +'" frameborder="0" allowfullscreen></iframe>';
+            pivotsHTML += '<iframe width="580" height="720" src="https://www.videoindexer.ai/embed/insights/' + accountId + '/' + id + '?accessToken=' + accessToken +'" frameborder="0" allowfullscreen></iframe>';
             pivotsHTML += '<script src="https://breakdown.blob.core.windows.net/public/vb.widgets.mediator.js"/>';
         }
 
@@ -37,7 +37,7 @@
                 headers: {
                     'Ocp-Apim-Subscription-Key': 'f0d1a0262df74dc994cb8efa87f28dba'
                 },
-                success: function (data) {
+                success: function (accessToken) {
                     $(document).ready(function () {
                         $.ajax({
                             url: `https://api.videoindexer.ai/trial/Accounts/ee451cff-6729-4f57-86d3-e6f779d295a5/Videos/Search`,
@@ -48,14 +48,14 @@
                             dataType: 'json',
                             data: {
                                 'query': _mySearchField.value,
-                                'accessToken': data
+                                'accessToken': accessToken
                             },
                             success: function (data) {
                                 if (data.results.length > 0) {
                                     for (var i = 0; i < data.results.length; i++) {
                                         pivotsHTML += '<div id="VideoContent" class="video_content">';
                                         pivotsHTML += '<div id="viName" class="viName">';
-                                        pivotsHTML += '<button onclick="myFunction(\'' + data.results[i].accountId + '\',\'' + data.results[i].id + '\')" id="idMyModal" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="background-color: transparent; border: none;"><h4>' + data.results[i].name + '</h4></button>';
+                                        pivotsHTML += '<button onclick="myFunction(\'' + data.results[i].accountId + '\',\'' + data.results[i].id + '\',\'' + accessToken + '\')" id="idMyModal" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="background-color: transparent; border: none;"><h4>' + data.results[i].name + '</h4></button>';
                                         pivotsHTML += '</div>';
 
                                         if (data.results[i].searchMatches.length > 0) {
@@ -112,7 +112,7 @@
                             <div class="modal-control-group">
                                 <span id="close-control" class="modal-control" data-dismiss="modal"><i class="ms-Icon ms-Icon--Clear"></i></span>
                             </div>
-                            <div id="modalVideoContent" style="margin-top: 40px; margin-left: 6px; margin-right: 6px;">
+                            <div id="modalVideoContent" style="margin-top: 40px; margin-left: 6px; margin-right: 6px; display: flex; justify-content: center;">
                             </div>
                             <input id="result-id" type="hidden" />
                         </div>

@@ -197,3 +197,25 @@ C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Ident
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.csproj.CoreCompileInputs.cache
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cs
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cache
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\ptsg-5ekacogqna01 - Web Deploy1\profile.arm.json
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\ptsg-5ekacogqna01-dev - Web Deploy\profile.arm.json
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Azure.Core.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Azure.Identity.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Azure.Security.KeyVault.Certificates.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Azure.Security.KeyVault.Secrets.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Identity.Web.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Identity.Web.UI.Views.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Identity.Web.UI.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cs
