@@ -14,6 +14,7 @@ using CognitiveSearch.UI.Models;
 using CognitiveSearch.UI.Services.GraphOperations;
 using CognitiveSearch.UI.Services.ARM;
 using CognitiveSearch.UI.Infrastructure;
+using System.Threading.Tasks;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -70,9 +71,16 @@ namespace CognitiveSearch.UI.Controllers
             return true;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             CheckDocSearchInitialized();
+
+            var accessToken =
+                await tokenAcquisition.GetAccessTokenForUserAsync(new[] { Constants.ScopeUserRead });
+
+            var me = await graphApiOperations.GetUserInformation(accessToken);
+            
+            ViewData["Me"] = me;
 
             return View();
         }
