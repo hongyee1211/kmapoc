@@ -15,6 +15,7 @@ using CognitiveSearch.UI.Services.GraphOperations;
 using CognitiveSearch.UI.Services.ARM;
 using CognitiveSearch.UI.Infrastructure;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -81,6 +82,25 @@ namespace CognitiveSearch.UI.Controllers
             var me = await graphApiOperations.GetUserInformation(accessToken);
             
             ViewData["Me"] = me;
+
+            var options = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMinutes(60),
+                IsEssential = true
+            };
+
+            var children = me.Properties();
+            foreach (var child in children)
+            {
+                if (child.Name == "displayName")
+                {
+                    Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
+                }
+                if (child.Name == "userType")
+                {
+                    Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
+                }
+            }
 
             return View();
         }

@@ -6,10 +6,33 @@
     function getProfile() {
         var x = document.getElementById("profileContainer");
         if (x.style.display === "none") {
+            getCookie();
             x.style.display = "block";
         } else {
             x.style.display = "none";
         }
+    }
+
+    function getCookie() {
+        var pivotsHTML = "";
+        var displayName = "displayName=";
+        var userType = "userType=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(displayName) == 0) {
+                pivotsHTML += '<div style="color: #fff;"><h6>' + c.substring(displayName.length, c.length).replace("%20", " ") + '</h6></div>';
+            }
+
+            if (c.indexOf(userType) == 0) {
+                pivotsHTML += '<div style="color: #00a19c;"><h6>' + c.substring(userType.length, c.length).replace("%20", " ") + '</h6></div>';
+            }
+        }
+
+        $('#profileContainer').html(pivotsHTML);
     }
 </script>
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -60,24 +83,6 @@
                 <img onclick="javascript:getProfile()" src="~/images/profile_icon.svg" height="30" id="navbar-img" alt="@AppConfig.Organization.Name logo" title="@AppConfig.Organization.Name logo" class="logo-container logo-sgv" asp-append-version="true" />
             </div>
             <div id="profileContainer" class="profileContainer">
-                @{
-                    var me = ViewData["Me"] as JObject;
-                    if (me != null)
-                    {
-                        var children = me.Properties();
-                        foreach (var child in children)
-                        {
-                            if (@child.Name == "displayName")
-                            {
-                                <div style="color: #fff;"><h6>@child.Value</h6></div>
-                            }
-                            if (@child.Name == "userType")
-                            {
-                                <div style="color: #00a19c;"><h6>@child.Value</h6></div>
-                            }   
-                        }
-                    }
-                }
             </div>
         </div>
 
