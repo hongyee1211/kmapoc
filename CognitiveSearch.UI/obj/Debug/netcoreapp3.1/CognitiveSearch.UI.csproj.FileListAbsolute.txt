@@ -257,3 +257,5 @@ C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI
 C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Web.Infrastructure.dll
 C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Owin.dll
 C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\Razor\Views\QuestionAndAnswer\EmbedReport.cshtml.g.cs
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Graph.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Graph.Core.dll

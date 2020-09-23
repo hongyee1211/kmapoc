@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using CognitiveSearch.UI.Models;
 using CognitiveSearch.UI.Services.GraphOperations;
 using CognitiveSearch.UI.Services.ARM;
+using CognitiveSearch.UI.Search;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
@@ -19,6 +20,7 @@ namespace CognitiveSearch.UI.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly ITokenAcquisition tokenAcquisition;
         private readonly IGraphApiOperations graphApiOperations;
         private readonly IArmOperations armOperations;
@@ -102,6 +104,10 @@ namespace CognitiveSearch.UI.Controllers
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
+                if (child.Name == "groups")
+                {
+                    Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
+                }
             }
 
             return View();
@@ -111,6 +117,12 @@ namespace CognitiveSearch.UI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 
+        }
+
+        //global variables for cookies
+        public static class MyGlobalVariables
+        {
+            public static string MyGlobalString { get; set; }
         }
 
         public IActionResult Search([FromQuery]string q, [FromQuery]string facets = "", [FromQuery]int page = 1)
@@ -129,6 +141,8 @@ namespace CognitiveSearch.UI.Controllers
                 .ToArray();
 
             string strText = Request.Cookies["givenName"];
+            MyGlobalVariables.MyGlobalString = strText;
+
             var arr = Regex.Matches(strText, @"[A-Z]+(?=[A-Z][a-z]+)|\d|[A-Z][a-z]+")
              .Cast<Match>()
              .Select(m => m.Value)
@@ -150,6 +164,8 @@ namespace CognitiveSearch.UI.Controllers
             public SearchFacet[] searchFacets { get; set; }
             public int currentPage { get; set; }
             public string polygonString { get; set; }
+
+            public string groupFilter { get; set; }
         }
 
         [HttpPost]
