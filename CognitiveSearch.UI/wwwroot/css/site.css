@@ -783,3 +783,77 @@ b {
     height: 4.5em;
 }
 
+.menuIcon {
+    background-image: url("../images/menu.svg");
+    width: 20px !important;
+    height: 20px !important;
+    background-repeat: no-repeat;
+}
+
+.menuThumbsUp {
+    background-image: url("../images/thumbs-down.svg");
+    width: 20px !important;
+    height: 20px !important;
+    fill: #00a19c;
+    transform: rotate(180deg);
+    background-repeat: no-repeat;
+}
+.menuThumbsDown {
+    background-image: url("../images/thumbs-down.svg");
+    width: 20px !important;
+    fill: red;
+    height: 20px !important;
+    background-repeat: no-repeat;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+    /* Dropdown button on hover & focus */
+    .dropbtn:hover, .dropbtn:focus {
+        background-color: #2980B9;
+    }
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: -8px;
+    background-color: #333333;
+    min-width: 60px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 35px;
+    padding: 0.3em 0.2em;
+}
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #ddd
+        }
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+    display: block;
+}

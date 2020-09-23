@@ -105,6 +105,19 @@ function ShowDocument(id) {
         });
 }
 
+
+function ShowFeedback(i) {
+    document.getElementById("modalFeedback" + i).classList.toggle("show");
+}
+
+function thumbsUp(id, name) {
+    console.log("Good");
+}
+
+function thumbsDown(id, name) {
+    console.log("Bad");
+}
+
 //  Authenticates the map and shows some locations.
 function AuthenticateMap(result) {
     $.post('/home/getmapcredentials', { },
