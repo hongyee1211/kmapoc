@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Auth;
+using CognitiveSearch.UI.Controllers;
 
 namespace CognitiveSearch.UI
 {
@@ -75,11 +76,11 @@ namespace CognitiveSearch.UI
             }
         }
 
-        public DocumentSearchResult<Document> Search(string searchText, SearchFacet[] searchFacets = null, string[] selectFilter = null, int currentPage = 1, string polygonString = null)
+        public DocumentSearchResult<Document> Search(string searchText, SearchFacet[] searchFacets = null, string[] selectFilter = null, int currentPage = 1, string polygonString = null, string documentGroupId = null)
         {
             try
             {
-                SearchParameters sp = GenerateSearchParameters(searchFacets, selectFilter, currentPage, polygonString);
+                SearchParameters sp = GenerateSearchParameters(searchFacets, selectFilter, currentPage, polygonString, documentGroupId);
 
                 if (!string.IsNullOrEmpty(telemetryClient.InstrumentationKey))
                 {
@@ -96,7 +97,7 @@ namespace CognitiveSearch.UI
             return null;
         }
 
-        public SearchParameters GenerateSearchParameters(SearchFacet[] searchFacets = null, string[] selectFilter = null, int currentPage = 1, string polygonString = null)
+        public SearchParameters GenerateSearchParameters(SearchFacet[] searchFacets = null, string[] selectFilter = null, int currentPage = 1, string polygonString = null, string documentGroupId = null)
         {
             // For more information on search parameters visit: 
             // https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.search.models.searchparameters?view=azure-dotnet
@@ -147,6 +148,24 @@ namespace CognitiveSearch.UI
                         // TODO: Date filters
                     }
                 }
+
+                //code to add filter condition for the query
+                if (HomeController.MyGlobalVariables.MyGlobalString == "GasTurbine")
+                    documentGroupId = "5bbc43d8-8cd2-4504-9450-95d018e86509";
+                else
+                    documentGroupId = "89b7db00-f092-48d0-8edb-ec3bb02f565e";
+
+                filter = String.Format("document_group/any(p:search.in(p, '{0}'))", string.Join(",", documentGroupId));
+                SearchParameters parameters = new SearchParameters()
+                {
+                    Filter = filter,
+                    Select = new[] { "application essays" }
+                };
+
+                //if (string.IsNullOrEmpty(filter))
+                //    filter = "document_group/any(g:search.in(g, '" + documentGroupId + "'))";
+                //else
+                //    filter += "document_group/any(g:search.in(g, '" + documentGroupId + "'))";
             }
 
             sp.Filter = filter;

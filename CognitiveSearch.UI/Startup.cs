@@ -45,13 +45,21 @@ namespace CognitiveSearch.UI
 
             services.AddOptions();
 
+            // Sign-in users with the Microsoft identity platform
             services.AddMicrosoftIdentityWebAppAuthentication(Configuration)
                     .EnableTokenAcquisitionToCallDownstreamApi(new string[] { Constants.ScopeUserRead })
                     .AddInMemoryTokenCaches();
 
             // Add APIs
             services.AddGraphService(Configuration);
+            //services.AddMSGraphService(Configuration);
             services.AddHttpClient<IArmOperations, ArmOperationService>();
+
+            //services.Configure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options => {
+                // The following code instructs the ASP.NET Core middleware to use the data in the "groups" claim in the [Authorize] attribute and for User.IsInRole()
+                // See https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles for more info.
+            //    options.TokenValidationParameters.RoleClaimType = "groups";
+            //});
 
             services.AddControllersWithViews(options =>
             {

@@ -392,6 +392,34 @@
           "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll": {}
         }
       },
+      "Microsoft.Graph/3.14.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Graph.Core": "1.21.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Graph.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Graph.dll": {}
+        }
+      },
+      "Microsoft.Graph.Core/1.21.0": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0",
+          "Newtonsoft.Json": "9.0.1",
+          "System.Diagnostics.DiagnosticSource": "4.6.0",
+          "System.Net.Http": "4.3.3",
+          "System.ValueTuple": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.1/Microsoft.Graph.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.1/Microsoft.Graph.Core.dll": {}
+        }
+      },
       "Microsoft.Identity.Client/4.18.0": {
         "type": "package",
         "dependencies": {
@@ -2253,6 +2281,20 @@
           "ref/netstandard1.2/System.Threading.Timer.dll": {}
         }
       },
+      "System.ValueTuple/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
+          "System.Runtime": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/System.ValueTuple.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/System.ValueTuple.dll": {}
+        }
+      },
       "System.Xml.ReaderWriter/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -2867,6 +2909,44 @@
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.xml",
         "microsoft.extensions.primitives.2.2.0.nupkg.sha512",
         "microsoft.extensions.primitives.nuspec"
+      ]
+    },
+    "Microsoft.Graph/3.14.0": {
+      "sha512": "nc8xlFI5PNItodPXUKwgK8HYj7boJt6tjdeqQMLj9i8lMrmppMPN4c5S7TCDt835/RCy5PqNEKluvgmfqyGffQ==",
+      "type": "package",
+      "path": "microsoft.graph/3.14.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/net461/Microsoft.Graph.dll",
+        "lib/net461/Microsoft.Graph.xml",
+        "lib/netstandard2.0/Microsoft.Graph.dll",
+        "lib/netstandard2.0/Microsoft.Graph.xml",
+        "microsoft.graph.3.14.0.nupkg.sha512",
+        "microsoft.graph.nuspec"
+      ]
+    },
+    "Microsoft.Graph.Core/1.21.0": {
+      "sha512": "O6xwZm8JRqdOuB+fwWKGcavakYLtPuptbV+3UiC6oCb03isMnirVO8qgm9Cka1E1G35iJsVlBC8Ge/+Q35PlPA==",
+      "type": "package",
+      "path": "microsoft.graph.core/1.21.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/monoandroid70/Microsoft.Graph.Core.dll",
+        "lib/monoandroid70/Microsoft.Graph.Core.xml",
+        "lib/net45/Microsoft.Graph.Core.dll",
+        "lib/net45/Microsoft.Graph.Core.xml",
+        "lib/netstandard1.1/Microsoft.Graph.Core.dll",
+        "lib/netstandard1.1/Microsoft.Graph.Core.xml",
+        "lib/xamarinios10/Microsoft.Graph.Core.dll",
+        "lib/xamarinios10/Microsoft.Graph.Core.xml",
+        "lib/xamarinmac20/Microsoft.Graph.Core.dll",
+        "lib/xamarinmac20/Microsoft.Graph.Core.xml",
+        "microsoft.graph.core.1.21.0.nupkg.sha512",
+        "microsoft.graph.core.nuspec"
       ]
     },
     "Microsoft.Identity.Client/4.18.0": {
@@ -7430,6 +7510,23 @@
         "system.threading.timer.nuspec"
       ]
     },
+    "System.ValueTuple/4.3.0": {
+      "sha512": "cNLEvBX3d6MMQRZe3SMFNukVbitDAEpVZO17qa0/2FHxZ7Y7PpFRpr6m2615XYM/tYYYf0B+WyHNujqIw8Luwg==",
+      "type": "package",
+      "path": "system.valuetuple/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/netstandard1.0/.xml",
+        "lib/netstandard1.0/System.ValueTuple.dll",
+        "lib/portable-net40+sl4+win8+wp8/.xml",
+        "lib/portable-net40+sl4+win8+wp8/System.ValueTuple.dll",
+        "system.valuetuple.4.3.0.nupkg.sha512",
+        "system.valuetuple.nuspec"
+      ]
+    },
     "System.Xml.ReaderWriter/4.3.0": {
       "sha512": "GrprA+Z0RUXaR4N7/eW71j1rgMnEnEVlgii49GZyAjTH7uliMnrOU3HNFBr6fEDBCJCIdlVNq9hHbaDR621XBA==",
       "type": "package",
@@ -7711,6 +7808,7 @@
     ".NETCoreApp,Version=v3.1": [
       "Microsoft.ApplicationInsights >= 2.13.1",
       "Microsoft.Azure.Search >= 10.1.0",
+      "Microsoft.Graph >= 3.14.0",
       "Microsoft.Identity.Web >= 0.4.0-preview",
       "Microsoft.Identity.Web.UI >= 0.4.0-preview",
       "Microsoft.IdentityModel.Clients.ActiveDirectory >= 5.2.8",
@@ -7727,20 +7825,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\izzat.rizalkhong\\.nuget\\packages\\": {}
+    "C:\\Users\\ashley.kb.ow\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
+      "projectUniqueName": "C:\\Ashley\\Code\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
       "projectName": "CognitiveSearch.UI",
-      "projectPath": "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
-      "packagesPath": "C:\\Users\\izzat.rizalkhong\\.nuget\\packages\\",
-      "outputPath": "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\obj\\",
+      "projectPath": "C:\\Ashley\\Code\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
+      "packagesPath": "C:\\Users\\ashley.kb.ow\\.nuget\\packages\\",
+      "outputPath": "C:\\Ashley\\Code\\kmapoc\\CognitiveSearch.UI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\izzat.rizalkhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\ashley.kb.ow\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -7770,6 +7873,10 @@
           "Microsoft.Azure.Search": {
             "target": "Package",
             "version": "[10.1.0, )"
+          },
+          "Microsoft.Graph": {
+            "target": "Package",
+            "version": "[3.14.0, )"
           },
           "Microsoft.Identity.Web": {
             "target": "Package",
