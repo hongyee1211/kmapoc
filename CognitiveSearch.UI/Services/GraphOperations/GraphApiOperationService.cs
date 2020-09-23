@@ -8,6 +8,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using CognitiveSearch.UI.Infrastructure;
+using Microsoft.Graph;
+using Constants = CognitiveSearch.UI.Infrastructure.Constants;
+using System.Diagnostics;
 
 namespace CognitiveSearch.UI.Services.GraphOperations
 {
@@ -15,6 +18,7 @@ namespace CognitiveSearch.UI.Services.GraphOperations
     {
         private readonly HttpClient httpClient;
         private readonly WebOptions webOptions;
+        private GraphServiceClient graphServiceClient;
 
         public GraphApiOperationService(HttpClient httpClient, IOptions<WebOptions> webOptionValue)
         {
@@ -85,6 +89,68 @@ namespace CognitiveSearch.UI.Services.GraphOperations
                 tenantInfo.Add(tenantId, displayName);
             }
             return tenantInfo;
+        }
+
+        public async Task<List<Group>> GetMyMemberOfGroupsAsync(string accessToken)
+        {
+            List<Group> groups = new List<Group>();
+            PrepareAuthenticatedClient(accessToken);
+            // Get groups the current user is a direct member of.
+            IUserMemberOfCollectionWithReferencesPage memberOfGroups = await graphServiceClient.Me.MemberOf.Request().GetAsync();
+            if (memberOfGroups?.Count > 0)
+            {
+                foreach (var directoryObject in memberOfGroups)
+                {
+                    // We only want groups, so ignore DirectoryRole objects.
+                    if (directoryObject is Group)
+                    {
+                        Group group = directoryObject as Group;
+                        groups.Add(group);
+                    }
+                }
+            }
+
+            // If paginating
+            while (memberOfGroups.NextPageRequest != null)
+            {
+                memberOfGroups = await memberOfGroups.NextPageRequest.GetAsync();
+
+                if (memberOfGroups?.Count > 0)
+                {
+                    foreach (var directoryObject in memberOfGroups)
+                    {
+                        // We only want groups, so ignore DirectoryRole objects.
+                        if (directoryObject is Group)
+                        {
+                            Group group = directoryObject as Group;
+                            groups.Add(group);
+                        }
+                    }
+                }
+            }
+
+            return groups;
+        }
+
+        private void PrepareAuthenticatedClient(string accessToken)
+        {
+            try
+            {
+                graphServiceClient = new GraphServiceClient(webOptions.GraphApiUrl,
+                                                                     new DelegateAuthenticationProvider(
+                                                                         async (requestMessage) =>
+                                                                         {
+                                                                             await Task.Run(() =>
+                                                                             {
+                                                                                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue(Constants.BearerAuthorizationScheme, accessToken);
+                                                                                 
+                                                                             });
+                                                                         }));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Could not create a graph client {ex}");
+            }
         }
 
         // Use the graph to get information (name) for a tenant 

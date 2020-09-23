@@ -6,22 +6,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.Identity.Web;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 using CognitiveSearch.UI.Models;
 using CognitiveSearch.UI.Services.GraphOperations;
 using CognitiveSearch.UI.Services.ARM;
-using CognitiveSearch.UI.Infrastructure;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace CognitiveSearch.UI.Controllers
 {
     public class HomeController : Controller
     {
-        readonly ITokenAcquisition tokenAcquisition;
+        private readonly ITokenAcquisition tokenAcquisition;
         private readonly IGraphApiOperations graphApiOperations;
         private readonly IArmOperations armOperations;
 
@@ -77,7 +75,7 @@ namespace CognitiveSearch.UI.Controllers
             CheckDocSearchInitialized();
 
             var accessToken =
-                await tokenAcquisition.GetAccessTokenForUserAsync(new[] { Constants.ScopeUserRead });
+                await tokenAcquisition.GetAccessTokenForUserAsync(new[] { Infrastructure.Constants.ScopeUserRead });
 
             var me = await graphApiOperations.GetUserInformation(accessToken);
             
@@ -92,6 +90,10 @@ namespace CognitiveSearch.UI.Controllers
             var children = me.Properties();
             foreach (var child in children)
             {
+                if (child.Name == "givenName")
+                {
+                    Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
+                }
                 if (child.Name == "displayName")
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
@@ -126,9 +128,15 @@ namespace CognitiveSearch.UI.Controllers
                 .Select(g => new SearchFacet { Key = g.Key, Value = g.Select(f => f[1]).ToArray() })
                 .ToArray();
 
+            string strText = Request.Cookies["givenName"];
+            var arr = Regex.Matches(strText, @"[A-Z]+(?=[A-Z][a-z]+)|\d|[A-Z][a-z]+")
+             .Cast<Match>()
+             .Select(m => m.Value)
+             .ToArray();
+
             var viewModel = SearchView(new SearchParameters
             {
-                q = q,
+                q = String.Join(" ", arr) + ", " + q,
                 searchFacets = searchFacets,
                 currentPage = page
             });
