@@ -12,18 +12,28 @@ namespace CognitiveSearch.UI
         {
             // Add UI facets here in order
             "people", 
-            "locations",
-            "organizations",
-            "keyphrases"
+            //"locations",
+            //"organizations",
+            //"keyphrases",
+            "PlantCode",
+            "Manufacturer",
+            "EquipmentClass",
+            "EquipmentType",
+            "Abbreviation"
         };
 
         private string[] tags = new string[]
         {
             // Add tags fields here in order
             "people", 
-            "locations",
-            "organizations",
-            "keyphrases"
+            //"locations",
+            //"organizations",
+            //"keyphrases"
+            "PlantCode",
+            "Manufacturer",
+            "EquipmentClass",
+            "EquipmentType",
+            "Abbreviation"
         };
 
         private string[] resultFields = new string[]
@@ -40,11 +50,16 @@ namespace CognitiveSearch.UI
             // NOTE: if you customize the resultFields, be sure to include metadata_storage_name,
             // metadata_storage_path as those fields are needed for the UI to work properly
             "people",
-            "locations",
-            "organizations",
-            "keyPhrases",
-            "language",
-            "translated_text",
+            //"locations",
+            //"organizations",
+            //"keyPhrases",
+            "PlantCode",
+            "Manufacturer",
+            "EquipmentClass",
+            "EquipmentType",
+            "Abbreviation",
+            //"language",
+            //"translated_text",
             "merged_content",
             "text",
             "layoutText",

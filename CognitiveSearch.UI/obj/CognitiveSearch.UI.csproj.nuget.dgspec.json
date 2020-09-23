@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj": {}
+    "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj": {
+    "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
+        "projectUniqueName": "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
         "projectName": "CognitiveSearch.UI",
-        "projectPath": "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
-        "packagesPath": "C:\\Users\\hongyee.gow\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\obj\\",
+        "projectPath": "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
+        "packagesPath": "C:\\Users\\izzat.rizalkhong\\.nuget\\packages\\",
+        "outputPath": "C:\\kmapoc2\\azure-search-knowledge-mining\\02 - Web UI Template\\CognitiveSearch.UI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\hongyee.gow\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\izzat.rizalkhong\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[0.4.0-preview, )"
             },
+            "Microsoft.IdentityModel.Clients.ActiveDirectory": {
+              "target": "Package",
+              "version": "[5.2.8, )"
+            },
             "Microsoft.VisualStudio.Web.BrowserLink": {
               "target": "Package",
               "version": "[2.2.0, )"
@@ -61,6 +65,38 @@
             "WindowsAzure.Storage": {
               "target": "Package",
               "version": "[9.3.3, )"
+            },
+            "microsoft.identity.client": {
+              "target": "Package",
+              "version": "[4.18.0, )"
+            },
+            "microsoft.powerbi.api": {
+              "target": "Package",
+              "version": "[3.15.0, )"
+            },
+            "microsoft.powerbi.aspnet.mvc": {
+              "target": "Package",
+              "version": "[1.1.11, )"
+            },
+            "microsoft.powerbi.aspnet.webforms": {
+              "target": "Package",
+              "version": "[1.1.11, )"
+            },
+            "microsoft.powerbi.core": {
+              "target": "Package",
+              "version": "[1.1.11, )"
+            },
+            "microsoft.powerbi.javascript": {
+              "target": "Package",
+              "version": "[2.14.1, )"
+            },
+            "microsoft.powerbi.owin.security": {
+              "target": "Package",
+              "version": "[1.1.11, )"
+            },
+            "microsoft.powerbi.reportauthoring": {
+              "target": "Package",
+              "version": "[1.1.0, )"
             }
           },
           "imports": [
