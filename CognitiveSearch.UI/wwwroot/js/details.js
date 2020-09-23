@@ -110,21 +110,27 @@ function ShowFeedback(i) {
     document.getElementById("modalFeedback" + i).classList.toggle("show");
 }
 
-function thumbsUp(i, id, title) {
-    setCookie(i, id, title, "Good");
+function thumbsUp(id, title) {
+    postFeedbackValue(id, title, "Good");
 }
 
-function thumbsDown(i, id, title) {
-    setCookie(i, id, title, "Bad");
+function thumbsDown(id, title) {
+    postFeedbackValue(id, title, "Bad");
 }
 
-function setCookie(i, id, title, action) {
-    var d = new Date();
-    d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toGMTString();
-    document.cookie = "Feedback" + i + "={ 'id': '" + id + "', 'title': '" + title + "', 'status': '" + action + "' };" + expires + ";path=/";
-
-    
+function postFeedbackValue(id, title, action) {
+    $.post("/Home/getFeedbackVal",
+        {
+            feedbackVal: {
+                feedbackID: id,
+                feedbackName: title,
+                feedbackAction: "Good"
+            }
+        },
+        function (data, status) {
+            //Handle status if you decide to return something
+        }
+    );
 }
 
 //  Authenticates the map and shows some locations.

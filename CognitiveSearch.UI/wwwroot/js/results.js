@@ -331,8 +331,8 @@ function UpdateResults(data) {
                                         <div class="results-icon col-md-1 menuIcon" onclick="ShowFeedback('${i}');"></div>
                                             <div id="modalFeedback${i}" class="dropdown-content">
                                                 <div style="display: flex;">
-                                                     <a onclick="thumbsUp('${i}', '${id}', '${title}')" style="margin: 5px;" class="menuThumbsUp"></a>
-                                                     <a onclick="thumbsDown('${i}', '${id}', '${title}')" style="margin: 5px;" class="menuThumbsDown"></a>
+                                                     <a onclick="thumbsUp('${id}', '${title}')" style="margin: 5px;" class="menuThumbsUp"></a>
+                                                     <a onclick="thumbsDown('${id}', '${title}')" style="margin: 5px;" class="menuThumbsDown"></a>
                                                 </div>
                                                
                                             </div>
