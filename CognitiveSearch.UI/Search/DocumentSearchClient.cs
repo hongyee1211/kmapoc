@@ -100,6 +100,8 @@ namespace CognitiveSearch.UI
             return null;
         }
 
+
+
         public SearchParameters GenerateSearchParameters(SearchFacet[] searchFacets = null, string[] selectFilter = null, int currentPage = 1, string polygonString = null, string documentGroupId = null)
         {
             // For more information on search parameters visit: 
@@ -153,12 +155,14 @@ namespace CognitiveSearch.UI
                 }
 
                 //code to add filter condition for the query
-                if (HomeController.MyGlobalVariables.MyGlobalString == "GasTurbine")
+                if (HomeController.MyGlobalVariables.UserDept == "Gas Turbine")
                     documentGroupId = "5bbc43d8-8cd2-4504-9450-95d018e86509";
-                else
+                else if (HomeController.MyGlobalVariables.UserDept == "Compressor")
                     documentGroupId = "89b7db00-f092-48d0-8edb-ec3bb02f565e";
+                else
+                    documentGroupId = "";
 
-                if (HomeController.MyGlobalVariables.MyGlobalString == "GasTurbine" || HomeController.MyGlobalVariables.MyGlobalString == "Compressor")
+                if (documentGroupId != "")
                 {
                     filter = String.Format("document_group/any(p:search.in(p, '{0}'))", string.Join(",", documentGroupId));
                     SearchParameters parameters = new SearchParameters()
@@ -166,6 +170,10 @@ namespace CognitiveSearch.UI
                         Filter = filter,
                         Select = new[] { "application essays" }
                     };
+                }
+                else
+                {
+                    filter = null;
                 }
             }
 
@@ -312,7 +320,7 @@ namespace CognitiveSearch.UI
             var facetResults = new List<object>();
             var tagsResults = new List<object>();
 
-            var resultTemp = new DocumentResult();
+            var resultTemp = Search(q, searchFacets, selectFilter, currentPage, polygonString);
 
             if (response != null && response.Facets != null)
             {
@@ -340,6 +348,7 @@ namespace CognitiveSearch.UI
                 }
 
                 //exclude thumbs down document
+                resultTemp.Results.Clear();
                 foreach (var resultDoc in response.Results)
                 {
                     foreach (var document in resultDoc.Document)
@@ -350,15 +359,8 @@ namespace CognitiveSearch.UI
                             {
                                 if (document.Value.ToString() != feedback.feedbackName)
                                 {
-                                    resultTemp.Results = (response == null ? null : response.Results);
-                                    resultTemp.Facets = facetResults;
-                                    resultTemp.Tags = tagsResults;
-                                    resultTemp.Count = (response == null ? 0 : Convert.ToInt32(response.Count));
-                                    resultTemp.SearchId = searchId;
-                                    resultTemp.IdField = idField;
-                                    resultTemp.Token = tokens[0];
-                                    resultTemp.IsPathBase64Encoded = _isPathBase64Encoded;
-                                    //resultTemp.Results.Add(resultDoc);
+                                    resultTemp.Results.Add(resultDoc);
+                                    
                                 }
                             }
                         }
@@ -366,7 +368,7 @@ namespace CognitiveSearch.UI
                 }
             }
 
-            if (resultTemp.Count==null)
+            if (resultTemp.Results.Count==0)
             {
                 var result = new DocumentResult
                 {
@@ -383,7 +385,18 @@ namespace CognitiveSearch.UI
             }
             else
             {
-                return resultTemp;
+                var result = new DocumentResult
+                {
+                    Results = (resultTemp == null ? null : resultTemp.Results),
+                    Facets = facetResults,
+                    Tags = tagsResults,
+                    Count = (resultTemp == null ? 0 : Convert.ToInt32(resultTemp.Count)),
+                    SearchId = searchId,
+                    IdField = idField,
+                    Token = tokens[0],
+                    IsPathBase64Encoded = _isPathBase64Encoded
+                };
+                return result;
             }
         }
 

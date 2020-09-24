@@ -104,10 +104,10 @@ namespace CognitiveSearch.UI.Controllers
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
-                //if (child.Name == "groups")
-                //{
-                //    Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
-                //}
+                if (child.Name == "department")
+                {
+                    Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
+                }
             }
 
             return View();
@@ -137,7 +137,7 @@ namespace CognitiveSearch.UI.Controllers
         public static class MyGlobalVariables
         {
             public static string MyGlobalString { get; set; }
-            public static string[] thumbsDownDocuments { get; set; }
+            public static string UserDept { get; set; }
         }
 
         public IActionResult Search([FromQuery]string q, [FromQuery]string facets = "", [FromQuery]int page = 1)
@@ -157,6 +157,7 @@ namespace CognitiveSearch.UI.Controllers
 
             string strText = Request.Cookies["givenName"];
             MyGlobalVariables.MyGlobalString = strText;
+            MyGlobalVariables.UserDept = Request.Cookies["department"];
 
             var arr = Regex.Matches(strText, @"[A-Z]+(?=[A-Z][a-z]+)|\d|[A-Z][a-z]+")
              .Cast<Match>()
@@ -179,7 +180,6 @@ namespace CognitiveSearch.UI.Controllers
             public SearchFacet[] searchFacets { get; set; }
             public int currentPage { get; set; }
             public string polygonString { get; set; }
-
             public string groupFilter { get; set; }
         }
 
