@@ -104,32 +104,40 @@ namespace CognitiveSearch.UI.Controllers
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
-                if (child.Name == "groups")
-                {
-                    Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
-                }
+                //if (child.Name == "groups")
+                //{
+                //    Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
+                //}
             }
 
             return View();
         }
 
+        public static List<FeedbackModel> feedbackModels = new List<FeedbackModel>();
+
         [HttpPost]
         public void getFeedbackVal(FeedbackModel feedbackVal)
         {
-            Console.WriteLine(feedbackVal.feedbackID);
+            var feedbackModel = new FeedbackModel();
+            feedbackModel.feedbackID = feedbackVal.feedbackID;
+            feedbackModel.feedbackName = feedbackVal.feedbackName;
+            feedbackModel.feedbackAction = feedbackVal.feedbackAction;
 
+            feedbackModels.Add(feedbackModel);
+
+            //Console.WriteLine(feedbackVal.feedbackID);
         }
 
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-
         }
 
         //global variables for cookies
         public static class MyGlobalVariables
         {
             public static string MyGlobalString { get; set; }
+            public static string[] thumbsDownDocuments { get; set; }
         }
 
         public IActionResult Search([FromQuery]string q, [FromQuery]string facets = "", [FromQuery]int page = 1)

@@ -124,7 +124,7 @@ function postFeedbackValue(id, title, action) {
             feedbackVal: {
                 feedbackID: id,
                 feedbackName: title,
-                feedbackAction: "Good"
+                feedbackAction: action
             }
         },
         function (data, status) {

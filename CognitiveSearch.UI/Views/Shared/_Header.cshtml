@@ -3,7 +3,6 @@
 @inject AppConfig AppConfig
 
 <script>
-import { group } from "console";
 
     function getProfile() {
         var x = document.getElementById("profileContainer");
@@ -19,7 +18,6 @@ import { group } from "console";
         var pivotsHTML = "";
         var displayName = "displayName=";
         var userType = "userType=";
-        var groups = "groups";
         var ca = document.cookie.split(';');
         for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
@@ -33,11 +31,6 @@ import { group } from "console";
             if (c.indexOf(userType) == 0) {
                 pivotsHTML += '<div style="color: #00a19c;"><h6>' + c.substring(userType.length, c.length).replace("%20", " ") + '</h6></div>';
             }
-
-            if (c.indexOf(groups) == 0) {
-                pivotsHTML += '<div style="color: #00a19c;"><h6>' + c.substring(groups.length, c.length).replace("%20", " ") + '</h6></div>';
-            }
-
         }
 
         $('#profileContainer').html(pivotsHTML);

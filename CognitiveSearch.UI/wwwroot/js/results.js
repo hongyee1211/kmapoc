@@ -238,7 +238,8 @@ function UpdateResults(data) {
         }
 
         if (document["metadata_storage_name"] !== undefined) {
-            name = document.metadata_storage_name.split(".")[0];
+            //name = document.metadata_storage_name.split(".")[0];
+            name = document.metadata_storage_name;
         }
         
         if (document["metadata_title"] !== undefined && document["metadata_title"] !== null) {
