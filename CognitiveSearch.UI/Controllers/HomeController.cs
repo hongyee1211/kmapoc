@@ -123,6 +123,16 @@ namespace CognitiveSearch.UI.Controllers
             feedbackModel.feedbackName = feedbackVal.feedbackName;
             feedbackModel.feedbackAction = feedbackVal.feedbackAction;
 
+            if (feedbackModels.Count() > 0) {
+                foreach (FeedbackModel feedback in feedbackModels.ToList())
+                {
+                    if (feedbackVal.feedbackID == feedback.feedbackID)
+                    {
+                        feedbackModels.Remove(feedback);
+                    }
+                }
+            }
+            
             feedbackModels.Add(feedbackModel);
 
             //Console.WriteLine(feedbackVal.feedbackID);
