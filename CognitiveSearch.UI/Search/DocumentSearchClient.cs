@@ -319,7 +319,7 @@ namespace CognitiveSearch.UI
             var searchId = GetSearchId().ToString();
             var facetResults = new List<object>();
             var tagsResults = new List<object>();
-
+            int i = 0;
             var resultTemp = Search(q, searchFacets, selectFilter, currentPage, polygonString);
 
             if (response != null && response.Facets != null)
@@ -349,7 +349,7 @@ namespace CognitiveSearch.UI
 
                 //exclude thumbs down document
                 resultTemp.Results.Clear();
-                foreach (var resultDoc in response.Results)
+                /*foreach (var resultDoc in response.Results)
                 {
                     foreach (var document in resultDoc.Document)
                     {
@@ -363,6 +363,28 @@ namespace CognitiveSearch.UI
                                     
                                 }
                             }
+                        }
+                    }
+                }*/
+
+                
+                foreach (var resultDoc in response.Results)
+                {
+                    foreach (var document in resultDoc.Document)
+                    {
+                        if (document.Key == "metadata_storage_name")
+                        {
+                            if (HomeController.feedbackModels.Count() > 0) {
+                                Boolean matchedFileName = HomeController.feedbackModels.Any(x => x.feedbackName == document.Value.ToString());
+                                if (!matchedFileName)
+                                {
+                                    resultTemp.Results.Add(resultDoc);
+                                }
+                                else {
+                                    i++;
+                                }
+                            }
+                            break;
                         }
                     }
                 }
@@ -390,7 +412,7 @@ namespace CognitiveSearch.UI
                     Results = (resultTemp == null ? null : resultTemp.Results),
                     Facets = facetResults,
                     Tags = tagsResults,
-                    Count = (resultTemp == null ? 0 : Convert.ToInt32(resultTemp.Count)),
+                    Count = (response == null ? 0 : Convert.ToInt32(response.Count - i)),
                     SearchId = searchId,
                     IdField = idField,
                     Token = tokens[0],
