@@ -857,3 +857,26 @@ b {
 .show {
     display: block;
 }
+
+.searchScore {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid;
+    font-size: 11px !important;
+    padding: 7px 0px;
+    margin-left: -5px;
+}
+
+.searchScore_red {
+    border-color: orangered;
+}
+
+.searchScore_yellow {
+    border-color: yellow;
+}
+
+.searchScore_green {
+    border-color: #00a19c;
+}

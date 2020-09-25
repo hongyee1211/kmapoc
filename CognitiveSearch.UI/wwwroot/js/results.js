@@ -210,6 +210,17 @@ function UpdateResults(data) {
         var document = result.document;
         document.idx = i;
 
+        var score = parseInt(result.score) + "%";
+        var scoreCSS = "";
+
+        if (parseInt(result.score) <= 30) {
+            scoreCSS = "searchScore_red";
+        } else if (parseInt(result.score) >= 31 && parseInt(result.score) <= 60) {
+            scoreCSS = "searchScore_yellow";
+        } else {
+            scoreCSS = "searchScore_green";
+        }
+
         var name;
         var title;
         var content;
@@ -317,6 +328,9 @@ function UpdateResults(data) {
                                         <div class="results-icon col-md-1">
                                             <div class="ms-CommandButton-icon">
                                                 <i class="html-icon ms-Icon ${icon}" style="font-size: 26px;"></i>
+                                            </div>
+                                            <div class="ms-CommandButton-icon">
+                                                <i class="html-icon searchScore ${scoreCSS}" style="font-size: 26px;">${score}</i>
                                             </div>
                                         </div>
                                         <div class="results-body col-md-10">
