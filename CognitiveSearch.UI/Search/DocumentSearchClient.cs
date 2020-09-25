@@ -162,17 +162,21 @@ namespace CognitiveSearch.UI
 
                 if (documentGroupId != "")
                 {
-                    filter = String.Format("document_group/any(p:search.in(p, '{0}'))", string.Join(",", documentGroupId));
+                    if (string.IsNullOrEmpty(filter))
+                        filter = String.Format("document_group/any(p:search.in(p, '{0}'))", string.Join(",", documentGroupId));
+                    else
+                        filter += String.Format(" and document_group/any(p:search.in(p, '{0}'))", string.Join(",", documentGroupId));
+
                     SearchParameters parameters = new SearchParameters()
                     {
                         Filter = filter,
                         Select = new[] { "application essays" }
                     };
                 }
-                else
-                {
-                    filter = null;
-                }
+                //else
+                //{
+                //    filter = null;
+                //}
             }
 
             sp.Filter = filter;
@@ -347,24 +351,6 @@ namespace CognitiveSearch.UI
 
                 //exclude thumbs down document
                 resultTemp.Results.Clear();
-                /*foreach (var resultDoc in response.Results)
-                {
-                    foreach (var document in resultDoc.Document)
-                    {
-                        if (document.Key == "metadata_storage_name")
-                        {
-                            foreach (var feedback in HomeController.feedbackModels)
-                            {
-                                if (document.Value.ToString() != feedback.feedbackName)
-                                {
-                                    resultTemp.Results.Add(resultDoc);
-                                    
-                                }
-                            }
-                        }
-                    }
-                }*/
-
                 
                 foreach (var resultDoc in response.Results)
                 {
@@ -410,11 +396,7 @@ namespace CognitiveSearch.UI
                     Results = (resultTemp == null ? null : resultTemp.Results),
                     Facets = facetResults,
                     Tags = tagsResults,
-<<<<<<< HEAD
-                    Count = (resultTemp == null ? 0 : Convert.ToInt32(resultTemp.Count)-1),
-=======
                     Count = (response == null ? 0 : Convert.ToInt32(response.Count - i)),
->>>>>>> 0c13d55ba8dd5831a1e621cee6c134afe3179228
                     SearchId = searchId,
                     IdField = idField,
                     Token = tokens[0],

@@ -31,8 +31,8 @@ namespace CognitiveSearch.UI
             "PlantCode",
             "Manufacturer",
             "EquipmentClass",
-            "EquipmentType",
-            "Abbreviation",
+            //"EquipmentType",
+            //"Abbreviation",
             "people",
         };
 

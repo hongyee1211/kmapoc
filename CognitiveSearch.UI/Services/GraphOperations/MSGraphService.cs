@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using CognitiveSearch.UI.Services.GraphOperations;
 
 namespace CognitiveSearch.UI.Services.GraphOperations
 {
