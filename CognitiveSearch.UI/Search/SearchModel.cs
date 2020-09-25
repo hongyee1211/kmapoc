@@ -11,7 +11,6 @@ namespace CognitiveSearch.UI
         private string[] facets = new string[]
         {
             // Add UI facets here in order
-            "people", 
             //"locations",
             //"organizations",
             //"keyphrases",
@@ -19,13 +18,13 @@ namespace CognitiveSearch.UI
             "Manufacturer",
             "EquipmentClass",
             "EquipmentType",
-            "Abbreviation"
+            "Abbreviation",
+            "people",
         };
 
         private string[] tags = new string[]
         {
             // Add tags fields here in order
-            "people", 
             //"locations",
             //"organizations",
             //"keyphrases"
@@ -33,7 +32,8 @@ namespace CognitiveSearch.UI
             "Manufacturer",
             "EquipmentClass",
             "EquipmentType",
-            "Abbreviation"
+            "Abbreviation",
+            "people",
         };
 
         private string[] resultFields = new string[]

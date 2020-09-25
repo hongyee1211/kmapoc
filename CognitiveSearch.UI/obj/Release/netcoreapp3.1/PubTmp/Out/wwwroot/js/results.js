@@ -238,7 +238,8 @@ function UpdateResults(data) {
         }
 
         if (document["metadata_storage_name"] !== undefined) {
-            name = document.metadata_storage_name.split(".")[0];
+            //name = document.metadata_storage_name.split(".")[0];
+            name = document.metadata_storage_name;
         }
         
         if (document["metadata_title"] !== undefined && document["metadata_title"] !== null) {
@@ -310,7 +311,7 @@ function UpdateResults(data) {
 
             var contentPreview = content ? `<p class="max-lines">${content}</p>` : "";
 
-            resultsHtml += `<div id="resultdiv${i}" class="${classList}" onclick="ShowDocument('${id}');">
+            resultsHtml += `<div id="resultdiv${i}" class="${classList}" >
                                     <div class="search-result">
                                         ${imageContent}
                                         <div class="results-icon col-md-1">
@@ -318,14 +319,27 @@ function UpdateResults(data) {
                                                 <i class="html-icon ms-Icon ${icon}" style="font-size: 26px;"></i>
                                             </div>
                                         </div>
-                                        <div class="results-body col-md-11">
-                                            <h4>${title}</h4>
+                                        <div class="results-body col-md-10">
+                                            <div style="cursor: pointer;" onclick="ShowDocument('${id}');">
+                                                <h4>${title}</h4>
+                                            </div>
                                             ${contentPreview}
                                             <h5>${name}</h5>
                                             ${tagsContent}
                                             ${resultContent}
                                         </div>
+                                        <div class="dropdown">
+                                        <div class="results-icon col-md-1 menuIcon" onclick="ShowFeedback('${i}');"></div>
+                                            <div id="modalFeedback${i}" class="dropdown-content">
+                                                <div style="display: flex;">
+                                                     <a onclick="thumbsUp('${id}', '${title}')" style="margin: 5px;" class="menuThumbsUp"></a>
+                                                     <a onclick="thumbsDown('${id}', '${title}')" style="margin: 5px;" class="menuThumbsDown"></a>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
                                     </div>
+                                    
                                 </div>`;
         }
         else {

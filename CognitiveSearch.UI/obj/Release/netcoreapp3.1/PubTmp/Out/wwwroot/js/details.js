@@ -105,6 +105,34 @@ function ShowDocument(id) {
         });
 }
 
+
+function ShowFeedback(i) {
+    document.getElementById("modalFeedback" + i).classList.toggle("show");
+}
+
+function thumbsUp(id, title) {
+    postFeedbackValue(id, title, "Good");
+}
+
+function thumbsDown(id, title) {
+    postFeedbackValue(id, title, "Bad");
+}
+
+function postFeedbackValue(id, title, action) {
+    $.post("/Home/getFeedbackVal",
+        {
+            feedbackVal: {
+                feedbackID: id,
+                feedbackName: title,
+                feedbackAction: action
+            }
+        },
+        function (data, status) {
+            //Handle status if you decide to return something
+        }
+    );
+}
+
 //  Authenticates the map and shows some locations.
 function AuthenticateMap(result) {
     $.post('/home/getmapcredentials', { },

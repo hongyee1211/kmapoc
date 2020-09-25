@@ -100,8 +100,6 @@ namespace CognitiveSearch.UI
             return null;
         }
 
-
-
         public SearchParameters GenerateSearchParameters(SearchFacet[] searchFacets = null, string[] selectFilter = null, int currentPage = 1, string polygonString = null, string documentGroupId = null)
         {
             // For more information on search parameters visit: 
@@ -390,7 +388,7 @@ namespace CognitiveSearch.UI
                     Results = (resultTemp == null ? null : resultTemp.Results),
                     Facets = facetResults,
                     Tags = tagsResults,
-                    Count = (resultTemp == null ? 0 : Convert.ToInt32(resultTemp.Count)),
+                    Count = (resultTemp == null ? 0 : Convert.ToInt32(resultTemp.Count)-1),
                     SearchId = searchId,
                     IdField = idField,
                     Token = tokens[0],
@@ -554,9 +552,22 @@ namespace CognitiveSearch.UI
                 // only add names that are long enough 
                 foreach (var element in facetResult.Value)
                 {
-                    if (element.Value.ToString().Length >= 4)
+                    //excluding incorrect people facets
+                    switch (element.Value.ToString().ToLower())
                     {
-                        cleanValues.Add(element);
+                        case "appendix":
+                        case "untuk dalaman":
+                        case "c. the":
+                        case "lo":
+                        case "max":
+                        case "ij":
+                            break;
+                        default:
+                            if (element.Value.ToString().Length >= 4)
+                            {
+                                cleanValues.Add(element);
+                            }
+                            break;
                     }
                 }
 
