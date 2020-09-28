@@ -202,8 +202,6 @@ function UpdateResults(data) {
 
     $("#doc-count").html(` Available Results: ${data.count}`);
 
-
-
     for (var i = 0; i < data.results.length; i++) {
 
         var result = data.results[i];
@@ -219,6 +217,15 @@ function UpdateResults(data) {
             scoreCSS = "searchScore_yellow";
         } else {
             scoreCSS = "searchScore_green";
+        }
+
+        var fileSize = document.metadata_storage_size;
+        var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        if (fileSize == 0) {
+            fileSize = '0 Byte';
+        } else {
+            var indSizes = parseInt(Math.floor(Math.log(fileSize) / Math.log(1024)));
+            fileSize = Math.round(fileSize / Math.pow(1024, indSizes), 2) + ' ' + sizes[indSizes];
         }
 
         var name;
@@ -335,7 +342,7 @@ function UpdateResults(data) {
                                         </div>
                                         <div class="results-body col-md-10">
                                             <div style="cursor: pointer;" onclick="ShowDocument('${id}');">
-                                                <h4>${title}</h4>
+                                                <h4>${title} [${fileSize}]</h4>
                                             </div>
                                             ${contentPreview}
                                             <h5>${name}</h5>
