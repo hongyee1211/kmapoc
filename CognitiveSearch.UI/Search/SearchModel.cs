@@ -41,6 +41,7 @@ namespace CognitiveSearch.UI
             "content",
             "metadata_storage_content_type",
             "metadata_storage_name",
+            "metadata_storage_size",
             "metadata_storage_path",
             "metadata_storage_file_extension",
             "metadata_content_type",
