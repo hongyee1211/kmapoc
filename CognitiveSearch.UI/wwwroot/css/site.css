@@ -505,7 +505,6 @@ pre {
 }
 
 .tag {
-    background-color: #00a19c;
     border: 1px solid transparent;
     border-radius: 0;
     color: #fff;
@@ -521,6 +520,20 @@ pre {
     text-decoration: none;
     transition: all .15s ease-in-out;
     white-space: nowrap;
+}
+
+.tag-people {
+    background-color: #00a19c;
+}
+.tag-EquipmentClass {
+    background-color: violet;
+}
+.tag-Manufacturer {
+    background-color: darkorchid;
+}
+.tag-PlantCode {
+    background-color: khaki;
+    color: #000;
 }
 
 #tags-panel {
@@ -710,8 +723,23 @@ body {
 }
 
 .panel-default > .panel-heading {
-    color: #00a19c !important;
     background-color: #333 !important;
+}
+
+.panel-default > .panel-heading-others {
+    color: #00a19c !important;
+}
+
+.panel-default > .panel-heading-EquipmentClass {
+    color: violet !important;
+}
+
+.panel-default > .panel-heading-Manufacturer {
+    color: darkorchid !important;
+}
+
+.panel-default > .panel-heading-PlantCode {
+    color: khaki !important;
 }
 
 .panel {

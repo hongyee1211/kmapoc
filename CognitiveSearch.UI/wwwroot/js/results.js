@@ -242,6 +242,10 @@ function UpdateResults(data) {
             content = "";
         }
 
+        var pathURL = Base64Decode(document.metadata_storage_path);
+        var isSKILL = pathURL.split("/").length - 1 - (pathURL.indexOf("http://") == -1 ? 0 : 2);
+        var indFile = isSKILL == 4 ? 'SKILL' : 'myExperts';
+
         var icon = " ms-Icon--Page";
         var id = azDocument[data.idField]; 
         var tags = GetTagsHTML(azDocument);
@@ -342,7 +346,7 @@ function UpdateResults(data) {
                                         </div>
                                         <div class="results-body col-md-10">
                                             <div style="cursor: pointer;" onclick="ShowDocument('${id}');">
-                                                <h4>${title} [${fileSize}]</h4>
+                                                <h4>[${indFile}] ${title} [${fileSize}]</h4>
                                             </div>
                                             ${contentPreview}
                                             <h5>${name}</h5>

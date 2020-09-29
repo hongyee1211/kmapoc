@@ -16,6 +16,8 @@ using CognitiveSearch.UI.Search;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using CognitiveSearch.UI.DAL;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Azure.Search;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -30,6 +32,7 @@ namespace CognitiveSearch.UI.Controllers
         private IConfiguration _configuration { get; set; }
         private DocumentSearchClient _docSearch { get; set; }
         private string _configurationError { get; set; }
+        private static ISearchIndexClient _indexClient;
 
         public HomeController(
             IConfiguration configuration,
@@ -319,6 +322,25 @@ namespace CognitiveSearch.UI.Controllers
                 uniqueItems
             );
 
+        }
+
+        public async Task<ActionResult> AutoComplete(string term)
+        {
+            InitializeDocSearch();
+
+            // Setup the autocomplete parameters.
+            var ap = new AutocompleteParameters()
+            {
+                AutocompleteMode = AutocompleteMode.OneTermWithContext,
+                Top = 6
+            };
+            AutocompleteResult autocompleteResult = await _indexClient.Documents.AutocompleteAsync(term, "ka-suggestor-03", ap);
+
+            // Convert the results to a list that can be displayed in the client.
+            List<string> autocomplete = autocompleteResult.Results.Select(x => x.Text).ToList();
+
+            // Return the list.
+            return new JsonResult(autocomplete);
         }
     }
 }
