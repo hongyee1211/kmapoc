@@ -356,6 +356,7 @@ namespace CognitiveSearch.UI
                 {
                     foreach (var document in resultDoc.Document)
                     {
+
                         if (document.Key == "metadata_storage_name")
                         {
                             if (HomeController.feedbackModels.Count() > 0) {
