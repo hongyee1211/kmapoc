@@ -244,7 +244,7 @@ function UpdateResults(data) {
 
         var pathURL = Base64Decode(document.metadata_storage_path);
         var isSKILL = pathURL.split("/").length - 1 - (pathURL.indexOf("http://") == -1 ? 0 : 2);
-        var indFile = isSKILL == 4 ? 'S' : 'M';
+        var indFile = isSKILL == 4 ? 'SKILL' : 'myExperts';
 
         var icon = " ms-Icon--Page";
         var id = document[data.idField]; 
