@@ -570,6 +570,45 @@ namespace CognitiveSearch.UI
                         case "lo":
                         case "max":
                         case "ij":
+                        case "categoris":
+                        case "v. gtg":
+                        case "ordine":
+                        case "commessa":
+                        case "cliente":
+                        case "commesso":
+                        case "cogen":
+                        case "train":
+                        case "solar":
+                        case "bunga kertas":
+                        case "bekok":
+                        case "baronia":
+                        case "inlet":
+                        case "f. macroscopic":
+                        case "dia":
+                        case "anime":
+                        case "doc":
+                        case "monitor":
+                        case "disabled comm":
+                        case "achieved sil":
+                        case "rotation":
+                        case "pitch":
+                        case "wall":
+                        case "c. equipment":
+                        case "max switch":
+                        case "a. perimiter":
+                        case "grade c.":
+                        case "micropack":
+                        case "fac":
+                        case "major":
+                        case "reboiler":
+                        case "unclassified":
+                        case "pam":
+                        case "a. bill":
+                        case "b. contractor":
+                        case "c. contractor":
+                        case "d. contractor":
+                        case "g. contractor":
+                        case "target sil":
                             break;
                         default:
                             if (element.Value.ToString().Length >= 4)
