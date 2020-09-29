@@ -585,7 +585,7 @@ namespace CognitiveSearch.UI
                         case "inlet":
                         case "f. macroscopic":
                         case "dia":
-                        case "anime":
+                        case "amine":
                         case "doc":
                         case "monitor":
                         case "disabled comm":
@@ -607,8 +607,18 @@ namespace CognitiveSearch.UI
                         case "b. contractor":
                         case "c. contractor":
                         case "d. contractor":
+                        case "e. contractor":
+                        case "f. contractor":
                         case "g. contractor":
+                        case "k. contractor":
                         case "target sil":
+                        case "average normal max":
+                        case "norm":
+                        case "norm.max":
+                        case "aux boiler":
+                        case "period":
+                        case "page":
+                        case "analsis":
                             break;
                         default:
                             if (element.Value.ToString().Length >= 4)
