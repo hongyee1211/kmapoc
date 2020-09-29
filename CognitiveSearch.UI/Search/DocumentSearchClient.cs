@@ -15,8 +15,6 @@ using CognitiveSearch.UI.Controllers;
 using CognitiveSearch.UI.Models;
 using Azure;
 using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Graph;
 
 namespace CognitiveSearch.UI
 {
@@ -332,7 +330,8 @@ namespace CognitiveSearch.UI
             return null;
         }
 
-        public DocumentResult GetDocuments(string q, SearchFacet[] searchFacets, int currentPage, string polygonString = null)
+        //**TODO refactor feedback dataset parameter in the future
+        public DocumentResult GetDocuments(string q, SearchFacet[] searchFacets, int currentPage, string polygonString = null, IQueryable<FeedbackModel> feedbacks = null)
         {
             var tokens = GetContainerSasUris();
 
@@ -385,13 +384,30 @@ namespace CognitiveSearch.UI
 
                         if (document.Key == "metadata_storage_name")
                         {
-                            if (HomeController.feedbackModels.Count() > 0) {
-                                Boolean matchedFileName = HomeController.feedbackModels.Any(x => x.feedbackName == document.Value.ToString());
+                            if (feedbacks == null)
+                            {
+                                if (HomeController.feedbackModels.Count() > 0)
+                                {
+                                    Boolean matchedFileName = HomeController.feedbackModels.Any(x => x.documentName == document.Value.ToString() && x.feedbackRating <= 1);
+                                    if (!matchedFileName)
+                                    {
+                                        resultTemp.Results.Add(resultDoc);
+                                    }
+                                    else
+                                    {
+                                        i++;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Boolean matchedFileName = feedbacks.Any(x => x.documentName == document.Value.ToString() && x.feedbackRating <= 1);
                                 if (!matchedFileName)
                                 {
                                     resultTemp.Results.Add(resultDoc);
                                 }
-                                else {
+                                else
+                                {
                                     i++;
                                 }
                             }
