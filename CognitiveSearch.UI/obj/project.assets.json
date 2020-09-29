@@ -7825,25 +7825,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ashley.kb.ow\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\hongyee.gow\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Ashley\\Code\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
+      "projectUniqueName": "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
       "projectName": "CognitiveSearch.UI",
-      "projectPath": "C:\\Ashley\\Code\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
-      "packagesPath": "C:\\Users\\ashley.kb.ow\\.nuget\\packages\\",
-      "outputPath": "C:\\Ashley\\Code\\kmapoc\\CognitiveSearch.UI\\obj\\",
+      "projectPath": "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\CognitiveSearch.UI.csproj",
+      "packagesPath": "C:\\Users\\hongyee.gow\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hongyee.gow\\Desktop\\New folder\\kmapoc\\CognitiveSearch.UI\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\ashley.kb.ow\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\hongyee.gow\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
