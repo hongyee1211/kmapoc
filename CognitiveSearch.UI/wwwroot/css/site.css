@@ -505,7 +505,6 @@ pre {
 }
 
 .tag {
-    background-color: #00a19c;
     border: 1px solid transparent;
     border-radius: 0;
     color: #fff;
@@ -521,6 +520,19 @@ pre {
     text-decoration: none;
     transition: all .15s ease-in-out;
     white-space: nowrap;
+}
+
+.tag-people {
+    background-color: #00a19c;
+}
+.tag-EquipmentClass {
+    background-color: mediumpurple;
+}
+.tag-Manufacturer {
+    background-color: darkmagenta;
+}
+.tag-PlantCode {
+    background-color: dodgerblue;
 }
 
 #tags-panel {
