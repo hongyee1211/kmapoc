@@ -6,7 +6,6 @@ function UpdateFilterReset() {
     // This allows users to remove filters
     var htmlString = '';
     $("#filterReset").html("");
-
     if (selectedFacets && selectedFacets.length > 0) {
 
         htmlString += `<div class="panel panel-default">
@@ -69,8 +68,17 @@ function UpdateFacets() {
 
             var title = name.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
 
+            var cssClass = "others";
+            if (name == "EquipmentClass") {
+                cssClass = "EquipmentClass";
+            } else if (name == "Manufacturer") {
+                cssClass = "Manufacturer";
+            } else if (name == "PlantCode") {
+                cssClass = "PlantCode";
+            }
+            
             facetResultsHTML += `<div class="panel panel-default">
-                                <div class="panel-heading">
+                                <div class="panel-heading panel-heading-${cssClass}">
                                     <h4 class="panel-title" id="${name}-facets">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#${name}">${title}</a>
                                     </h4>
