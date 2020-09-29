@@ -880,3 +880,48 @@ b {
 .searchScore_green {
     border-color: #00a19c;
 }
+
+/*Ratings page css*/
+.ratings-content {
+    margin-top: 50px;
+}
+
+.ratings-table-rows {
+    background-color: #555;
+    color: #FFFFFF
+}
+
+.ratings-table-header {
+    background-color: #00a19c;
+    color: #FFFFFF
+}
+
+.ratings-table-column-align {
+    text-align: center
+}
+
+.ratings-table-thumbs-up {
+    background-image: url("../images/thumbs-down.svg");
+    background-position: center;
+    background-size: 20px 20px;
+    transform: rotate(180deg);
+    background-repeat: no-repeat;
+}
+
+.ratings-table-thumbs-down {
+    background-image: url("../images/thumbs-down.svg");
+    background-position: center;
+    background-size: 20px 20px;
+    transform: rotate(180deg);
+    background-repeat: no-repeat;
+}
+
+.ratings-table-thumbs-up:hover {
+    cursor: pointer;
+}
+
+.ratings-table-thumbs-down:hover {
+    cursor: pointer;
+}
+
+

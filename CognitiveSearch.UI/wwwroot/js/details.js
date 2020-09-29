@@ -110,21 +110,25 @@ function ShowFeedback(i) {
     document.getElementById("modalFeedback" + i).classList.toggle("show");
 }
 
-function thumbsUp(id, title) {
-    postFeedbackValue(id, title, "Good");
+function thumbsUp(id, title, queryString) {
+    postFeedbackValue(id, title, 2, queryString);
 }
 
-function thumbsDown(id, title) {
-    postFeedbackValue(id, title, "Bad");
+function thumbsDown(id, title, queryString) {
+    postFeedbackValue(id, title, 1, queryString);
 }
 
-function postFeedbackValue(id, title, action) {
+function postFeedbackValue(id, title, action, queryString) {
     $.post("/Home/getFeedbackVal",
         {
             feedbackVal: {
-                feedbackID: id,
-                feedbackName: title,
-                feedbackAction: action
+                userID: null,
+                userType: null,
+                givenName: null,
+                documentName: title,
+                feedbackRating: action,
+                comment: "placeholder",
+                query: queryString
             }
         },
         function (data, status) {
