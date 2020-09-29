@@ -242,9 +242,9 @@ function UpdateResults(data) {
             content = "";
         }
 
-        var pathURL = Base64Decode(document.metadata_storage_path);
+        var pathURL = Base64Decode(azDocument.metadata_storage_path);
         var isSKILL = pathURL.split("/").length - 1 - (pathURL.indexOf("http://") == -1 ? 0 : 2);
-        var indFile = isSKILL == 4 ? 'S' : 'M';
+        var indFile = isSKILL == 4 ? 'SKILL' : 'myExperts';
 
         var icon = " ms-Icon--Page";
         var id = azDocument[data.idField]; 

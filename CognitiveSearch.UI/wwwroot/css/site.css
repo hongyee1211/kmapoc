@@ -924,7 +924,6 @@ b {
     background-image: url("../images/thumbs-down.svg");
     background-position: center;
     background-size: 20px 20px;
-    transform: rotate(180deg);
     background-repeat: no-repeat;
 }
 

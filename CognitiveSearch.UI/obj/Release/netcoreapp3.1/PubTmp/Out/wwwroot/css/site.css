@@ -505,7 +505,6 @@ pre {
 }
 
 .tag {
-    background-color: #00a19c;
     border: 1px solid transparent;
     border-radius: 0;
     color: #fff;
@@ -521,6 +520,19 @@ pre {
     text-decoration: none;
     transition: all .15s ease-in-out;
     white-space: nowrap;
+}
+
+.tag-people {
+    background-color: #00a19c;
+}
+.tag-EquipmentClass {
+    background-color: mediumpurple;
+}
+.tag-Manufacturer {
+    background-color: darkmagenta;
+}
+.tag-PlantCode {
+    background-color: dodgerblue;
 }
 
 #tags-panel {
@@ -857,3 +869,70 @@ b {
 .show {
     display: block;
 }
+
+.searchScore {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid;
+    font-size: 11px !important;
+    padding: 7px 0px;
+    margin-left: -5px;
+}
+
+.searchScore_red {
+    border-color: orangered;
+}
+
+.searchScore_yellow {
+    border-color: yellow;
+}
+
+.searchScore_green {
+    border-color: #00a19c;
+}
+
+/*Ratings page css*/
+.ratings-content {
+    margin-top: 50px;
+}
+
+.ratings-table-rows {
+    background-color: #555;
+    color: #FFFFFF
+}
+
+.ratings-table-header {
+    background-color: #00a19c;
+    color: #FFFFFF
+}
+
+.ratings-table-column-align {
+    text-align: center
+}
+
+.ratings-table-thumbs-up {
+    background-image: url("../images/thumbs-down.svg");
+    background-position: center;
+    background-size: 20px 20px;
+    transform: rotate(180deg);
+    background-repeat: no-repeat;
+}
+
+.ratings-table-thumbs-down {
+    background-image: url("../images/thumbs-down.svg");
+    background-position: center;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+}
+
+.ratings-table-thumbs-up:hover {
+    cursor: pointer;
+}
+
+.ratings-table-thumbs-down:hover {
+    cursor: pointer;
+}
+
+
