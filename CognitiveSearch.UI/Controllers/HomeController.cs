@@ -15,6 +15,7 @@ using CognitiveSearch.UI.Services.ARM;
 using CognitiveSearch.UI.Search;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using CognitiveSearch.UI.DAL;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search;
 
@@ -26,6 +27,7 @@ namespace CognitiveSearch.UI.Controllers
         private readonly ITokenAcquisition tokenAcquisition;
         private readonly IGraphApiOperations graphApiOperations;
         private readonly IArmOperations armOperations;
+        private readonly FeedbackContext _context;
 
         private IConfiguration _configuration { get; set; }
         private DocumentSearchClient _docSearch { get; set; }
@@ -36,8 +38,10 @@ namespace CognitiveSearch.UI.Controllers
             IConfiguration configuration,
             ITokenAcquisition tokenAcquisition,
             IGraphApiOperations graphApiOperations,
-            IArmOperations armOperations)
+            IArmOperations armOperations,
+            FeedbackContext context)
         {
+            this._context = context;
             this.tokenAcquisition = tokenAcquisition;
             this.graphApiOperations = graphApiOperations;
             this.armOperations = armOperations;
@@ -95,19 +99,23 @@ namespace CognitiveSearch.UI.Controllers
             var children = me.Properties();
             foreach (var child in children)
             {
-                if (child.Name == "givenName")
+                if (child.Name == "id")
+                {
+                    Response.Cookies.Append("userId", child.Value.ToString(), options);
+                }
+                else if (child.Name == "givenName")
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
-                if (child.Name == "displayName")
+                else if (child.Name == "displayName")
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
-                if (child.Name == "userType")
+                else if (child.Name == "userType")
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
-                if (child.Name == "department")
+                else if (child.Name == "department")
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
@@ -122,19 +130,35 @@ namespace CognitiveSearch.UI.Controllers
         public void getFeedbackVal(FeedbackModel feedbackVal)
         {
             var feedbackModel = new FeedbackModel();
-            feedbackModel.feedbackID = feedbackVal.feedbackID;
-            feedbackModel.feedbackName = feedbackVal.feedbackName;
-            feedbackModel.feedbackAction = feedbackVal.feedbackAction;
+            feedbackModel.userID = Request.Cookies["userId"];
+            feedbackModel.userType = Request.Cookies["userType"];
+            feedbackModel.givenName = Request.Cookies["givenName"];
+            feedbackModel.query = feedbackVal.query;
+            feedbackModel.documentName = feedbackVal.documentName;
+            feedbackModel.feedbackRating = feedbackVal.feedbackRating;
+            feedbackModel.comment = feedbackVal.comment;
+            var existing = this._context.Feedbacks.FirstOrDefault(f => f.userID.Equals(feedbackModel.userID) && f.documentName.Equals(feedbackModel.documentName) && f.query.Equals(feedbackModel.query));
 
-            if (feedbackModels.Count() > 0) {
-                foreach (FeedbackModel feedback in feedbackModels.ToList())
-                {
-                    if (feedbackVal.feedbackID == feedback.feedbackID)
-                    {
-                        feedbackModels.Remove(feedback);
-                    }
-                }
+            if (existing == null)
+            {
+                this._context.Feedbacks.Add(feedbackModel);
             }
+            else
+            {
+                this._context.Entry(existing).CurrentValues.SetValues(feedbackModel);
+                //this._context.Feedbacks.Update(feedbackModel);
+            }
+            this._context.SaveChanges();
+
+            //if (feedbackModels.Count() > 0) {
+            //    foreach (FeedbackModel feedback in feedbackModels.ToList())
+            //    {
+            //        if (feedbackVal.feedbackID == feedback.feedbackID)
+            //        {
+            //            feedbackModels.Remove(feedback);
+            //        }
+            //    }
+            //}
             
             feedbackModels.Add(feedbackModel);
 
@@ -211,9 +235,11 @@ namespace CognitiveSearch.UI.Controllers
             if (CheckDocSearchInitialized())
                 searchidId = _docSearch.GetSearchId().ToString();
 
+            var feedbacks = this._context.Feedbacks.Where(feedback => feedback.query.Equals(searchParams.q) && feedback.userID.Equals(Request.Cookies["userId"]));
+
             var viewModel = new SearchResultViewModel
             {
-                documentResult = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString),
+                documentResult = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, feedbacks),
                 query = searchParams.q,
                 selectedFacets = searchParams.searchFacets,
                 currentPage = searchParams.currentPage,

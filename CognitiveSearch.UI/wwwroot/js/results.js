@@ -199,14 +199,14 @@ function UpdateMap(data) {
 
 function UpdateResults(data) {
     var resultsHtml = '';
-
+    let search = document.getElementById("q").value;
     $("#doc-count").html(` Available Results: ${data.count}`);
 
     for (var i = 0; i < data.results.length; i++) {
 
         var result = data.results[i];
-        var document = result.document;
-        document.idx = i;
+        var azDocument = result.document;
+        azDocument.idx = i;
 
         var score = parseInt(result.score) + "%";
         var scoreCSS = "";
@@ -219,7 +219,7 @@ function UpdateResults(data) {
             scoreCSS = "searchScore_green";
         }
 
-        var fileSize = document.metadata_storage_size;
+        var fileSize = azDocument.metadata_storage_size;
         var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
         if (fileSize == 0) {
             fileSize = '0 Byte';
@@ -244,28 +244,28 @@ function UpdateResults(data) {
 
         var pathURL = Base64Decode(document.metadata_storage_path);
         var isSKILL = pathURL.split("/").length - 1 - (pathURL.indexOf("http://") == -1 ? 0 : 2);
-        var indFile = isSKILL == 4 ? 'SKILL' : 'myExperts';
+        var indFile = isSKILL == 4 ? 'S' : 'M';
 
         var icon = " ms-Icon--Page";
-        var id = document[data.idField]; 
-        var tags = GetTagsHTML(document);
+        var id = azDocument[data.idField]; 
+        var tags = GetTagsHTML(azDocument);
         var path;
 
         // get path
         if (data.isPathBase64Encoded) {
-            path = Base64Decode(document.metadata_storage_path) + token;
+            path = Base64Decode(azDocument.metadata_storage_path) + token;
         }
         else {
-            path = document.metadata_storage_path + token;
+            path = azDocument.metadata_storage_path + token;
         }
 
-        if (document["metadata_storage_name"] !== undefined) {
+        if (azDocument["metadata_storage_name"] !== undefined) {
             //name = document.metadata_storage_name.split(".")[0];
-            name = document.metadata_storage_name;
+            name = azDocument.metadata_storage_name;
         }
         
-        if (document["metadata_title"] !== undefined && document["metadata_title"] !== null) {
-            title = document.metadata_title;
+        if (azDocument["metadata_title"] !== undefined && azDocument["metadata_title"] !== null) {
+            title = azDocument.metadata_title;
         }
         else {
             // Bring up the name to the top
@@ -357,8 +357,8 @@ function UpdateResults(data) {
                                         <div class="results-icon col-md-1 menuIcon" onclick="ShowFeedback('${i}');"></div>
                                             <div id="modalFeedback${i}" class="dropdown-content">
                                                 <div style="display: flex;">
-                                                     <a onclick="thumbsUp('${id}', '${title}')" style="margin: 5px;" class="menuThumbsUp"></a>
-                                                     <a onclick="thumbsDown('${id}', '${title}')" style="margin: 5px;" class="menuThumbsDown"></a>
+                                                     <a onclick="thumbsUp('${id}', '${title}', '${search}')" style="margin: 5px;" class="menuThumbsUp"></a>
+                                                     <a onclick="thumbsDown('${id}', '${title}', '${search}')" style="margin: 5px;" class="menuThumbsDown"></a>
                                                 </div>
                                                
                                             </div>

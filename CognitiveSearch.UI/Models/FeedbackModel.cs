@@ -8,8 +8,12 @@ namespace CognitiveSearch.UI.Models
 {
     public class FeedbackModel
     {
-        public string feedbackID { get; set; }
-        public string feedbackName { get; set; }
-        public string feedbackAction { get; set; }
+        public string userID { get; set; }
+        public string documentName { get; set; }
+        public string givenName { get; set; }
+        public string userType { get; set; }
+        public string comment { get; set; }
+        public string query { get; set; }
+        public int feedbackRating { get; set; }
     }
 }

@@ -18,6 +18,8 @@ using CognitiveSearch.UI.Configuration;
 using CognitiveSearch.UI.Infrastructure;
 using CognitiveSearch.UI.Services.ARM;
 using CognitiveSearch.UI.Services.GraphOperations;
+using CognitiveSearch.UI.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace CognitiveSearch.UI
 {
@@ -42,6 +44,8 @@ namespace CognitiveSearch.UI
                 // Handling SameSite cookie according to https://docs.microsoft.com/en-us/aspnet/core/security/samesite?view=aspnetcore-3.1
                 options.HandleSameSiteCookieCompatibility();
             });
+
+            services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddOptions();
 

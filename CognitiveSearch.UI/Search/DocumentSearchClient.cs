@@ -306,7 +306,8 @@ namespace CognitiveSearch.UI
             return null;
         }
 
-        public DocumentResult GetDocuments(string q, SearchFacet[] searchFacets, int currentPage, string polygonString = null)
+        //**TODO refactor feedback dataset parameter in the future
+        public DocumentResult GetDocuments(string q, SearchFacet[] searchFacets, int currentPage, string polygonString = null, IQueryable<FeedbackModel> feedbacks = null)
         {
             var tokens = GetContainerSasUris();
 
@@ -359,13 +360,30 @@ namespace CognitiveSearch.UI
 
                         if (document.Key == "metadata_storage_name")
                         {
-                            if (HomeController.feedbackModels.Count() > 0) {
-                                Boolean matchedFileName = HomeController.feedbackModels.Any(x => x.feedbackName == document.Value.ToString());
+                            if (feedbacks == null)
+                            {
+                                if (HomeController.feedbackModels.Count() > 0)
+                                {
+                                    Boolean matchedFileName = HomeController.feedbackModels.Any(x => x.documentName == document.Value.ToString() && x.feedbackRating <= 1);
+                                    if (!matchedFileName)
+                                    {
+                                        resultTemp.Results.Add(resultDoc);
+                                    }
+                                    else
+                                    {
+                                        i++;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Boolean matchedFileName = feedbacks.Any(x => x.documentName == document.Value.ToString() && x.feedbackRating <= 1);
                                 if (!matchedFileName)
                                 {
                                     resultTemp.Results.Add(resultDoc);
                                 }
-                                else {
+                                else
+                                {
                                     i++;
                                 }
                             }
@@ -585,7 +603,7 @@ namespace CognitiveSearch.UI
                         case "inlet":
                         case "f. macroscopic":
                         case "dia":
-                        case "anime":
+                        case "amine":
                         case "doc":
                         case "monitor":
                         case "disabled comm":
@@ -607,8 +625,18 @@ namespace CognitiveSearch.UI
                         case "b. contractor":
                         case "c. contractor":
                         case "d. contractor":
+                        case "e. contractor":
+                        case "f. contractor":
                         case "g. contractor":
+                        case "k. contractor":
                         case "target sil":
+                        case "average normal max":
+                        case "norm":
+                        case "norm.max":
+                        case "aux boiler":
+                        case "period":
+                        case "page":
+                        case "analsis":
                             break;
                         default:
                             if (element.Value.ToString().Length >= 4)
