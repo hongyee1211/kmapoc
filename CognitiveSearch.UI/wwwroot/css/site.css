@@ -526,14 +526,13 @@ pre {
     background-color: #00a19c;
 }
 .tag-EquipmentClass {
-    background-color: violet;
+    background-color: mediumpurple;
 }
 .tag-Manufacturer {
-    background-color: darkorchid;
+    background-color: darkmagenta;
 }
 .tag-PlantCode {
-    background-color: khaki;
-    color: #000;
+    background-color: dodgerblue;
 }
 
 #tags-panel {
@@ -723,23 +722,8 @@ body {
 }
 
 .panel-default > .panel-heading {
-    background-color: #333 !important;
-}
-
-.panel-default > .panel-heading-others {
     color: #00a19c !important;
-}
-
-.panel-default > .panel-heading-EquipmentClass {
-    color: violet !important;
-}
-
-.panel-default > .panel-heading-Manufacturer {
-    color: darkorchid !important;
-}
-
-.panel-default > .panel-heading-PlantCode {
-    color: khaki !important;
+    background-color: #333 !important;
 }
 
 .panel {
