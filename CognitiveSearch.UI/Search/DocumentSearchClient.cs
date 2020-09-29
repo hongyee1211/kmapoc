@@ -153,36 +153,12 @@ namespace CognitiveSearch.UI
                 }
 
                 //code to add filter condition for the query
-                switch (HomeController.MyGlobalVariables.UserDept)
-                {
-                    case "Compressor":
-                        documentGroupId = "89b7db00-f092-48d0-8edb-ec3bb02f565e";
-                        break;
-                    case "Gas Turbine":
-                        documentGroupId = "5bbc43d8-8cd2-4504-9450-95d018e86509";
-                        break;
-                    case "Instrument":
-                        documentGroupId = "e84e11b5-19ba-4d55-962f-855b1f1eb096";
-                        break;
-                    case "Process":
-                        documentGroupId = "e46c7dfb-c25a-4f1f-8034-16338f03a324";
-                        break;
-                    case "Electrical":
-                        documentGroupId = "2fc63317-295a-46b8-99eb-d563c7d1505f";
-                        break;
-                    case "Mechanical":
-                        documentGroupId = "f7b826b6-f0eb-4474-bbe0-fdc17db339f7";
-                        break;
-                    case "MLNG":
-                        documentGroupId = "11abfa5e-4b45-45ef-bebb-c13691190b42";
-                        break;
-                    case "MRCSB":
-                        documentGroupId = "b5bbdc71-b6ae-430c-bd86-67ed64c85183";
-                        break;
-                    default:
-                        documentGroupId = "";
-                        break;
-                }
+                if (HomeController.MyGlobalVariables.UserDept == "Gas Turbine")
+                    documentGroupId = "5bbc43d8-8cd2-4504-9450-95d018e86509";
+                else if (HomeController.MyGlobalVariables.UserDept == "Compressor")
+                    documentGroupId = "89b7db00-f092-48d0-8edb-ec3bb02f565e";
+                else
+                    documentGroupId = "";
 
                 if (documentGroupId != "")
                 {
@@ -417,40 +393,7 @@ namespace CognitiveSearch.UI
                 }
             }
 
-            if (resultTemp != null)
-            {
-                if (resultTemp.Results.Count == 0)
-                {
-                    var result = new DocumentResult
-                    {
-                        Results = (response == null ? null : response.Results),
-                        Facets = facetResults,
-                        Tags = tagsResults,
-                        Count = (response == null ? 0 : Convert.ToInt32(response.Count)),
-                        SearchId = searchId,
-                        IdField = idField,
-                        Token = tokens[0],
-                        IsPathBase64Encoded = _isPathBase64Encoded
-                    };
-                    return result;
-                }
-                else
-                {
-                    var result = new DocumentResult
-                    {
-                        Results = (resultTemp == null ? null : resultTemp.Results),
-                        Facets = facetResults,
-                        Tags = tagsResults,
-                        Count = (response == null ? 0 : Convert.ToInt32(response.Count - i)),
-                        SearchId = searchId,
-                        IdField = idField,
-                        Token = tokens[0],
-                        IsPathBase64Encoded = _isPathBase64Encoded
-                    };
-                    return result;
-                }
-            }
-            else
+            if (resultTemp.Results.Count==0)
             {
                 var result = new DocumentResult
                 {
@@ -458,6 +401,21 @@ namespace CognitiveSearch.UI
                     Facets = facetResults,
                     Tags = tagsResults,
                     Count = (response == null ? 0 : Convert.ToInt32(response.Count)),
+                    SearchId = searchId,
+                    IdField = idField,
+                    Token = tokens[0],
+                    IsPathBase64Encoded = _isPathBase64Encoded
+                };
+                return result;
+            }
+            else
+            {
+                var result = new DocumentResult
+                {
+                    Results = (resultTemp == null ? null : resultTemp.Results),
+                    Facets = facetResults,
+                    Tags = tagsResults,
+                    Count = (response == null ? 0 : Convert.ToInt32(response.Count - i)),
                     SearchId = searchId,
                     IdField = idField,
                     Token = tokens[0],

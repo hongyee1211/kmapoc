@@ -19,67 +19,7 @@ function GetTagsHTML(result) {
                                 // create substring of tag name length if too long
                                 tagValue = tagValue.substring(0, 30);
                             }
-
-                            switch (tagValue.toLowerCase()) {
-                                case "appendix":
-                                case "untuk dalaman":
-                                case "c. the":
-                                case "lo":
-                                case "max":
-                                case "ij":
-                                case "categoris":
-                                case "v. gtg":
-                                case "ordine":
-                                case "commessa":
-                                case "cliente":
-                                case "commesso":
-                                case "cogen":
-                                case "train":
-                                case "solar":
-                                case "bunga kertas":
-                                case "bekok":
-                                case "baronia":
-                                case "inlet":
-                                case "f. macroscopic":
-                                case "dia":
-                                case "amine":
-                                case "doc":
-                                case "monitor":
-                                case "disabled comm":
-                                case "achieved sil":
-                                case "rotation":
-                                case "pitch":
-                                case "wall":
-                                case "c. equipment":
-                                case "max switch":
-                                case "a. perimiter":
-                                case "grade c.":
-                                case "micropack":
-                                case "fac":
-                                case "major":
-                                case "reboiler":
-                                case "unclassified":
-                                case "pam":
-                                case "a. bill":
-                                case "b. contractor":
-                                case "c. contractor":
-                                case "d. contractor":
-                                case "e. contractor":
-                                case "f. contractor":
-                                case "g. contractor":
-                                case "k. contractor":
-                                case "target sil":
-                                case "average normal max":
-                                case "norm":
-                                case "norm.max":
-                                case "aux boiler":
-                                case "period":
-                                case "page":
-                                case "analsis":
-                                    break;
-                                default:
-                                    tagsHTML += `<button class="tag tag-${name}" onclick="HighlightTag(event)">${tagValue}</button>`;
-                            }
+                            tagsHTML += `<button class="tag tag-${name}" onclick="HighlightTag(event)">${tagValue}</button>`;
                             i++;
                         }
                 }
