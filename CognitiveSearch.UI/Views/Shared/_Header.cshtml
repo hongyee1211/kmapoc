@@ -83,9 +83,17 @@
                 </div>
             }
 
-            <div id="navbarNav" style="float:right;margin-top:-40px;">
-                <img onclick="javascript:getProfile()" src="~/images/profile_icon.svg" height="30" id="navbar-img" alt="@AppConfig.Organization.Name logo" title="@AppConfig.Organization.Name logo" class="logo-container logo-sgv" asp-append-version="true" />
-            </div>
+        <div id="navbarNav" style="float:right;margin-top:-40px;">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <img onclick="javascript:getProfile()" src="~/images/profile_icon.svg" height="30" id="navbar-img" alt="@AppConfig.Organization.Name logo" title="@AppConfig.Organization.Name logo" class="logo-container logo-sgv" asp-append-version="true" />
+            <a class="navbar-text navbar-text-color" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">Sign out</a>
+        }
+        else
+        {
+            <a class="navbar-text navbar-text-color" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Sign in</a>
+        }
+        </div>
             <div id="profileContainer" class="profileContainer">
             </div>
         </div>
