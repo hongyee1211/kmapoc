@@ -334,7 +334,8 @@ function UpdateResults(data) {
             var contentPreview = content ? `<p class="max-lines">${content}</p>` : "";
 
             resultsHtml += `<div id="resultdiv${i}" class="${classList}" >
-                                    <div class="search-result">
+                                <div class="row search-row-result ">
+                                    <div class="search-result col-md-11">
                                         ${imageContent}
                                         <div class="results-icon col-md-1">
                                             <div class="ms-CommandButton-icon">
@@ -352,34 +353,85 @@ function UpdateResults(data) {
                                             <h5>${name}</h5>
                                             ${tagsContent}
                                             ${resultContent}
-                                        </div>
-                                        <div class="dropdown">
+                                        </div>                                        
+                                    </div>
+                                    <div class="search-dropdown col-md-1">
                                         <div class="results-icon col-md-1 menuIcon" onclick="ShowFeedback('${i}');"></div>
-                                            <div id="modalFeedback${i}" class="dropdown-content">
-                                                <div style="display: flex;">
-                                                     <a onclick="thumbsUp('${id}', '${title}', '${search}')" style="margin: 5px;" class="menuThumbsUp"></a>
-                                                     <a onclick="thumbsDown('${id}', '${title}', '${search}')" style="margin: 5px;" class="menuThumbsDown"></a>
-                                                </div>
-                                               
+                                        <div id="modalFeedback${i}" class="search-dropdown-content">
+                                            <div class="search-ratings-star-cluster">
+                                                <span class="fa fa-star" id="star-1-${i}" onclick="toggleRating(${1},${i})"></span>
+                                                <span class="fa fa-star" id="star-2-${i}" onclick="toggleRating(${2},${i})"></span>
+                                                <span class="fa fa-star" id="star-3-${i}" onclick="toggleRating(${3},${i})"></span>
+                                                <span class="fa fa-star" id="star-4-${i}" onclick="toggleRating(${4},${i})"></span>
+                                                <span class="fa fa-star" id="star-5-${i}" onclick="toggleRating(${5},${i})"></span>
+                                            </div>
+                                            <div class="form-horizontal">
+                                                <textarea style="width:200px; resize: none;" id="search-ratings-comment-${i}" class="form-control search-ratings-textarea" rows="4" placeholder="Write your comment here..."></textarea>
+                                            </div>
+                                            <div style="text-align: center" class="search-ratebtn-container">
+                                                <button type="button" class="btn btn-info search-ratebtn" onclick="submitRating(${i},'${id}', '${title}', '${search}')">Rate</button>
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                </div>`;
+                                </div>
+                            </div>`;
         }
         else {
             resultsHtml += `<div class="${classList}" );">
-                                    <div class="search-result">
-                                        <div class="results-header">
-                                            <h4>Could not get metadata_storage_path for this result.</h4>
-                                        </div>
+                                <div class="search-result">
+                                    <div class="results-header">
+                                        <h4>Could not get metadata_storage_path for this result.</h4>
                                     </div>
-                                </div>`; 
+                                </div>
+                            </div>`; 
         }
     }
 
     $("#doc-details-div").html(resultsHtml);
 }
+
+function toggleRating(rating, rowId) {
+    currentRating = 0;
+    for (let i = 5; i > 0; i--) {
+        if ($(`#star-${i}-${rowId}`).hasClass("ratings-star-checked")) {
+            currentRating = i
+            break
+        }
+    }
+    if (rating == currentRating) {
+        rating = 0
+    }
+    for (let i = 5; i > 0; i--) {
+        if (rating >= i) {
+            $(`#star-${i}-${rowId}`).addClass("ratings-star-checked")
+        }
+        else {
+            $(`#star-${i}-${rowId}`).removeClass("ratings-star-checked")
+        }
+    }
+}
+
+function submitRating(rowId, id, title, search) {
+    let rating = 0
+    for (let i = 5; i > 0; i--) {
+        if ($(`#star-${i}-${rowId}`).hasClass("ratings-star-checked")) {
+            rating = i
+            break
+        }
+    }
+    let comment = $(`#search-ratings-comment-${rowId}`).val()
+    function callback(data, status) {
+        if (status == "success") {
+            RemoveFeedbackDisplay(rowId)
+        }
+        else {
+            console.error(`Error encountered in saving rating to db, received status:${status}`)
+        }
+    }
+    sendFeedback(id, title, search, comment, rating, callback)
+}
+
+
 
 function ShowHideTags(i) {
     var node = document.getElementById("tagdiv" + i);

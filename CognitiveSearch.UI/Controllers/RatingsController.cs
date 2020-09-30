@@ -46,7 +46,7 @@ namespace CognitiveSearch.UI.Controllers
 
         private List<FeedbackModel> retrieveFeedback(string userId)
         {
-            return this._context.Feedbacks.Where(feedback => feedback.userID.Equals(userId) && feedback.feedbackRating <= 1).ToList();
+            return this._context.Feedbacks.Where(feedback => feedback.userID.Equals(userId)).ToList();
 
         }
     }

@@ -470,15 +470,64 @@ pre {
     }
 
 .search-result {
-    background-color: #666;
     color: #fff;
-    border-radius: 10px;
-    height: auto;
-    margin: 10px;
     overflow: hidden;
+    min-height: 95px !important;
+    text-align: left;
+}
+
+.search-row-result {
+    background-color: #666;
+    border-radius: 10px;
+    margin: 10px !important;
     padding: 10px;
     text-align: left;
 }
+
+.search-ratings-star-cluster {
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.search-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.search-dropdown-content {
+    display: none;
+    position: absolute;
+    right: -8px;
+    background-color: #333333;
+    border-radius: 10px;
+    min-width: 60px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 35px;
+    padding: 0.3em 0.2em;
+}
+
+.search-ratings-textarea {
+    width: 200px;
+    resize: none;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.search-ratebtn-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.search-ratebtn {
+    background-color: #00a19c !important;
+    border-radius: 5px !important;
+    border: none !important
+}
+
 
 #transcript-search-box {
 }
@@ -837,6 +886,7 @@ b {
     background-repeat: no-repeat;
 }
 
+/*Depracated, moved to specific search classes*/
 /* Dropdown Button */
 .dropbtn {
     background-color: #3498DB;
@@ -946,12 +996,12 @@ b {
     background-repeat: no-repeat;
 }
 
-.ratings-table-thumbs-up:hover {
+.ratings-table-delete:hover {
     cursor: pointer;
 }
 
-.ratings-table-thumbs-down:hover {
-    cursor: pointer;
+.ratings-star-checked {
+    color: orange;
 }
 
 

@@ -110,12 +110,42 @@ function ShowFeedback(i) {
     document.getElementById("modalFeedback" + i).classList.toggle("show");
 }
 
+function RemoveFeedbackDisplay(i) {
+    document.getElementById("modalFeedback" + i).classList.remove("show");
+}
+
 function thumbsUp(id, title, queryString) {
     postFeedbackValue(id, title, 2, queryString);
 }
 
 function thumbsDown(id, title, queryString) {
     postFeedbackValue(id, title, 1, queryString);
+}
+
+function sendFeedback(id, title, queryString, comment, rating, callback) {
+    postFeedbackValue2(id, title, queryString, comment, rating, callback);
+}
+
+function postFeedbackValue2(id, title, queryString, comment, rating, callback) {
+    $.post("/Home/getFeedbackVal",
+        {
+            feedbackVal: {
+                userID: null,
+                userType: null,
+                givenName: null,
+                documentName: title,
+                feedbackRating: rating,
+                comment: comment,
+                query: queryString
+            }
+        },
+        function (data, status) {
+            if (callback != null) {
+                callback(data, status)
+            }
+            //Handle status if you decide to return something
+        }
+    );
 }
 
 function postFeedbackValue(id, title, action, queryString) {

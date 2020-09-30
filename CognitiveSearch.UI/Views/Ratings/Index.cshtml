@@ -24,19 +24,31 @@
                 }
             }
             rowCount += 1
-            var ratingContent = ''
-            if (feedback.feedbackRating > 1) {
-                ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-up"></td>`
+            var starsDoms = ''
+            for (let i = 0; i < 5; i++) {
+                if (feedback.feedbackRating > i) {
+                    starsDoms += `<span class="fa fa-star ratings-star-checked"></span>`
+                }
+                else {
+                    starsDoms += `<span class="fa fa-star"></span>`
+                }
             }
-            else {
-                //ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down" onclick="tdclick();"></td>`
-                ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down" onclick="remove('${feedback.userID}', '${feedback.documentName}', '${feedback.query}');"></td>`
-            }
+
+            var ratingContent = `<td class="ratings-table-column-align">${starsDoms}</td>`
+            //if (feedback.feedbackRating > 1) {
+            //    ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-up"></td>`
+            //}
+            //else {
+            //    //ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down" onclick="tdclick();"></td>`
+            //    ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down" onclick="remove('${feedback.userID}', '${feedback.documentName}', '${feedback.query}');"></td>`
+            //}
             rowsHtml += `<tr class="ratings-table-rows">
                                 <th scope="row">${rowCount}</th>
                                 <td>${feedback.documentName}</td>
+                                <td>${feedback.comment}</td>
                                 <td class="ratings-table-column-align">${feedbacks[i].query}</td>
                                 ${ratingContent}
+                                <td class="ratings-table-column-align ratings-table-delete" onclick="remove('${feedback.userID}', '${feedback.documentName}', '${feedback.query}');"><span class="fa fa-trash"></span></td>
                             </tr>`
         }
         table.html(rowsHtml);
@@ -47,11 +59,7 @@
             {
                 feedbackVal: {
                     userID: userID,
-                    userType: null,
-                    givenName: null,
                     documentName: documentName,
-                    feedbackRating: 1,
-                    comment: "placeholder",
                     query: query
                 }
             },
@@ -73,7 +81,7 @@
         updateTable()
     });
 </script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 <div>
     <div class="content ratings-content">
@@ -82,8 +90,10 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Document</th>
+                    <th scope="col">Description</th>
                     <th class="ratings-table-column-align" scope="col">Query</th>
                     <th class="ratings-table-column-align" scope="col">Rating</th>
+                    <th class="ratings-table-column-align" scope="col"></th>
                 </tr>
             </thead>
             <tbody id="ratings-table-body">
@@ -91,56 +101,3 @@
         </table>
     </div>
 </div>
-
-@*
-    page = page - 1;
-    if (page < 0)
-    {
-        page = 0;
-    }
-    var userId = Request.Cookies["userId"];
-
-    IQueryable<FeedbackModel> feedbacks;
-    if (filterQuery == null)
-    {
-        feedbacks = this._context.Feedbacks.Where(feedback => feedback.userID.Equals(userId) && feedback.feedbackRating <= 1);
-    }
-    else
-    {
-        feedbacks = this._context.Feedbacks.Where(feedback => feedback.userID.Equals(userId) && feedback.feedbackRating <= 1 && feedback.query.Contains(filterQuery));
-    }
-    int numLength = feedbacks.Count();
-    int take = 100;
-    int skip = take * page;
-    if (skip > numLength)
-    {
-        skip = (numLength / take) * take;
-    }
-
-    var viewModel = new RatingsViewModel
-    {
-        feedbacks = feedbacks.Skip(skip).Take(take).ToList(),
-        pages = (int)Math.Ceiling((float)numLength / take),
-    };
-
-
-
-    @for (int i = 0; i < Model.feedbacks.Count; i++)
-                {
-                    <tr class="ratings-table-rows">
-                        <th scope="row">@(i+1)</th>
-                        <td>@Model.feedbacks[i].documentName</td>
-                        <td class="ratings-table-column-align">@Model.feedbacks[i].query</td>
-                        @*currently always == 1 but condition will be used when 1-5 star rating is applied
-    @if (Model.feedbacks[i].feedbackRating > 1)
-    {
-        <td class="ratings-table-column-align ratings-table-thumbs-up"></td>
-    }
-    else
-    {
-        <td class="ratings-table-column-align ratings-table-thumbs-down"></td>
-    }
-                        </tr>
-                    }
-
-*@
