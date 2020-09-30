@@ -285,7 +285,7 @@ function UpdateEntityGraph() {
             .attr("font-weight", "bold")
             .attr("pointer-events", "none")
             .attr("fill", function (d) {
-                return d.layer > 1 ? "#808080" : "#000000";
+                return d.layer > 1 ? "#808080" : "#D8D8D8";
             })
             .text(d => d.name);
 
