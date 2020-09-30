@@ -174,6 +174,7 @@ namespace CognitiveSearch.UI.Controllers
         public static class MyGlobalVariables
         {
             public static string MyGlobalString { get; set; }
+            public static string DisplayName { get; set; }
             public static string UserDept { get; set; }
         }
 
@@ -193,8 +194,11 @@ namespace CognitiveSearch.UI.Controllers
                 .ToArray();
 
             string strText = Request.Cookies["givenName"];
+            string strdisplayName = Request.Cookies["displayName"];
+            string strUserDept = Request.Cookies["department"];
             MyGlobalVariables.MyGlobalString = strText;
-            MyGlobalVariables.UserDept = Request.Cookies["department"];
+            MyGlobalVariables.DisplayName = strdisplayName;
+            MyGlobalVariables.UserDept = strUserDept;
 
             var arr = Regex.Matches(strText, @"[A-Z]+(?=[A-Z][a-z]+)|\d|[A-Z][a-z]+")
              .Cast<Match>()
@@ -203,7 +207,7 @@ namespace CognitiveSearch.UI.Controllers
 
             var viewModel = SearchView(new SearchParameters
             {
-                q = String.Join(" ", arr) + ", " + q,
+                q = String.Join(" ", strText) + ", " + q,
                 searchFacets = searchFacets,
                 currentPage = page
             });
