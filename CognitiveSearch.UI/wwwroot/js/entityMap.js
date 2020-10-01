@@ -67,7 +67,6 @@ function GetGraph(q) {
             maxNodes: currentMaxNodes
         },
         success: function (data) {
-
             Unload();
             viewParams.nodes = data.nodes;
             viewParams.links = data.links;
@@ -247,6 +246,15 @@ function UpdateEntityGraph() {
             return d.radius;
         })
         .style("fill", function (d) {
+
+            if (d.facetName == "EquipmentClass") {
+                 return "violet"; //violet
+            } else if (d.facetName == "Manufacturer") {
+                return "darkorchid"; //darkorchid
+            } else if (d.facetName == "PlantCode") {
+                return "khaki"; //khaki
+            }
+
             return applySaturationToHexColor(colors(d.color), 1.0 - d.layer * nodeDesaturation);
         })
         .on("click", function (d) {

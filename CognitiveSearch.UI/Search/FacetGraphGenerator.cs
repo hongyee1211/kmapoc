@@ -9,11 +9,12 @@ namespace CognitiveSearch.UI
 {
     public class NodeInfo
     {
-        public NodeInfo(int index, int colorId)
+        public NodeInfo(int index, int colorId, string facetVal)
         {
             Index = index;
             ColorId = colorId;
             LayerCornerStone = -1;
+            FacetVal = facetVal;
         }
         public int Index { get; set; }
         public int ColorId { get; set; }
@@ -21,6 +22,7 @@ namespace CognitiveSearch.UI
         public int Distance { get; set; }
         public int ChildCount { get; set; }
         public int LayerCornerStone { get; set; }
+        public string FacetVal { get; set; }
     }
 
     public class FacetGraphGenerator
@@ -44,7 +46,7 @@ namespace CognitiveSearch.UI
 
             var NodeMap = new Dictionary<string, NodeInfo>();
 
-            NodeMap[q] = new NodeInfo(CurrentNodes, 0)
+            NodeMap[q] = new NodeInfo(CurrentNodes, 0, "")
             {
                 Distance = originalDistance,
                 Layer = 0
@@ -97,12 +99,12 @@ namespace CognitiveSearch.UI
                             foreach (FacetResult facet in facetVals)
                             {
                                 var facetValue = facet.Value.ToString();
-                                NodeInfo nodeInfo = new NodeInfo(-1, -1);
+                                NodeInfo nodeInfo = new NodeInfo(-1, -1, facetName);
                                 if (NodeMap.TryGetValue(facetValue, out nodeInfo) == false)
                                 {
                                     // This is a new node
                                     ++levelNodeCount;
-                                    NodeMap[facetValue] = new NodeInfo(++CurrentNodes, facetColor)
+                                    NodeMap[facetValue] = new NodeInfo(++CurrentNodes, facetColor, facetName)
                                     {
                                         Distance = originalDistance,
                                         Layer = CurrentLevel + 1
@@ -152,7 +154,8 @@ namespace CognitiveSearch.UI
                     id = entry.Value.Index,
                     color = entry.Value.ColorId,
                     layer = entry.Value.Layer,
-                    cornerStone = entry.Value.LayerCornerStone
+                    cornerStone = entry.Value.LayerCornerStone,
+                    facetName = entry.Value.FacetVal
                 }));
             }
 
