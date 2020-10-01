@@ -248,14 +248,18 @@ function UpdateEntityGraph() {
         .style("fill", function (d) {
 
             if (d.facetName == "EquipmentClass") {
-                 return "violet"; //violet
+                return "violet"; //violet
             } else if (d.facetName == "Manufacturer") {
                 return "darkorchid"; //darkorchid
             } else if (d.facetName == "PlantCode") {
                 return "khaki"; //khaki
+            } else if (d.facetName == "Header") {
+                // random color
+                return applySaturationToHexColor(colors(d.color), 1.0 - d.layer * nodeDesaturation);
+            } else {
+                return "#00a19c";
             }
-
-            return applySaturationToHexColor(colors(d.color), 1.0 - d.layer * nodeDesaturation);
+            
         })
         .on("click", function (d) {
             $("#e").val(d.name);

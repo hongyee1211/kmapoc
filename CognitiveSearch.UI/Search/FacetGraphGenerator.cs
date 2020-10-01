@@ -46,7 +46,7 @@ namespace CognitiveSearch.UI
 
             var NodeMap = new Dictionary<string, NodeInfo>();
 
-            NodeMap[q] = new NodeInfo(CurrentNodes, 0, "")
+            NodeMap[q] = new NodeInfo(CurrentNodes, 0, "Header")
             {
                 Distance = originalDistance,
                 Layer = 0
