@@ -26,7 +26,7 @@
             rowCount += 1
             var starsDoms = ''
             for (let i = 0; i < 5; i++) {
-                if (feedback.feedbackRating > i) {
+                if (feedback.rating > i) {
                     starsDoms += `<span class="fa fa-star ratings-star-checked"></span>`
                 }
                 else {
@@ -42,25 +42,24 @@
             //    //ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down" onclick="tdclick();"></td>`
             //    ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down" onclick="remove('${feedback.userID}', '${feedback.documentName}', '${feedback.query}');"></td>`
             //}
+            //<td class="ratings-table-column-align">${feedbacks[i].query}</td>
             rowsHtml += `<tr class="ratings-table-rows">
                                 <th scope="row">${rowCount}</th>
                                 <td>${feedback.documentName}</td>
                                 <td>${feedback.comment}</td>
-                                <td class="ratings-table-column-align">${feedbacks[i].query}</td>
                                 ${ratingContent}
-                                <td class="ratings-table-column-align ratings-table-delete" onclick="remove('${feedback.userID}', '${feedback.documentName}', '${feedback.query}');"><span class="fa fa-trash"></span></td>
+                                <td class="ratings-table-column-align ratings-table-delete" onclick="remove('${feedback.searchId}', '${feedback.documentName}');"><span class="fa fa-trash"></span></td>
                             </tr>`
         }
         table.html(rowsHtml);
     }
 
-    function remove(userID, documentName, query) {
+    function remove(searchId, documentName) {
         $.post("/Ratings/deleteFeedback",
             {
                 feedbackVal: {
-                    userID: userID,
+                    searchId: searchId,
                     documentName: documentName,
-                    query: query
                 }
             },
             function (data, status) {
@@ -91,7 +90,6 @@
                     <th scope="col">#</th>
                     <th scope="col">Document</th>
                     <th scope="col">Description</th>
-                    <th class="ratings-table-column-align" scope="col">Query</th>
                     <th class="ratings-table-column-align" scope="col">Rating</th>
                     <th class="ratings-table-column-align" scope="col"></th>
                 </tr>

@@ -50,6 +50,7 @@ function Search() {
 
 function UpdateResultsView() {
     // Get center of map to use to score the search results
+    console.log("search")
 
     //Pass the polygon filter to the query: mapPolygon.data.geometry.coordinates[0][1]
     var polygonString = "";
@@ -82,6 +83,7 @@ function Update(viewModel) {
     // Update UI controls to match view model incase we came from a direct link
     selectedFacets = viewModel.selectedFacets;
     q = viewModel.query;
+    searchFbId = viewModel.searchFbId;
     $("#q").val(q);
     currentPage = viewModel.currentPage;
 

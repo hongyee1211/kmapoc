@@ -331,13 +331,13 @@ function UpdateResults(data) {
             // display:none
             // <div class="col-md-1"><img id="tagimg${i}" src="/images/expand.png" height="30px" onclick="event.stopPropagation(); ShowHideTags(${i});"></div>
 
+            // <div class="results-icon col-md-1 menuIcon" onclick="ShowFeedback('${i}');"></div>
             var contentPreview = content ? `<p class="max-lines">${content}</p>` : "";
 
             resultsHtml += `<div id="resultdiv${i}" class="${classList}" >
-                                <div class="row search-row-result ">
-                                    <div class="search-result col-md-11">
-                                        ${imageContent}
-                                        <div class="results-icon col-md-1">
+                                <div class="search-row-result ">
+                                    <div class="row" style="display: flex;">
+                                        <div class="results-icon results-icon-column">
                                             <div class="ms-CommandButton-icon">
                                                 <i class="html-icon ms-Icon ${icon}" style="font-size: 26px;"></i>
                                             </div>
@@ -345,31 +345,48 @@ function UpdateResults(data) {
                                                 <i class="html-icon searchScore ${scoreCSS}" style="font-size: 26px;">${score}</i>
                                             </div>
                                         </div>
-                                        <div class="results-body col-md-10">
-                                            <div style="cursor: pointer;" onclick="ShowDocument('${id}');">
-                                                <h4>[${indFile}] ${title} [${fileSize}]</h4>
+                                        <div class="results-details-column">
+                                            <div class="row">
+                                                <div class="search-dropdown">
+                                                    <div class="results-icon menuThumbsUp" onclick="ShowFeedback('${i}'); thumbsUp('${id}', '${title}', '${search}');"></div>
+                                                    <div class="results-icon menuThumbsDown" onclick="thumbsDown('${id}', '${title}', '${search}')"></div>
+                                                    <div id="modalFeedback${i}" class="search-dropdown-content">
+                                                        <div class="search-ratings-star-cluster">
+                                                            <span class="fa fa-star" id="star-1-${i}" onclick="toggleRating(${1},${i})"></span>
+                                                            <span class="fa fa-star" id="star-2-${i}" onclick="toggleRating(${2},${i})"></span>
+                                                            <span class="fa fa-star" id="star-3-${i}" onclick="toggleRating(${3},${i})"></span>
+                                                            <span class="fa fa-star" id="star-4-${i}" onclick="toggleRating(${4},${i})"></span>
+                                                            <span class="fa fa-star" id="star-5-${i}" onclick="toggleRating(${5},${i})"></span>
+                                                        </div>
+                                                        <div class="form-horizontal">
+                                                            <textarea style="width:200px; resize: none;" id="search-ratings-comment-${i}" class="form-control search-ratings-textarea" rows="4" placeholder="Write your comment here..."></textarea>
+                                                        </div>
+                                                        <div style="text-align: center" class="search-ratebtn-container">
+                                                            <button type="button" class="btn btn-info search-ratebtn" onclick="submitRating(${i},'${id}', '${title}', '${search}')">Rate</button>
+                                                        </div>
+                                                        <span onclick="ShowFeedback('${i}');" class="search-rating-close-button">&times;</span>
+                                                    </div>
+                                                </div>
+                                                <div class="search-result results-column">
+                                                    ${imageContent}
+                                                    <div class="results-body">
+                                                        <div style="cursor: pointer;" onclick="ShowDocument('${id}');">
+                                                            <h4>[${indFile}] ${title} [${fileSize}]</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            ${contentPreview}
-                                            <h5>${name}</h5>
-                                            ${tagsContent}
-                                            ${resultContent}
-                                        </div>                                        
-                                    </div>
-                                    <div class="search-dropdown col-md-1">
-                                        <div class="results-icon col-md-1 menuIcon" onclick="ShowFeedback('${i}');"></div>
-                                        <div id="modalFeedback${i}" class="search-dropdown-content">
-                                            <div class="search-ratings-star-cluster">
-                                                <span class="fa fa-star" id="star-1-${i}" onclick="toggleRating(${1},${i})"></span>
-                                                <span class="fa fa-star" id="star-2-${i}" onclick="toggleRating(${2},${i})"></span>
-                                                <span class="fa fa-star" id="star-3-${i}" onclick="toggleRating(${3},${i})"></span>
-                                                <span class="fa fa-star" id="star-4-${i}" onclick="toggleRating(${4},${i})"></span>
-                                                <span class="fa fa-star" id="star-5-${i}" onclick="toggleRating(${5},${i})"></span>
-                                            </div>
-                                            <div class="form-horizontal">
-                                                <textarea style="width:200px; resize: none;" id="search-ratings-comment-${i}" class="form-control search-ratings-textarea" rows="4" placeholder="Write your comment here..."></textarea>
-                                            </div>
-                                            <div style="text-align: center" class="search-ratebtn-container">
-                                                <button type="button" class="btn btn-info search-ratebtn" onclick="submitRating(${i},'${id}', '${title}', '${search}')">Rate</button>
+                                            <div class="row">
+                                                <div class="search-result">
+                                                    <div class="col-md-6 col-search-details-padding">
+                                                        ${contentPreview}
+                                                    </div>
+                                                    <div class="col-md-6 col-search-details-padding">
+                                                        <h5>${name}</h5>
+                                                        ${tagsContent}
+                                                        ${resultContent}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

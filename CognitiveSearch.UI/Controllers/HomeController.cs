@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using CognitiveSearch.UI.DAL;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search;
+using CognitiveSearch.UI.Helpers;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -28,6 +29,7 @@ namespace CognitiveSearch.UI.Controllers
         private readonly IGraphApiOperations graphApiOperations;
         private readonly IArmOperations armOperations;
         private readonly FeedbackContext _context;
+        private readonly FeedbackDBHelper feedbackHandler;
 
         private IConfiguration _configuration { get; set; }
         private DocumentSearchClient _docSearch { get; set; }
@@ -42,6 +44,7 @@ namespace CognitiveSearch.UI.Controllers
             FeedbackContext context)
         {
             this._context = context;
+            this.feedbackHandler = new FeedbackDBHelper(context);
             this.tokenAcquisition = tokenAcquisition;
             this.graphApiOperations = graphApiOperations;
             this.armOperations = armOperations;
@@ -87,7 +90,7 @@ namespace CognitiveSearch.UI.Controllers
                 await tokenAcquisition.GetAccessTokenForUserAsync(new[] { Infrastructure.Constants.ScopeUserRead });
 
             var me = await graphApiOperations.GetUserInformation(accessToken);
-            
+
             ViewData["Me"] = me;
 
             var options = new CookieOptions
@@ -126,29 +129,39 @@ namespace CognitiveSearch.UI.Controllers
 
         public static List<FeedbackModel> feedbackModels = new List<FeedbackModel>();
 
-        [HttpPost]
-        public void getFeedbackVal(FeedbackModel feedbackVal)
-        {
-            var feedbackModel = new FeedbackModel();
-            feedbackModel.userID = Request.Cookies["userId"];
-            feedbackModel.userType = Request.Cookies["userType"];
-            feedbackModel.givenName = Request.Cookies["givenName"];
-            feedbackModel.query = feedbackVal.query;
-            feedbackModel.documentName = feedbackVal.documentName;
-            feedbackModel.feedbackRating = feedbackVal.feedbackRating;
-            feedbackModel.comment = feedbackVal.comment;
-            var existing = this._context.Feedbacks.FirstOrDefault(f => f.userID.Equals(feedbackModel.userID) && f.documentName.Equals(feedbackModel.documentName) && f.query.Equals(feedbackModel.query));
 
-            if (existing == null)
-            {
-                this._context.Feedbacks.Add(feedbackModel);
-            }
-            else
-            {
-                this._context.Entry(existing).CurrentValues.SetValues(feedbackModel);
-                //this._context.Feedbacks.Update(feedbackModel);
-            }
-            this._context.SaveChanges();
+        [HttpPost]
+        public void getRating(FBRatingDocumentModel feedbackVal)
+        {
+            feedbackHandler.SaveRatingFeedback(feedbackVal.searchId, feedbackVal.documentName, feedbackVal.rating);
+        }
+
+
+        [HttpPost]
+        public void getReview(FBReviewDocumentModel feedbackVal)
+        {
+            feedbackHandler.SaveReviewFeedback(feedbackVal.searchId, feedbackVal.documentName, feedbackVal.rating, feedbackVal.comment);
+
+            //var feedbackModel = new FeedbackModel();
+            //feedbackModel.userID = Request.Cookies["userId"];
+            //feedbackModel.userType = Request.Cookies["userType"];
+            //feedbackModel.givenName = Request.Cookies["givenName"];
+            //feedbackModel.query = feedbackVal.query;
+            //feedbackModel.documentName = feedbackVal.documentName;
+            //feedbackModel.feedbackRating = feedbackVal.feedbackRating;
+            //feedbackModel.comment = feedbackVal.comment;
+            //var existing = this._context.Feedbacks.FirstOrDefault(f => f.userID.Equals(feedbackModel.userID) && f.documentName.Equals(feedbackModel.documentName) && f.query.Equals(feedbackModel.query));
+
+            //if (existing == null)
+            //{
+            //    this._context.Feedbacks.Add(feedbackModel);
+            //}
+            //else
+            //{
+            //    this._context.Entry(existing).CurrentValues.SetValues(feedbackModel);
+            //    //this._context.Feedbacks.Update(feedbackModel);
+            //}
+            //this._context.SaveChanges();
 
             //if (feedbackModels.Count() > 0) {
             //    foreach (FeedbackModel feedback in feedbackModels.ToList())
@@ -159,8 +172,8 @@ namespace CognitiveSearch.UI.Controllers
             //        }
             //    }
             //}
-            
-            feedbackModels.Add(feedbackModel);
+
+            //feedbackModels.Add(feedbackModel);
 
             //Console.WriteLine(feedbackVal.feedbackID);
         }
@@ -178,7 +191,7 @@ namespace CognitiveSearch.UI.Controllers
             public static string UserDept { get; set; }
         }
 
-        public IActionResult Search([FromQuery]string q, [FromQuery]string facets = "", [FromQuery]int page = 1)
+        public IActionResult Search([FromQuery] string q, [FromQuery] string facets = "", [FromQuery] int page = 1)
         {
             // Split the facets.
             //  Expected format: &facets=key1_val1,key1_val2,key2_val1
@@ -205,11 +218,13 @@ namespace CognitiveSearch.UI.Controllers
              .Select(m => m.Value)
              .ToArray();
 
+            string searchString = String.Join(" ", strText) + ", " + q;
+
             var viewModel = SearchView(new SearchParameters
             {
-                q = String.Join(" ", strText) + ", " + q,
+                q = searchString,
                 searchFacets = searchFacets,
-                currentPage = page
+                currentPage = page,
             });
 
             return View(viewModel);
@@ -222,10 +237,11 @@ namespace CognitiveSearch.UI.Controllers
             public int currentPage { get; set; }
             public string polygonString { get; set; }
             public string groupFilter { get; set; }
+            public int searchId { get; set; }
         }
 
         [HttpPost]
-        public SearchResultViewModel SearchView([FromForm]SearchParameters searchParams)
+        public SearchResultViewModel SearchView([FromForm] SearchParameters searchParams)
         {
             if (searchParams.q == null)
                 searchParams.q = "*";
@@ -239,6 +255,8 @@ namespace CognitiveSearch.UI.Controllers
             if (CheckDocSearchInitialized())
                 searchidId = _docSearch.GetSearchId().ToString();
 
+            var searchQuery = feedbackHandler.AddSearchQuery(Request.Cookies["userId"], Request.Cookies["userType"], Request.Cookies["givenName"], searchParams.q);
+
             var feedbacks = this._context.Feedbacks.Where(feedback => feedback.query.Equals(searchParams.q) && feedback.userID.Equals(Request.Cookies["userId"]));
 
             var viewModel = new SearchResultViewModel
@@ -248,6 +266,7 @@ namespace CognitiveSearch.UI.Controllers
                 selectedFacets = searchParams.searchFacets,
                 currentPage = searchParams.currentPage,
                 searchId = searchidId ?? null,
+                searchFbId = searchQuery.searchId,
                 applicationInstrumentationKey = _configuration.GetSection("InstrumentationKey")?.Value,
                 facetableFields = _docSearch.Model.Facets.Select(k => k.Name).ToArray()
             };
@@ -255,12 +274,17 @@ namespace CognitiveSearch.UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetDocumentById(string id = "")
+        public IActionResult GetDocumentById(string id = "", int searchFbId = -1)
         {
             var result = _docSearch.GetDocumentById(id);
+            string documentName = result.Result["metadata_storage_name"].ToString();
+
+            if (searchFbId != -1 && documentName != null)
+                feedbackHandler.AddImplicitDocumentQueryAsync(searchFbId, documentName);
 
             return new JsonResult(result);
         }
+
 
         public class MapCredentials
         {
@@ -345,6 +369,24 @@ namespace CognitiveSearch.UI.Controllers
 
             // Return the list.
             return new JsonResult(autocomplete);
+        }
+
+        [HttpPost]
+        public void MonitorDocumentQuery(int searchFbId, string documentName, string query)
+        {
+            feedbackHandler.AddImplicitDocumentQueryAsync(searchFbId, documentName, query);
+        }
+
+        [HttpPost]
+        public void MonitorDocumentResultTags(int searchFbId, string documentName, string tag)
+        {
+            feedbackHandler.AddImplicitDocumentResultAsync(searchFbId, documentName, tag);
+        }
+
+        [HttpPost]
+        public void MonitorCategoryTags(int searchFbId, string category, string tag, int rating)
+        {
+            feedbackHandler.AddCategoryFeedbackAsync(searchFbId, category, tag, rating);
         }
     }
 }

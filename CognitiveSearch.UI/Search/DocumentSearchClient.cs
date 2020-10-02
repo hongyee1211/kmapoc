@@ -417,7 +417,7 @@ namespace CognitiveSearch.UI
                 }
             }
 
-            if (resultTemp.Results.Count == 0)
+            if (resultTemp == null || resultTemp.Results.Count == 0)
             {
                 var result = new DocumentResult
                 {

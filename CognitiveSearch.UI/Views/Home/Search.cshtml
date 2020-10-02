@@ -12,6 +12,7 @@
     aspViewModel = @Html.Raw(Json.Serialize(Model));
     q = @Html.Raw(Json.Serialize(Model.query));
     searchId = @Html.Raw(Json.Serialize((Model.searchId)));
+    searchFbId = @Html.Raw(Json.Serialize((Model.searchFbId)));
     applicationInstrumentationKey = @Html.Raw(Json.Serialize(Model.applicationInstrumentationKey));
 </script>
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />

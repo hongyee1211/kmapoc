@@ -23,7 +23,7 @@ namespace CognitiveSearch.UI.Controllers
         {
             var userId = Request.Cookies["userId"];
 
-            List<FeedbackModel> feedbacks = retrieveFeedback(userId);
+            List<FBReviewDocumentModel> feedbacks = retrieveFeedback(userId);
 
             var viewModel = new RatingsViewModel
             {
@@ -33,20 +33,20 @@ namespace CognitiveSearch.UI.Controllers
         }
 
         [HttpPost]
-        public List<FeedbackModel> deleteFeedback(FeedbackModel feedbackVal)
+        public List<FBReviewDocumentModel> deleteFeedback(FBReviewDocumentModel feedbackVal)
         {
-            FeedbackModel entry = this._context.Feedbacks.FirstOrDefault(x => x.userID.Equals(feedbackVal.userID) && x.documentName.Equals(feedbackVal.documentName) && x.query.Equals(feedbackVal.query));
+            FBReviewDocumentModel entry = this._context.ReviewDocument.FirstOrDefault(x => x.searchId.Equals(feedbackVal.searchId) && x.documentName.Equals(feedbackVal.documentName));
             if (entry != null) {
-                this._context.Feedbacks.Remove(entry);
+                this._context.ReviewDocument.Remove(entry);
             }
             this._context.SaveChanges();
             var userId = Request.Cookies["userId"];
             return retrieveFeedback(userId);
         }
 
-        private List<FeedbackModel> retrieveFeedback(string userId)
+        private List<FBReviewDocumentModel> retrieveFeedback(string userId)
         {
-            return this._context.Feedbacks.Where(feedback => feedback.userID.Equals(userId)).ToList();
+            return this._context.ReviewDocument.ToList();
 
         }
     }
