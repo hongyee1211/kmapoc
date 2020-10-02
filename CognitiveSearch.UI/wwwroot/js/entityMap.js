@@ -67,7 +67,6 @@ function GetGraph(q) {
             maxNodes: currentMaxNodes
         },
         success: function (data) {
-
             Unload();
             viewParams.nodes = data.nodes;
             viewParams.links = data.links;
@@ -247,7 +246,20 @@ function UpdateEntityGraph() {
             return d.radius;
         })
         .style("fill", function (d) {
-            return applySaturationToHexColor(colors(d.color), 1.0 - d.layer * nodeDesaturation);
+
+            if (d.facetName == "EquipmentClass") {
+                return "violet"; //violet
+            } else if (d.facetName == "Manufacturer") {
+                return "darkorchid"; //darkorchid
+            } else if (d.facetName == "PlantCode") {
+                return "khaki"; //khaki
+            } else if (d.facetName == "Header") {
+                // random color
+                return applySaturationToHexColor(colors(d.color), 1.0 - d.layer * nodeDesaturation);
+            } else {
+                return "#00a19c";
+            }
+            
         })
         .on("click", function (d) {
             $("#e").val(d.name);
