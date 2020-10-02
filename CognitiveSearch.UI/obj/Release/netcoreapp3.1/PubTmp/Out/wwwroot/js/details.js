@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 // Details
+var currentSelectedPDF;
 function ShowDocument(id) {
     $.post('/home/getdocumentbyid',
         {
-            id: id
+            id: id,
+            searchFbId: searchFbId,
         },
         function (data) {
             result = data.result;
@@ -110,12 +112,57 @@ function ShowFeedback(i) {
     document.getElementById("modalFeedback" + i).classList.toggle("show");
 }
 
+function RemoveFeedbackDisplay(i) {
+    document.getElementById("modalFeedback" + i).classList.remove("show");
+}
+
 function thumbsUp(id, title, queryString) {
-    postFeedbackValue(id, title, 2, queryString);
+    postRating(id, title, queryString, 2);
 }
 
 function thumbsDown(id, title, queryString) {
-    postFeedbackValue(id, title, 1, queryString);
+    postRating(id, title, queryString, 1);
+}
+
+function sendFeedback(id, title, queryString, comment, rating, callback) {
+    postReview(id, title, queryString, comment, rating, callback);
+}
+
+function postReview(id, title, queryString, comment, rating, callback = null) {
+    $.post("/Home/getReview",
+        {
+            feedbackVal: {
+                searchId: searchFbId,
+                documentName: title,
+                rating: rating,
+                comment: comment,
+            }
+        },
+        function (data, status) {
+            if (callback != null) {
+                callback(data, status)
+            }
+            //Handle status if you decide to return something
+        }
+    );
+}
+
+function postRating(id, title, queryString, rating, callback = null) {
+    $.post("/Home/getRating",
+        {
+            feedbackVal: {
+                searchId: searchFbId,
+                documentName: title,
+                rating: rating,
+            }
+        },
+        function (data, status) {
+            if (callback != null) {
+                callback(data, status)
+            }
+            //Handle status if you decide to return something
+        }
+    );
 }
 
 function postFeedbackValue(id, title, action, queryString) {
@@ -205,6 +252,7 @@ function GetMatches(string, regex, index) {
 function GetFileHTML(data, result) {
     var filename = result.metadata_storage_name; // blob filename
     var path = data.decodedPath + data.token; // direct path to blob with auth token
+    currentSelectedPDF = filename
 
     if (path != null) {
         var pathLower = path.toLowerCase();
@@ -396,7 +444,7 @@ function GetSearchReferences(q) {
     matches = GetMatches(copy, /\w+/gi, 0);
 
     matches.forEach(function (match) {
-        GetReferences(match, true);
+        GetReferences(match, true, false);
     });
 }
 

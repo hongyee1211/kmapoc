@@ -405,7 +405,7 @@ pre {
 }
 
 .results-div {
-    width: 50%;
+    width: 100%;
 }
 
 .results-body {
@@ -418,7 +418,7 @@ pre {
     text-overflow: ellipsis;
     word-wrap: break-word;
     overflow: hidden;
-    max-height: 4em;
+    max-height: 10em;
     line-height: 1.8em;
 }
 
@@ -432,15 +432,58 @@ pre {
     line-height: 1.1;
 }
 
-.results-type {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px;
-    color: #fff;
-    background-color: #0076BB;
-    opacity: 1;
+.results-icon-column,
+.results-details-column,
+.results-title-column {
+    margin-left: 10px;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
+
+.results-icon-column{
+    width:50px;
+}
+
+.results-details-column {
+    width: calc(100% - 50px);
+}
+
+.col-search-details-padding {
+    padding-left: 0px !important
+}
+
+
+@media (max-width: 992px) {
+    .results-icon-column,
+    .results-details-column,
+    .results-title-column {
+        margin-left: 10px;
+        position: relative;
+        min-height: 1px;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .results-icon-column {
+        width: 50px !important;
+    }
+
+    .results-details-column {
+        width: calc(100% - 50px);
+    }
+}
+
+    .results-type {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px;
+        color: #fff;
+        background-color: #0076BB;
+        opacity: 1;
+    }
 
 #search-label {
     color: #fff;
@@ -470,15 +513,87 @@ pre {
     }
 
 .search-result {
-    background-color: #666;
     color: #fff;
-    border-radius: 10px;
-    height: auto;
-    margin: 10px;
     overflow: hidden;
+    text-align: left;
+}
+
+.search-row-result {
+    min-height: 110px !important;
+    background-color: #666;
+    border-radius: 10px;
+    margin: 10px !important;
     padding: 10px;
     text-align: left;
 }
+
+.search-ratings-star-cluster {
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.search-dropdown {
+    float: right;
+    position: relative;
+    display: flex;
+    width: 75px
+}
+
+.search-dropdown-content {
+    display: none;
+    position: absolute;
+    right: -50px;
+    background-color: #333333;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: #00a19c;
+    min-width: 60px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 35px;
+    padding: 0.3em 0.2em;
+}
+
+.search-rating-close-button {
+    border: none;
+    display: inline-block;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    color: #00a19c;
+}
+
+.search-ratings-textarea {
+    width: 200px;
+    resize: none;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.search-ratebtn-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.search-ratebtn {
+    background-color: #00a19c !important;
+    border-radius: 5px !important;
+    border: none !important
+}
+
 
 #transcript-search-box {
 }
@@ -525,14 +640,18 @@ pre {
 .tag-people {
     background-color: #00a19c;
 }
+
 .tag-EquipmentClass {
-    background-color: mediumpurple;
+    background-color: violet;
 }
+
 .tag-Manufacturer {
-    background-color: darkmagenta;
+    background-color: darkorchid;
 }
+
 .tag-PlantCode {
-    background-color: dodgerblue;
+    background-color: khaki;
+    color: #000;
 }
 
 #tags-panel {
@@ -722,8 +841,23 @@ body {
 }
 
 .panel-default > .panel-heading {
-    color: #00a19c !important;
     background-color: #333 !important;
+}
+
+.panel-default > .panel-heading-others {
+    color: #00a19c !important;
+}
+
+.panel-default > .panel-heading-EquipmentClass {
+    color: violet !important;
+}
+
+.panel-default > .panel-heading-Manufacturer {
+    color: darkorchid !important;
+}
+
+.panel-default > .panel-heading-PlantCode {
+    color: khaki !important;
 }
 
 .panel {
@@ -806,18 +940,30 @@ b {
     background-image: url("../images/thumbs-down.svg");
     width: 20px !important;
     height: 20px !important;
+    margin-left: 2px;
+    margin-right: 2px;
     fill: #00a19c;
     transform: rotate(180deg);
     background-repeat: no-repeat;
 }
+
+
 .menuThumbsDown {
     background-image: url("../images/thumbs-down.svg");
     width: 20px !important;
     fill: red;
     height: 20px !important;
+    margin-left: 2px;
+    margin-right: 2px;
     background-repeat: no-repeat;
 }
 
+    .menuThumbsDown:hover,
+    .menuThumbsUp:hover {
+        cursor: pointer;
+    }
+
+/*Depracated, moved to specific search classes*/
 /* Dropdown Button */
 .dropbtn {
     background-color: #3498DB;
@@ -927,12 +1073,12 @@ b {
     background-repeat: no-repeat;
 }
 
-.ratings-table-thumbs-up:hover {
+.ratings-table-delete:hover {
     cursor: pointer;
 }
 
-.ratings-table-thumbs-down:hover {
-    cursor: pointer;
+.ratings-star-checked {
+    color: orange;
 }
 
 
