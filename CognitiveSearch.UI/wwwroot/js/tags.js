@@ -2,6 +2,10 @@
 // Licensed under the MIT License.
 
 function GetTagsHTML(result) {
+    var title;
+    if (result["metadata_storage_name"] !== undefined) {
+        title = result.metadata_storage_name;
+    }
     var tagsHTML = "";
 
     var i = 0;
@@ -80,7 +84,7 @@ function GetTagsHTML(result) {
                                 case "analsis":
                                     break;
                                 default:
-                                    tagsHTML += `<button class="tag tag-${name}" onclick="HighlightTag(event)">${tagValue}</button>`;
+                                    tagsHTML += `<button class="tag tag-${name}" onclick="HighlightTag(event,'${title}')">${tagValue}</button>`;
                             }
                             i++;
                         }
@@ -92,13 +96,16 @@ function GetTagsHTML(result) {
     return tagsHTML;
 }
 
-function HighlightTag(tag) {
+function HighlightTag(tag, title = null) {
     var searchText = $(event.target).text();
 
     if ($(event.target).parents('#tags-panel').length) {
         GetReferences(searchText, false);
     }
     else {
+        if (title != null) {
+            MonitorSearchViaDocumentTag(searchText, title)
+        }
         event.stopPropagation();
 
         query = $('#q').val();
@@ -117,7 +124,11 @@ function HighlightTag(tag) {
     }
 }
 
-function GetReferences(searchText, allowMultiple) {
+function GetReferences(searchText, allowMultiple, monitor = true) {
+    if (monitor) {
+        MonitorDocumentSearch(searchText)
+    }
+
     var transcriptText;
 
     if (!allowMultiple) {
@@ -181,6 +192,31 @@ function GetReferences(searchText, allowMultiple) {
         var shortName = value.slice(0, 20).replace(/[^a-zA-Z ]/g, " ").replace(new RegExp(" ", 'g'), "_");
         $('#reference-viewer').append(`<li class='reference list-group-item' onclick='GoToReference("${index}_${shortName}")'>...${reference}...</li>`);
     });
+}
+async function MonitorDocumentSearch(query) {
+    $.post('/home/monitordocumentquery',
+        {
+            searchFbId: searchFbId,
+            documentName: currentSelectedPDF,
+            query:query
+        },
+        function (data) {
+            //do nothing
+        }
+    )
+}
+
+async function MonitorSearchViaDocumentTag(query, title) {
+    $.post('/home/monitordocumentresulttags',
+        {
+            searchFbId: searchFbId,
+            documentName: title,
+            tag: query
+        },
+        function (data) {
+            //do nothing
+        }
+    )
 }
 
 function GoToReference(selector) {

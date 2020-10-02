@@ -45,7 +45,7 @@ namespace CognitiveSearch.UI
                 options.HandleSameSiteCookieCompatibility();
             });
 
-            services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
 
             services.AddOptions();
 

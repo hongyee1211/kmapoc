@@ -12,6 +12,8 @@
 
         public string searchId { get; set; }
 
+        public int searchFbId { get; set; }
+
         public string applicationInstrumentationKey { get; set; }
 
         public string[] facetableFields { get; set; }
