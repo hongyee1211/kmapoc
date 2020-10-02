@@ -75,7 +75,7 @@ namespace CognitiveSearch.UI
             {
                 // If you get an exceptio here, most likely you have not set your
                 // credentials correctly in appsettings.json
-                throw new ArgumentException(e.Message.ToString());
+                throw new ArgumentException("DocumentSearchClient" + e.Message.ToString());
             }
         }
 
@@ -325,7 +325,7 @@ namespace CognitiveSearch.UI
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error querying index: {0}\r\n", ex.Message.ToString());
+                Console.WriteLine("DocumentSearchClient: Error querying index: {0}\r\n", ex.Message.ToString());
             }
             return null;
         }

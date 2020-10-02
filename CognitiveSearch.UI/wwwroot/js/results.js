@@ -234,9 +234,9 @@ function UpdateResults(data) {
 
         if (result.highlights) {
             if (result.highlights?.merged_content) {
-                content = result.highlights?.merged_content[0];
+                content = "..." + result.highlights?.merged_content + "...";
             } else if (result.highlights?.content) {
-                content = result.highlights?.content[0];
+                content = "..." + result.highlights?.content + "...";
             }
         } else {
             content = "";

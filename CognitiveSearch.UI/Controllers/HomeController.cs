@@ -200,17 +200,17 @@ namespace CognitiveSearch.UI.Controllers
             MyGlobalVariables.DisplayName = strdisplayName;
             MyGlobalVariables.UserDept = strUserDept;
 
-            var arr = Regex.Matches(strText, @"[A-Z]+(?=[A-Z][a-z]+)|\d|[A-Z][a-z]+")
+            /*var arr = Regex.Matches(strText, @"[A-Z]+(?=[A-Z][a-z]+)|\d|[A-Z][a-z]+")
              .Cast<Match>()
              .Select(m => m.Value)
-             .ToArray();
+             .ToArray();*/
 
             var viewModel = SearchView(new SearchParameters
             {
                 q = String.Join(" ", strText) + ", " + q,
                 searchFacets = searchFacets,
                 currentPage = page
-            });
+            }); ; ;
 
             return View(viewModel);
         }
