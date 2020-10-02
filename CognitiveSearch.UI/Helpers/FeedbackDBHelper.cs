@@ -18,17 +18,17 @@ namespace CognitiveSearch.UI.Helpers
             this._context = context;
         }
 
-        public Task<int> AddImplicitDocumentQueryAsync(int searchId, string documentName, string query = "")
+        public void AddImplicitDocumentQuery(int searchId, string documentName, string query = "")
         {
             FBImplicitDocumentQueryModel feedback = new FBImplicitDocumentQueryModel();
             feedback.query = query;
             feedback.searchId = searchId;
             feedback.documentName = documentName;
             this._context.ImplicitDocumentQueryFeedbacks.Add(feedback);
-            return this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
 
-        public Task<int> AddCategoryFeedbackAsync(int searchId, string category, string tag, int rating)
+        public void AddCategoryFeedback(int searchId, string category, string tag, int rating)
         {
             FBCategoryRatingModel feedback = new FBCategoryRatingModel();
             feedback.searchId = searchId;
@@ -36,17 +36,23 @@ namespace CognitiveSearch.UI.Helpers
             feedback.name = tag;
             feedback.rating = rating;
             this._context.CategoryRating.Add(feedback);
-            return this._context.SaveChangesAsync();
+            this._context.SaveChanges();
         }
 
-        public Task<int> AddImplicitDocumentResultAsync(int searchId, string documentName, string tag = "")
+        public void AddImplicitDocumentResult(int searchId, string documentName, string tag = "")
         {
             FBImplicitDocumentResultModel feedback = new FBImplicitDocumentResultModel();
             feedback.tagSelected = tag;
             feedback.searchId = searchId;
             feedback.documentName = documentName;
             this._context.ImplicitDocumentResultFeedbacks.Add(feedback);
-            return this._context.SaveChangesAsync();
+            try {
+                this._context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                //ignore exceptions for now, must be ignoring only on duplicate keys
+            }
         }
 
 
@@ -58,8 +64,16 @@ namespace CognitiveSearch.UI.Helpers
             searchQuery.givenName = givenName;
             searchQuery.query = query;
             this._context.Search.Add(searchQuery);
-            return this._context.SaveChangesAsync();
-        }
+            try
+            {
+                return this._context.SaveChangesAsync();
+            }
+            catch (Exception err)
+            {
+                return null;
+                //ignore exceptions for now, must be ignoring only on duplicate keys
+            }
+}
 
         public FBSearchModel AddSearchQuery(string userId, string userType, string givenName, string query)
         {
@@ -79,6 +93,10 @@ namespace CognitiveSearch.UI.Helpers
             feedbackModel.searchId = searchId;
             feedbackModel.documentName = documentName;
             feedbackModel.rating = rating;
+            if(comment == null)
+            {
+                comment = "";
+            }
             feedbackModel.comment = comment;
             var existing = this._context.ReviewDocument.FirstOrDefault(f => f.searchId.Equals(feedbackModel.searchId) && f.documentName.Equals(feedbackModel.documentName));
 
@@ -91,7 +109,14 @@ namespace CognitiveSearch.UI.Helpers
                 feedbackModel.revFeedbackId = existing.revFeedbackId;
                 this._context.Entry(existing).CurrentValues.SetValues(feedbackModel);
             }
-            this._context.SaveChanges();
+            try
+            {
+                this._context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                //ignore exceptions for now, must be ignoring only on duplicate keys
+            }
         }
 
         public void SaveRatingFeedback(int searchId, string documentName, int rating)
@@ -111,7 +136,14 @@ namespace CognitiveSearch.UI.Helpers
                 feedbackModel.rateFeedbackId = existing.rateFeedbackId;
                 this._context.Entry(existing).CurrentValues.SetValues(feedbackModel);
             }
-            this._context.SaveChanges();
+            try
+            {
+                this._context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                //ignore exceptions for now, must be ignoring only on duplicate keys
+            }
         }
     }
 }

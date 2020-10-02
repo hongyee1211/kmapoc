@@ -280,7 +280,7 @@ namespace CognitiveSearch.UI.Controllers
             string documentName = result.Result["metadata_storage_name"].ToString();
 
             if (searchFbId != -1 && documentName != null)
-                feedbackHandler.AddImplicitDocumentQueryAsync(searchFbId, documentName);
+                feedbackHandler.AddImplicitDocumentQuery(searchFbId, documentName);
 
             return new JsonResult(result);
         }
@@ -374,19 +374,19 @@ namespace CognitiveSearch.UI.Controllers
         [HttpPost]
         public void MonitorDocumentQuery(int searchFbId, string documentName, string query)
         {
-            feedbackHandler.AddImplicitDocumentQueryAsync(searchFbId, documentName, query);
+            feedbackHandler.AddImplicitDocumentQuery(searchFbId, documentName, query);
         }
 
         [HttpPost]
         public void MonitorDocumentResultTags(int searchFbId, string documentName, string tag)
         {
-            feedbackHandler.AddImplicitDocumentResultAsync(searchFbId, documentName, tag);
+            feedbackHandler.AddImplicitDocumentResult(searchFbId, documentName, tag);
         }
 
         [HttpPost]
         public void MonitorCategoryTags(int searchFbId, string category, string tag, int rating)
         {
-            feedbackHandler.AddCategoryFeedbackAsync(searchFbId, category, tag, rating);
+            feedbackHandler.AddCategoryFeedback(searchFbId, category, tag, rating);
         }
     }
 }
