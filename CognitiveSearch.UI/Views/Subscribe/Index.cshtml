@@ -1,14 +1,14 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model CognitiveSearch.UI.Models.RatingsViewModel
+@model CognitiveSearch.UI.Models.SubscribeViewModel
 
 @{
     ViewData["Title"] = "Ratings";
 }
 
 <script>
-    feedbacks = @Html.Raw(Json.Serialize(Model.feedbacks));
+    subscriptions = @Html.Raw(Json.Serialize(Model.subscriptions));
     currentPage = 0;
 
     function updateTable(query = null) {
@@ -16,25 +16,25 @@
         table.empty();
         rowsHtml = '';
         rowCount = 0;
-        for (i in feedbacks) {
-            feedback = feedbacks[i]
+        for (i in subscriptions) {
+            subscription = subscriptions[i]
             if (query != null) {
-                if (!feedback.query.includes(query)) {
+                if (!subscription.query.includes(query)) {
                     continue
                 }
             }
             rowCount += 1
-            var starsDoms = ''
-            for (let i = 0; i < 5; i++) {
-                if (feedback.rating > i) {
-                    starsDoms += `<span class="fa fa-star ratings-star-checked"></span>`
-                }
-                else {
-                    starsDoms += `<span class="fa fa-star"></span>`
-                }
-            }
+            //var starsDoms = ''
+            //for (let i = 0; i < 5; i++) {
+            //    if (feedback.rating > i) {
+            //        starsDoms += `<span class="fa fa-star ratings-star-checked"></span>`
+            //    }
+            //    else {
+            //        starsDoms += `<span class="fa fa-star"></span>`
+            //    }
+            //}
 
-            var ratingContent = `<td class="ratings-table-column-align">${starsDoms}</td>`
+            //var ratingContent = `<td class="ratings-table-column-align">${starsDoms}</td>`
             //if (feedback.feedbackRating > 1) {
             //    ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-up"></td>`
             //}
@@ -45,26 +45,21 @@
             //<td class="ratings-table-column-align">${feedbacks[i].query}</td>
             rowsHtml += `<tr class="ratings-table-rows">
                                 <th scope="row">${rowCount}</th>
-                                <td>${feedback.documentName}</td>
-                                <td>${feedback.comment}</td>
-                                ${ratingContent}
-                                <td class="ratings-table-column-align ratings-table-delete" onclick="remove('${feedback.searchId}', '${feedback.documentName}');"><span class="fa fa-trash"></span></td>
+                                <td>${subscription.query}</td>
+                                <td class="ratings-table-column-align ratings-table-delete" onclick="remove('${subscription.query}');"><span class="fa fa-trash"></span></td>
                             </tr>`
         }
         table.html(rowsHtml);
     }
 
-    function remove(searchId, documentName) {
-        $.post("/Ratings/deleteFeedback",
+    function remove(query) {
+        $.post("/Subscribe/Unsubscribe",
             {
-                feedbackVal: {
-                    searchId: searchId,
-                    documentName: documentName,
-                }
+                query: query,
             },
             function (data, status) {
                 if (status == "success") {
-                    feedbacks = data
+                    subscriptions = data
                     updateTable()
                 }
             }
@@ -88,9 +83,7 @@
             <thead class="ratings-table-header">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Document</th>
-                    <th scope="col">Description</th>
-                    <th class="ratings-table-column-align" scope="col">Rating</th>
+                    <th scope="col">Query</th>
                     <th class="ratings-table-column-align" scope="col"></th>
                 </tr>
             </thead>

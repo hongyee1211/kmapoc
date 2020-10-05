@@ -1,4 +1,6 @@
-﻿namespace CognitiveSearch.UI.Models
+﻿using System;
+
+namespace CognitiveSearch.UI.Models
 {
     public class SearchResultViewModel
     {
@@ -17,5 +19,7 @@
         public string applicationInstrumentationKey { get; set; }
 
         public string[] facetableFields { get; set; }
+
+        public Boolean subscribed { get; set; }
     }
 }

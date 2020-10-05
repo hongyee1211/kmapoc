@@ -202,7 +202,7 @@ function UpdateResults(data) {
     let search = document.getElementById("q").value;
     const regex = /"/gi;
 
-    search = search.replaceAll(regex, '&#');
+    search = search.replaceAll(regex, '&quot;');
     $("#doc-count").html(` Available Results: ${data.count}`);
 
     for (var i = 0; i < data.results.length; i++) {

@@ -594,6 +594,16 @@ pre {
     border: none !important
 }
 
+.search-subscribe-container {
+    color: white;
+    text-align: right;
+}
+
+.home-subscribe-container {
+    color: white;
+    text-align: center;
+}
+
 
 #transcript-search-box {
 }
@@ -1080,5 +1090,7 @@ b {
 .ratings-star-checked {
     color: orange;
 }
+
+
 
 

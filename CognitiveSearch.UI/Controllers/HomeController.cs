@@ -19,6 +19,7 @@ using CognitiveSearch.UI.DAL;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search;
 using CognitiveSearch.UI.Helpers;
+using CognitiveSearch.UI.Models.Data;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -28,8 +29,12 @@ namespace CognitiveSearch.UI.Controllers
         private readonly ITokenAcquisition tokenAcquisition;
         private readonly IGraphApiOperations graphApiOperations;
         private readonly IArmOperations armOperations;
+
+        //Deprecated, use feedback db helper instead
         private readonly FeedbackContext _context;
+
         private readonly FeedbackDBHelper feedbackHandler;
+        private readonly SubscribeDBHelper subscribeHandler;
 
         private IConfiguration _configuration { get; set; }
         private DocumentSearchClient _docSearch { get; set; }
@@ -41,10 +46,12 @@ namespace CognitiveSearch.UI.Controllers
             ITokenAcquisition tokenAcquisition,
             IGraphApiOperations graphApiOperations,
             IArmOperations armOperations,
-            FeedbackContext context)
+            FeedbackContext feedbackContext,
+            SubscribeContext subscribeContext)
         {
-            this._context = context;
-            this.feedbackHandler = new FeedbackDBHelper(context);
+            this._context = feedbackContext;
+            this.feedbackHandler = new FeedbackDBHelper(feedbackContext);
+            this.subscribeHandler = new SubscribeDBHelper(subscribeContext);
             this.tokenAcquisition = tokenAcquisition;
             this.graphApiOperations = graphApiOperations;
             this.armOperations = armOperations;
@@ -191,7 +198,7 @@ namespace CognitiveSearch.UI.Controllers
             public static string UserDept { get; set; }
         }
 
-        public IActionResult Search([FromQuery] string q, [FromQuery] string facets = "", [FromQuery] int page = 1)
+        public IActionResult Search([FromQuery] string q, [FromQuery] string facets = "", [FromQuery] int page = 1, [FromQuery] string subscribe = "")
         {
             // Split the facets.
             //  Expected format: &facets=key1_val1,key1_val2,key2_val1
@@ -205,6 +212,8 @@ namespace CognitiveSearch.UI.Controllers
                 // Select grouped key/values into SearchFacet array
                 .Select(g => new SearchFacet { Key = g.Key, Value = g.Select(f => f[1]).ToArray() })
                 .ToArray();
+
+            bool isSubscribing = subscribe == "on" ? true : false;
 
             string strText = Request.Cookies["givenName"];
             string strdisplayName = Request.Cookies["displayName"];
@@ -224,7 +233,7 @@ namespace CognitiveSearch.UI.Controllers
             {
                 q = searchString,
                 searchFacets = searchFacets,
-                currentPage = page,
+                currentPage = page
             });
 
             return View(viewModel);
@@ -254,14 +263,20 @@ namespace CognitiveSearch.UI.Controllers
 
             if (CheckDocSearchInitialized())
                 searchidId = _docSearch.GetSearchId().ToString();
+            string userId = Request.Cookies["userId"];
+            string userType = Request.Cookies["userType"];
+            string givenName = Request.Cookies["givenName"];
 
-            var searchQuery = feedbackHandler.AddSearchQuery(Request.Cookies["userId"], Request.Cookies["userType"], Request.Cookies["givenName"], searchParams.q);
+            var searchQuery = feedbackHandler.AddSearchQuery(userId, userType, givenName, searchParams.q);
 
-            var feedbacks = this._context.Feedbacks.Where(feedback => feedback.query.Equals(searchParams.q) && feedback.userID.Equals(Request.Cookies["userId"]));
+            //var feedbacks = feedbackHandler._context.RatingDocument.Where(feedback => feedback.query.Equals(searchParams.q) && feedback.userId.Equals(Request.Cookies["userId"]));
+            var documentResults = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, null);
+            var isSubscribed = subscribeHandler.CheckIfSubscribed(userId, searchParams.q);
 
             var viewModel = new SearchResultViewModel
             {
-                documentResult = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, feedbacks),
+                documentResult = documentResults,
+                subscribed = isSubscribed,
                 query = searchParams.q,
                 selectedFacets = searchParams.searchFacets,
                 currentPage = searchParams.currentPage,
@@ -369,6 +384,15 @@ namespace CognitiveSearch.UI.Controllers
 
             // Return the list.
             return new JsonResult(autocomplete);
+        }
+
+        [HttpPost]
+        public void SubscribeToQuery(string query, int documentCount)
+        {
+            string userId = Request.Cookies["userId"];
+            string userType = Request.Cookies["userType"];
+            string givenName = Request.Cookies["givenName"];
+            subscribeHandler.AddSearchQuery(userId, userType, givenName, query, documentCount);
         }
 
         [HttpPost]

@@ -1,4 +1,5 @@
 ﻿using CognitiveSearch.UI.DAL;
+using CognitiveSearch.UI.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Graph;
 using System;
@@ -10,7 +11,7 @@ namespace CognitiveSearch.UI.Helpers
 {
     public class FeedbackDBHelper
     {
-        private readonly FeedbackContext _context;
+        public FeedbackContext _context;
 
 
         public FeedbackDBHelper(FeedbackContext context)
@@ -25,7 +26,15 @@ namespace CognitiveSearch.UI.Helpers
             feedback.searchId = searchId;
             feedback.documentName = documentName;
             this._context.ImplicitDocumentQueryFeedbacks.Add(feedback);
-            this._context.SaveChanges();
+            try
+            {
+                this._context.SaveChanges();
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException err)
+            {
+                //Ignore as it will ignore err updates with same query+user id
+                //as opposed to searching first before adding
+            }
         }
 
         public void AddCategoryFeedback(int searchId, string category, string tag, int rating)
@@ -36,7 +45,15 @@ namespace CognitiveSearch.UI.Helpers
             feedback.name = tag;
             feedback.rating = rating;
             this._context.CategoryRating.Add(feedback);
-            this._context.SaveChanges();
+            try
+            {
+                this._context.SaveChanges();
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException err)
+            {
+                //Ignore as it will ignore err updates with same query+user id
+                //as opposed to searching first before adding
+            }
         }
 
         public void AddImplicitDocumentResult(int searchId, string documentName, string tag = "")
@@ -49,9 +66,10 @@ namespace CognitiveSearch.UI.Helpers
             try {
                 this._context.SaveChanges();
             }
-            catch (Exception err)
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException err)
             {
-                //ignore exceptions for now, must be ignoring only on duplicate keys
+                //Ignore as it will ignore err updates with same query+user id
+                //as opposed to searching first before adding
             }
         }
 
@@ -68,12 +86,13 @@ namespace CognitiveSearch.UI.Helpers
             {
                 return this._context.SaveChangesAsync();
             }
-            catch (Exception err)
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException err)
             {
+                //Ignore as it will ignore err updates with same query+user id
+                //as opposed to searching first before adding
                 return null;
-                //ignore exceptions for now, must be ignoring only on duplicate keys
             }
-}
+        }
 
         public FBSearchModel AddSearchQuery(string userId, string userType, string givenName, string query)
         {
@@ -113,9 +132,10 @@ namespace CognitiveSearch.UI.Helpers
             {
                 this._context.SaveChanges();
             }
-            catch (Exception err)
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException err)
             {
-                //ignore exceptions for now, must be ignoring only on duplicate keys
+                //Ignore as it will ignore err updates with same query+user id
+                //as opposed to searching first before adding
             }
         }
 
@@ -140,9 +160,10 @@ namespace CognitiveSearch.UI.Helpers
             {
                 this._context.SaveChanges();
             }
-            catch (Exception err)
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException err)
             {
-                //ignore exceptions for now, must be ignoring only on duplicate keys
+                //Ignore as it will ignore err updates with same query+user id
+                //as opposed to searching first before adding
             }
         }
     }

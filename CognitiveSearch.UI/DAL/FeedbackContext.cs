@@ -1,4 +1,5 @@
 ﻿using CognitiveSearch.UI.Models;
+using CognitiveSearch.UI.Models.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace CognitiveSearch.UI.DAL

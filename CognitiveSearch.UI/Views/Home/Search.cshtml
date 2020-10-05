@@ -11,6 +11,8 @@
 <script>
     aspViewModel = @Html.Raw(Json.Serialize(Model));
     q = @Html.Raw(Json.Serialize(Model.query));
+    subscribed = @Html.Raw(Json.Serialize(Model.subscribed))
+    documentCount = @Html.Raw(Json.Serialize(Model.documentResult.Count))
     searchId = @Html.Raw(Json.Serialize((Model.searchId)));
     searchFbId = @Html.Raw(Json.Serialize((Model.searchFbId)));
     applicationInstrumentationKey = @Html.Raw(Json.Serialize(Model.applicationInstrumentationKey));
@@ -66,7 +68,10 @@
                 <button id="search-button" class="btn btn-default" onclick="Search();"><span class="ms-Icon ms-Icon--Search"></span></button>
             </span>
         </div>
-        <br />
+        <div class="form-check search-subscribe-container">
+            <input type="checkbox" class="form-check-input" id="search-subscribe-cb" onchange="HandleSubscribe(event)">
+            <label class="form-check-label" for="search-subscribe-cb">Subscribe</label>
+        </div>
         <button style="width:100%" class="btn btn-default" onclick="EntityMapClick()">View Entity Map</button>
         <br />
         <br />
