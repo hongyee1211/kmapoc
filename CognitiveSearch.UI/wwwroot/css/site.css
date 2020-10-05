@@ -936,6 +936,12 @@ b {
     background-repeat: no-repeat;
 }
 
+.keyPhaseThumbs {
+    position: absolute;
+    float: right;
+    display: unset;
+}
+
 .menuThumbsUp {
     background-image: url("../images/thumbs-down.svg");
     width: 20px !important;
@@ -946,7 +952,6 @@ b {
     transform: rotate(180deg);
     background-repeat: no-repeat;
 }
-
 
 .menuThumbsDown {
     background-image: url("../images/thumbs-down.svg");

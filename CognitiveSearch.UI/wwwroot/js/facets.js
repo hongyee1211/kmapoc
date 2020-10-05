@@ -98,7 +98,12 @@ function UpdateFacets() {
                         facetResultsHTML += `<div class="ms-CheckBox">
                                             <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" onclick="ChooseFacet('${name}','${data[j].value}', '${j}');">
                                             <label id="${name}_${j}" role="checkbox" class="ms-CheckBox-field" tabindex="0" aria-checked="false" name="checkboxa">
-                                                <span class="ms-Label">${data[j].value} (${data[j].count})</span> 
+                                                <span class="ms-Label">
+                                                    ${data[j].value} (${data[j].count})
+                                                    <div class="keyPhaseThumbs menuThumbsUp"></div>
+                                                    <div class="keyPhaseThumbs menuThumbsDown" style="margin-left: 28px;"></div>
+                                                </span> 
+                                                
                                             </label>
                                         </div>`;
                     }
