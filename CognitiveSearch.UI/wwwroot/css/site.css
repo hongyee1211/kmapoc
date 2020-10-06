@@ -1096,6 +1096,41 @@ b {
     color: orange;
 }
 
+.category-rating-content {
+    display: none;
+    position: absolute;
+    right: -25px;
+    background-color: #333333;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: #00a19c;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    width: 115px;
+}
 
+.category-rating-close-button {
+    border: none;
+    display: inline-block;
+    padding: 5px 0px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    color: #00a19c;
+}
+
+.category-rating-star-cluster {
+    color: #fff;
+    margin: 0.5em;
+}
 
 
