@@ -46,7 +46,8 @@ namespace CognitiveSearch.UI.Controllers
             string userId = Request.Cookies["userId"];
             string userType = Request.Cookies["userType"];
             string givenName = Request.Cookies["givenName"];
-            dbHandler.AddSearchQuery(userId, userType, givenName, query, count);
+            string email = Request.Cookies["email"];
+            dbHandler.AddSearchQuery(userId, userType, givenName, query, count, email);
             return Retrieve();
         }
 
@@ -56,6 +57,13 @@ namespace CognitiveSearch.UI.Controllers
             return dbHandler.GetAllUserSubscriptions(userId);
         }
 
+        [HttpPost, HttpGet]
+        public void test()
+        {
+            Console.WriteLine("this");
+            // Delegate the processing of the HTTP POST to the adapter.
+            // The adapter will invoke the bot.
+        }
 
     }
 }

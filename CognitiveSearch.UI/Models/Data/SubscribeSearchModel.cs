@@ -12,6 +12,7 @@ namespace CognitiveSearch.UI.Models.Data
         public string givenName { get; set; }
         public string userType { get; set; }
         public string query { get; set; }
+        public string email { get; set; }
 
     }
 }

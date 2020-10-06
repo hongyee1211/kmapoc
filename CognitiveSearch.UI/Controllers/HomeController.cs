@@ -129,6 +129,10 @@ namespace CognitiveSearch.UI.Controllers
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
+                else if (child.Name == "userPrincipalName")
+                {
+                    Response.Cookies.Append("email", child.Value.ToString(), options);
+                }
             }
 
             return View();
@@ -392,7 +396,8 @@ namespace CognitiveSearch.UI.Controllers
             string userId = Request.Cookies["userId"];
             string userType = Request.Cookies["userType"];
             string givenName = Request.Cookies["givenName"];
-            subscribeHandler.AddSearchQuery(userId, userType, givenName, query, documentCount);
+            string email = Request.Cookies["email"];
+            subscribeHandler.AddSearchQuery(userId, userType, givenName, query, documentCount, email);
         }
 
         [HttpPost]
