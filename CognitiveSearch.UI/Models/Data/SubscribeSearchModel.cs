@@ -9,10 +9,8 @@ namespace CognitiveSearch.UI.Models.Data
     {
         public int documentCount { get; set; }
         public string userId { get; set; }
-        public string givenName { get; set; }
+        public string displayName { get; set; }
         public string userType { get; set; }
         public string query { get; set; }
-        public string email { get; set; }
-
     }
 }

@@ -45,9 +45,8 @@ namespace CognitiveSearch.UI.Controllers
         {
             string userId = Request.Cookies["userId"];
             string userType = Request.Cookies["userType"];
-            string givenName = Request.Cookies["givenName"];
-            string email = Request.Cookies["email"];
-            dbHandler.AddSearchQuery(userId, userType, givenName, query, count, email);
+            string name = Request.Cookies["displayName"];
+            dbHandler.AddSearchQuery(userId, userType, name, query, count);
             return Retrieve();
         }
 

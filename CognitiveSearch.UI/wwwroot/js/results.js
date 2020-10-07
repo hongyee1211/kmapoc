@@ -352,7 +352,7 @@ function UpdateResults(data) {
                                             <div class="row">
                                                 <div class="search-dropdown">
                                                     <div class="results-icon menuThumbsUp" onclick="ShowFeedback('${i}'); thumbsUp('${id}', '${title}', '${search}');"></div>
-                                                    <div class="results-icon menuThumbsDown" onclick=""thumbsDown('${id}', '${title}', '${search}')""></div>
+                                                    <div class="results-icon menuThumbsDown" onclick="thumbsDown('${id}', '${title}', '${search}')"></div>
                                                     <div id="modalFeedback${i}" class="search-dropdown-content">
                                                         <div class="search-ratings-star-cluster">
                                                             <span class="fa fa-star" id="star-1-${i}" onclick="toggleRating(${1},${i})"></span>

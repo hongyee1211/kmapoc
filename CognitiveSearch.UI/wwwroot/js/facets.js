@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-function monitorCategoryTags(category, action) {
-    var query = $('#q').val();
+function monitorCategoryTags(category, tag, action) {
     $.post('/home/monitorcategorytags',
         {
             searchFbId: searchFbId,
             category: category,
-            tag: query,
+            tag: tag,
             rating: action
         },
         function (data) {
@@ -112,14 +111,14 @@ function UpdateFacets() {
                     if (data[j].value.toString().length < 100) {
                         var idName = name + "_" + j;
                         facetResultsHTML += `<div class="ms-CheckBox">
-                                            <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" onclick="ChooseFacet('${name}','${data[j].value}', '${j}');"></input>
+                                            <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" onclick="ChooseFacet('${name}','${j}');"></input>
                                             <label id="label-${idName}" role="checkbox" class="ms-CheckBox-field" tabindex="0" aria-checked="false" name="checkboxa">
                                                 <span class="ms-Label">
                                                     ${data[j].value} (${data[j].count})
                                                 </span> 
                                             </label>
-                                            <div class="keyPhaseThumbs menuThumbsUp" style="margin: 7px 3px;" onclick="monitorCategoryTags('${name}', ${1});"></div>
-                                            <div class="keyPhaseThumbs menuThumbsDown" style="margin: 7px 3px 7px 28px;" onclick="monitorCategoryTags('${name}', ${2});"></div>
+                                            <div class="keyPhaseThumbs menuThumbsUp" style="margin: 7px 3px;" onclick="monitorCategoryTags('${name}','${data[j].value}', ${1});"></div>
+                                            <div class="keyPhaseThumbs menuThumbsDown" style="margin: 7px 3px 7px 28px;" onclick="monitorCategoryTags('${name}','${data[j].value}', ${2});"></div>
                                         </div>`;
                     }
                 }

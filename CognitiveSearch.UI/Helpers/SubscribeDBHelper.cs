@@ -17,15 +17,14 @@ namespace CognitiveSearch.UI.Helpers
             this._context = context;
         }
 
-        public SubscribeSearchModel AddSearchQuery(string userId, string userType, string givenName, string query, int count, string email)
+        public SubscribeSearchModel AddSearchQuery(string userId, string userType, string displayName, string query, int count)
         {
             SubscribeSearchModel searchQuery = new SubscribeSearchModel();
             searchQuery.userId = userId;
             searchQuery.userType = userType;
-            searchQuery.givenName = givenName;
+            searchQuery.displayName = displayName;
             searchQuery.query = query;
             searchQuery.documentCount = count;
-            searchQuery.email = email;
             this._context.Search.Add(searchQuery);
             try
             {

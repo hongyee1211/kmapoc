@@ -129,10 +129,6 @@ namespace CognitiveSearch.UI.Controllers
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
-                else if (child.Name == "userPrincipalName")
-                {
-                    Response.Cookies.Append("email", child.Value.ToString(), options);
-                }
             }
 
             return View();
@@ -390,16 +386,7 @@ namespace CognitiveSearch.UI.Controllers
             return new JsonResult(autocomplete);
         }
 
-        [HttpPost]
-        public void SubscribeToQuery(string query, int documentCount)
-        {
-            string userId = Request.Cookies["userId"];
-            string userType = Request.Cookies["userType"];
-            string givenName = Request.Cookies["givenName"];
-            string email = Request.Cookies["email"];
-            subscribeHandler.AddSearchQuery(userId, userType, givenName, query, documentCount, email);
-        }
-
+        //TODO: Move the following endpoints to a separate controller dedicated for monitoring
         [HttpPost]
         public void MonitorDocumentQuery(int searchFbId, string documentName, string query)
         {
