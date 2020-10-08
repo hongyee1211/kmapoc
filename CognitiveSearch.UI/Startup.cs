@@ -25,9 +25,16 @@ namespace CognitiveSearch.UI
 {
     public class Startup
     {
+        public static class DBConnStr
+        {
+            public static string connStr { get; set; }
+        }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            DBConnStr.connStr = configuration["sqlDBConnStr"].ToString();
         }
 
         public IConfiguration Configuration { get; }
@@ -45,7 +52,8 @@ namespace CognitiveSearch.UI
                 options.HandleSameSiteCookieCompatibility();
             });
 
-            services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
+            //services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
+            services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(DBConnStr.connStr, sqlServerOptionsAction => sqlServerOptionsAction.CommandTimeout(60)));
 
             services.AddOptions();
 
