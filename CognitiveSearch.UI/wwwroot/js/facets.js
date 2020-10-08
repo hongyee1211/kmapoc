@@ -111,7 +111,7 @@ function UpdateFacets() {
                     if (data[j].value.toString().length < 100) {
                         var idName = name + "_" + j;
                         facetResultsHTML += `<div class="ms-CheckBox">
-                                            <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" onclick="ChooseFacet('${name}','${j}');"></input>
+                                            <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" onclick="ChooseFacet('${name}','${data[j].value}','${j}');"></input>
                                             <label id="label-${idName}" role="checkbox" class="ms-CheckBox-field" tabindex="0" aria-checked="false" name="checkboxa">
                                                 <span class="ms-Label">
                                                     ${data[j].value} (${data[j].count})
