@@ -17,6 +17,7 @@ namespace CognitiveSearch.UI.DAL
         public DbSet<FBImplicitDocumentResultModel> ImplicitDocumentResultFeedbacks { get; set; }
         public DbSet<FBImplicitDocumentQueryModel> ImplicitDocumentQueryFeedbacks { get; set; }
         public DbSet<FBCategoryRatingModel> CategoryRating { get; set; }
+        public DbSet<FBTagAnnotationModel> TagAnnotations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,6 +54,11 @@ namespace CognitiveSearch.UI.DAL
             {
                 feedback.HasKey(c => new { c.searchId, c.category, c.name });
                 feedback.ToTable("FeedbackCategoryRatings");
+            });
+            modelBuilder.Entity<FBTagAnnotationModel>(feedback =>
+            {
+                feedback.HasKey(c => new { c.searchId, c.documentName, c.tag });
+                feedback.ToTable("TagAnnotations");
             });
         }
     }

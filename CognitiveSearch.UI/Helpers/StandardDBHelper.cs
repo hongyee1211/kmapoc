@@ -41,7 +41,7 @@ namespace CognitiveSearch.UI.Helpers
             }
 
             return this._context.Standards
-                .Where(x => components.Contains(x.Component) || equipmentClass.Contains(x.EquipmentClass) || failureMode.Contains(x.FailureMode))
+                .Where(x => components.Contains(x.Component.ToLower()) || equipmentClass.Contains(x.EquipmentClass.ToLower()) || failureMode.Contains(x.FailureMode.ToLower()))
                 .Select(x => x.DocumentName).Distinct().ToArray<string>();
         }
 
