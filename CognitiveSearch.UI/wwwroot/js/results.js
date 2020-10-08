@@ -197,6 +197,18 @@ function UpdateMap(data) {
     }
 }
 
+function UpdateStandards(standards) {
+    var resultsHtml = "";
+
+    for (var i = 0; i < standards.length; i++) {
+        var iconStr = standards[i].slice(0, parseInt(standards[i].indexOf(" ")));
+        var iconCSS = iconStr == "ISO" ? "../images/iso-icon.png" : "../images/nfpa-icon.png";
+        resultsHtml += '<div><img src="' + iconCSS + '" class="standards_icon">' + standards[i] + '</div>';
+    }
+
+    $("#doc-standards-div").html(resultsHtml);
+}
+
 function UpdateResults(data) {
     var resultsHtml = '';
     let search = document.getElementById("q").value;

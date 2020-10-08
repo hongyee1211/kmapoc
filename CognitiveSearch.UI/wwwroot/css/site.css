@@ -527,6 +527,17 @@ pre {
     text-align: left;
 }
 
+.search-row-standards {
+    min-height: 2280px !important;
+    background-color: #666;
+    border-radius: 10px;
+    margin: 10px !important;
+    padding: 10px;
+    text-align: left;
+    color: #fff;
+    width: 23% !important;
+}
+
 .search-ratings-star-cluster {
     color: #fff;
     text-align: center;
@@ -1133,4 +1144,10 @@ b {
     margin: 0.5em;
 }
 
+.standards_icon {
+    width: 20px !important;
+    height: 20px !important;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
 
