@@ -35,6 +35,7 @@ namespace CognitiveSearch.UI.Controllers
 
         private readonly FeedbackDBHelper feedbackHandler;
         private readonly SubscribeDBHelper subscribeHandler;
+        private readonly StandardDBHelper standardHandler;
 
         private IConfiguration _configuration { get; set; }
         private DocumentSearchClient _docSearch { get; set; }
@@ -47,11 +48,13 @@ namespace CognitiveSearch.UI.Controllers
             IGraphApiOperations graphApiOperations,
             IArmOperations armOperations,
             FeedbackContext feedbackContext,
-            SubscribeContext subscribeContext)
+            SubscribeContext subscribeContext,
+            StandardContext standardContext)
         {
             this._context = feedbackContext;
             this.feedbackHandler = new FeedbackDBHelper(feedbackContext);
             this.subscribeHandler = new SubscribeDBHelper(subscribeContext);
+            this.standardHandler = new StandardDBHelper(standardContext);
             this.tokenAcquisition = tokenAcquisition;
             this.graphApiOperations = graphApiOperations;
             this.armOperations = armOperations;
@@ -198,7 +201,7 @@ namespace CognitiveSearch.UI.Controllers
             public static string UserDept { get; set; }
         }
 
-        public IActionResult Search([FromQuery] string q, [FromQuery] string facets = "", [FromQuery] int page = 1, [FromQuery] string subscribe = "")
+        public IActionResult Search([FromQuery] string q, [FromQuery] string facets = "", [FromQuery] int page = 1)
         {
             // Split the facets.
             //  Expected format: &facets=key1_val1,key1_val2,key2_val1
@@ -212,8 +215,6 @@ namespace CognitiveSearch.UI.Controllers
                 // Select grouped key/values into SearchFacet array
                 .Select(g => new SearchFacet { Key = g.Key, Value = g.Select(f => f[1]).ToArray() })
                 .ToArray();
-
-            bool isSubscribing = subscribe == "on" ? true : false;
 
             string strText = Request.Cookies["givenName"];
             string strdisplayName = Request.Cookies["displayName"];
@@ -273,6 +274,24 @@ namespace CognitiveSearch.UI.Controllers
             var documentResults = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, null);
             var isSubscribed = subscribeHandler.CheckIfSubscribed(userId, searchParams.q);
 
+            string text = searchParams.q.Replace(",", " ");
+            var stringFacetsArray = text.Split('"').Where((item, index) => index % 2 != 0).ToList<string>();
+            var stringNormalArray = text.Split('"').Where((item, index) => index % 2 != 1);
+            foreach(string str in stringNormalArray)
+            {
+                string[] instances = str.Split(' ');
+                foreach(string instance in instances)
+                {
+                    if (!String.IsNullOrEmpty(instance))
+                    {
+                        stringFacetsArray.Add(instance);
+                    }
+                }
+            }
+
+
+            string[] standards = standardHandler.FindAllStandard(stringFacetsArray, searchParams.searchFacets);
+
             var viewModel = new SearchResultViewModel
             {
                 documentResult = documentResults,
@@ -283,7 +302,8 @@ namespace CognitiveSearch.UI.Controllers
                 searchId = searchidId ?? null,
                 searchFbId = searchQuery.searchId,
                 applicationInstrumentationKey = _configuration.GetSection("InstrumentationKey")?.Value,
-                facetableFields = _docSearch.Model.Facets.Select(k => k.Name).ToArray()
+                facetableFields = _docSearch.Model.Facets.Select(k => k.Name).ToArray(),
+                standards = standards
             };
             return viewModel;
         }

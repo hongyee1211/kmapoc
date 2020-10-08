@@ -16,10 +16,10 @@ namespace CognitiveSearch.UI.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SubscribeSearchModel>(feedback =>
+            modelBuilder.Entity<SubscribeSearchModel>(subscribe =>
             {
-                feedback.HasKey(c => new { c.userId, c.query });
-                feedback.ToTable("SubscribeSearch");
+                subscribe.HasKey(c => new { c.userId, c.query });
+                subscribe.ToTable("SubscribeSearch");
             });
         }
     }

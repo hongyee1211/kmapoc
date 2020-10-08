@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace CognitiveSearch.UI.Models
 {
@@ -21,5 +22,7 @@ namespace CognitiveSearch.UI.Models
         public string[] facetableFields { get; set; }
 
         public Boolean subscribed { get; set; }
+
+        public string[] standards;
     }
 }
