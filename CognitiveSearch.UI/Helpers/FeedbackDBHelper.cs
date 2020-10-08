@@ -166,6 +166,35 @@ namespace CognitiveSearch.UI.Helpers
                 //as opposed to searching first before adding
             }
         }
+
+        public void AddAnnotation(int searchId, string documentName, string annotation, string tag)
+        {
+            var feedbackModel = new FBTagAnnotationModel();
+            feedbackModel.searchId = searchId;
+            feedbackModel.documentName = documentName;
+            feedbackModel.tag = tag;
+            feedbackModel.annotation = annotation;
+            var existing = this._context.TagAnnotations.FirstOrDefault(f => f.searchId.Equals(feedbackModel.searchId) && f.documentName.Equals(feedbackModel.documentName) && f.tag.Equals(feedbackModel.tag));
+
+            if (existing == null)
+            {
+                this._context.TagAnnotations.Add(feedbackModel);
+            }
+            else
+            {
+                feedbackModel.annotationFeedbackId = existing.annotationFeedbackId;
+                this._context.Entry(existing).CurrentValues.SetValues(feedbackModel);
+            }
+            try
+            {
+                this._context.SaveChanges();
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException err)
+            {
+                //Ignore as it will ignore err updates with same query+user id
+                //as opposed to searching first before adding
+            }
+        }
     }
 }
 

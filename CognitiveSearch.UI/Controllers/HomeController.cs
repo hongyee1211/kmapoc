@@ -274,7 +274,7 @@ namespace CognitiveSearch.UI.Controllers
             var documentResults = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, null);
             var isSubscribed = subscribeHandler.CheckIfSubscribed(userId, searchParams.q);
 
-            string text = searchParams.q.Replace(",", " ");
+            string text = searchParams.q.ToLower().Replace(",", " ");
             var stringFacetsArray = text.Split('"').Where((item, index) => index % 2 != 0).ToList<string>();
             var stringNormalArray = text.Split('"').Where((item, index) => index % 2 != 1);
             foreach(string str in stringNormalArray)

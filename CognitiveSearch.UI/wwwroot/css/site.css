@@ -1151,3 +1151,28 @@ b {
     margin-right: 10px;
 }
 
+.show-contextmenu {
+    z-index: 10000;
+    position: absolute;
+    display: block;
+    margin: 0;
+    list-style-type: none;
+    list-style: none;
+    background: #222222;
+    color: #ffffff;
+}
+
+.hide-contextmenu {
+    display: none;
+}
+
+.cm-row {
+    display: block;
+    color: #ffffff;
+    border: solid 1px white;
+    padding: 2px 20px;
+}
+
+.cm-element:hover {
+    cursor: pointer !important;
+}
