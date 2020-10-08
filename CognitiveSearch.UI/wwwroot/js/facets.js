@@ -117,8 +117,8 @@ function UpdateFacets() {
                                                     ${data[j].value} (${data[j].count})
                                                 </span> 
                                             </label>
-                                            <div class="keyPhaseThumbs menuThumbsUp" style="margin: 7px 3px;" onclick="monitorCategoryTags('${name}','${data[j].value}', ${1});"></div>
-                                            <div class="keyPhaseThumbs menuThumbsDown" style="margin: 7px 3px 7px 28px;" onclick="monitorCategoryTags('${name}','${data[j].value}', ${2});"></div>
+                                            <div class="keyPhaseThumbs menuThumbsUp" style="margin: 7px 3px;" onclick="monitorCategoryTags('${name}','${data[j].value}', ${2});"></div>
+                                            <div class="keyPhaseThumbs menuThumbsDown" style="margin: 7px 3px 7px 28px;" onclick="monitorCategoryTags('${name}','${data[j].value}', ${1});"></div>
                                         </div>`;
                     }
                 }
