@@ -19,6 +19,7 @@ using CognitiveSearch.UI.DAL;
 using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search;
 using CognitiveSearch.UI.Helpers;
+using CognitiveSearch.UI.Models.Data;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -28,8 +29,13 @@ namespace CognitiveSearch.UI.Controllers
         private readonly ITokenAcquisition tokenAcquisition;
         private readonly IGraphApiOperations graphApiOperations;
         private readonly IArmOperations armOperations;
+
+        //Deprecated, use feedback db helper instead
         private readonly FeedbackContext _context;
+
         private readonly FeedbackDBHelper feedbackHandler;
+        private readonly SubscribeDBHelper subscribeHandler;
+        private readonly StandardDBHelper standardHandler;
 
         private IConfiguration _configuration { get; set; }
         private DocumentSearchClient _docSearch { get; set; }
@@ -41,10 +47,14 @@ namespace CognitiveSearch.UI.Controllers
             ITokenAcquisition tokenAcquisition,
             IGraphApiOperations graphApiOperations,
             IArmOperations armOperations,
-            FeedbackContext context)
+            FeedbackContext feedbackContext,
+            SubscribeContext subscribeContext,
+            StandardContext standardContext)
         {
-            this._context = context;
-            this.feedbackHandler = new FeedbackDBHelper(context);
+            this._context = feedbackContext;
+            this.feedbackHandler = new FeedbackDBHelper(feedbackContext);
+            this.subscribeHandler = new SubscribeDBHelper(subscribeContext);
+            this.standardHandler = new StandardDBHelper(standardContext);
             this.tokenAcquisition = tokenAcquisition;
             this.graphApiOperations = graphApiOperations;
             this.armOperations = armOperations;
@@ -224,7 +234,7 @@ namespace CognitiveSearch.UI.Controllers
             {
                 q = searchString,
                 searchFacets = searchFacets,
-                currentPage = page,
+                currentPage = page
             });
 
             return View(viewModel);
@@ -254,21 +264,46 @@ namespace CognitiveSearch.UI.Controllers
 
             if (CheckDocSearchInitialized())
                 searchidId = _docSearch.GetSearchId().ToString();
+            string userId = Request.Cookies["userId"];
+            string userType = Request.Cookies["userType"];
+            string givenName = Request.Cookies["givenName"];
 
-            var searchQuery = feedbackHandler.AddSearchQuery(Request.Cookies["userId"], Request.Cookies["userType"], Request.Cookies["givenName"], searchParams.q);
+            var searchQuery = feedbackHandler.AddSearchQuery(userId, userType, givenName, searchParams.q);
 
-            var feedbacks = this._context.Feedbacks.Where(feedback => feedback.query.Equals(searchParams.q) && feedback.userID.Equals(Request.Cookies["userId"]));
+            //var feedbacks = feedbackHandler._context.RatingDocument.Where(feedback => feedback.query.Equals(searchParams.q) && feedback.userId.Equals(Request.Cookies["userId"]));
+            var documentResults = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, null);
+            var isSubscribed = subscribeHandler.CheckIfSubscribed(userId, searchParams.q);
+
+            string text = searchParams.q.ToLower().Replace(",", " ");
+            var stringFacetsArray = text.Split('"').Where((item, index) => index % 2 != 0).ToList<string>();
+            var stringNormalArray = text.Split('"').Where((item, index) => index % 2 != 1);
+            foreach(string str in stringNormalArray)
+            {
+                string[] instances = str.Split(' ');
+                foreach(string instance in instances)
+                {
+                    if (!String.IsNullOrEmpty(instance))
+                    {
+                        stringFacetsArray.Add(instance);
+                    }
+                }
+            }
+
+
+            string[] standards = standardHandler.FindAllStandard(stringFacetsArray, searchParams.searchFacets);
 
             var viewModel = new SearchResultViewModel
             {
-                documentResult = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, feedbacks),
+                documentResult = documentResults,
+                subscribed = isSubscribed,
                 query = searchParams.q,
                 selectedFacets = searchParams.searchFacets,
                 currentPage = searchParams.currentPage,
                 searchId = searchidId ?? null,
                 searchFbId = searchQuery.searchId,
                 applicationInstrumentationKey = _configuration.GetSection("InstrumentationKey")?.Value,
-                facetableFields = _docSearch.Model.Facets.Select(k => k.Name).ToArray()
+                facetableFields = _docSearch.Model.Facets.Select(k => k.Name).ToArray(),
+                standards = standards
             };
             return viewModel;
         }
@@ -371,6 +406,7 @@ namespace CognitiveSearch.UI.Controllers
             return new JsonResult(autocomplete);
         }
 
+        //TODO: Move the following endpoints to a separate controller dedicated for monitoring
         [HttpPost]
         public void MonitorDocumentQuery(int searchFbId, string documentName, string query)
         {

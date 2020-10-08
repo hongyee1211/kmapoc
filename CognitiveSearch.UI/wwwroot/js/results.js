@@ -197,12 +197,24 @@ function UpdateMap(data) {
     }
 }
 
+function UpdateStandards(standards) {
+    var resultsHtml = "";
+
+    for (var i = 0; i < standards.length; i++) {
+        var iconStr = standards[i].slice(0, parseInt(standards[i].indexOf(" ")));
+        var iconCSS = iconStr == "ISO" ? "../images/iso-icon.png" : "../images/nfpa-icon.png";
+        resultsHtml += '<div><img src="' + iconCSS + '" class="standards_icon">' + standards[i] + '</div>';
+    }
+
+    $("#doc-standards-div").html(resultsHtml);
+}
+
 function UpdateResults(data) {
     var resultsHtml = '';
     let search = document.getElementById("q").value;
     const regex = /"/gi;
 
-    search = search.replaceAll(regex, '&#');
+    search = search.replaceAll(regex, '&quot;');
     $("#doc-count").html(` Available Results: ${data.count}`);
 
     for (var i = 0; i < data.results.length; i++) {
@@ -352,7 +364,7 @@ function UpdateResults(data) {
                                             <div class="row">
                                                 <div class="search-dropdown">
                                                     <div class="results-icon menuThumbsUp" onclick="ShowFeedback('${i}'); thumbsUp('${id}', '${title}', '${search}');"></div>
-                                                    <div class="results-icon menuThumbsDown" onclick=""thumbsDown('${id}', '${title}', '${search}')""></div>
+                                                    <div class="results-icon menuThumbsDown" onclick="thumbsDown('${id}', '${title}', '${search}')"></div>
                                                     <div id="modalFeedback${i}" class="search-dropdown-content">
                                                         <div class="search-ratings-star-cluster">
                                                             <span class="fa fa-star" id="star-1-${i}" onclick="toggleRating(${1},${i})"></span>

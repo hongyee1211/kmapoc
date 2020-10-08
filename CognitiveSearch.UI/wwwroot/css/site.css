@@ -527,6 +527,17 @@ pre {
     text-align: left;
 }
 
+.search-row-standards {
+    min-height: 2280px !important;
+    background-color: #666;
+    border-radius: 10px;
+    margin: 10px !important;
+    padding: 10px;
+    text-align: left;
+    color: #fff;
+    width: 23% !important;
+}
+
 .search-ratings-star-cluster {
     color: #fff;
     text-align: center;
@@ -592,6 +603,16 @@ pre {
     background-color: #00a19c !important;
     border-radius: 5px !important;
     border: none !important
+}
+
+.search-subscribe-container {
+    color: white;
+    text-align: right;
+}
+
+.home-subscribe-container {
+    color: white;
+    text-align: center;
 }
 
 
@@ -936,6 +957,12 @@ b {
     background-repeat: no-repeat;
 }
 
+.keyPhaseThumbs {
+    position: absolute;
+    float: right;
+    display: unset;
+}
+
 .menuThumbsUp {
     background-image: url("../images/thumbs-down.svg");
     width: 20px !important;
@@ -946,7 +973,6 @@ b {
     transform: rotate(180deg);
     background-repeat: no-repeat;
 }
-
 
 .menuThumbsDown {
     background-image: url("../images/thumbs-down.svg");
@@ -1081,4 +1107,72 @@ b {
     color: orange;
 }
 
+.category-rating-content {
+    display: none;
+    position: absolute;
+    right: -25px;
+    background-color: #333333;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: #00a19c;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    width: 115px;
+}
 
+.category-rating-close-button {
+    border: none;
+    display: inline-block;
+    padding: 5px 0px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    color: #00a19c;
+}
+
+.category-rating-star-cluster {
+    color: #fff;
+    margin: 0.5em;
+}
+
+.standards_icon {
+    width: 20px !important;
+    height: 20px !important;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+.show-contextmenu {
+    z-index: 10000;
+    position: absolute;
+    display: block;
+    margin: 0;
+    list-style-type: none;
+    list-style: none;
+    background: #222222;
+    color: #ffffff;
+}
+
+.hide-contextmenu {
+    display: none;
+}
+
+.cm-row {
+    display: block;
+    color: #ffffff;
+    border: solid 1px white;
+    padding: 2px 20px;
+}
+
+.cm-element:hover {
+    cursor: pointer !important;
+}

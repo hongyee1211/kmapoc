@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CognitiveSearch.UI.DAL
+namespace CognitiveSearch.UI.Models.Data
 {
     public class FBSearchModel
     {
@@ -15,5 +15,6 @@ namespace CognitiveSearch.UI.DAL
         public string givenName { get; set; }
         public string userType { get; set; }
         public string query { get; set; }
+        public DateTime time { get; set; } = DateTime.UtcNow;
     }
 }

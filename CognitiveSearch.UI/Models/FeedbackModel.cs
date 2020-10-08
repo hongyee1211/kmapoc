@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace CognitiveSearch.UI.Models
 {
+    [Obsolete("Transition to data models under model/data", false)]
     public class FeedbackModel
     {
         public string userID { get; set; }

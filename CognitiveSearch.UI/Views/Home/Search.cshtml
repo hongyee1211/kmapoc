@@ -11,12 +11,33 @@
 <script>
     aspViewModel = @Html.Raw(Json.Serialize(Model));
     q = @Html.Raw(Json.Serialize(Model.query));
+    subscribed = @Html.Raw(Json.Serialize(Model.subscribed))
+    documentCount = @Html.Raw(Json.Serialize(Model.documentResult.Count))
     searchId = @Html.Raw(Json.Serialize((Model.searchId)));
     searchFbId = @Html.Raw(Json.Serialize((Model.searchFbId)));
     applicationInstrumentationKey = @Html.Raw(Json.Serialize(Model.applicationInstrumentationKey));
+    $(function () {
+        $('#details-pivot-content').on('contextmenu', ShowAnnotationContextMenu);
+        $('#reference-viewer').on('contextmenu', ShowAnnotationContextMenu);
+        $(document).bind("click", function (event) {
+            document.getElementById("annotation-menu").className = "hide-contextmenu";
+        });
+    });
 </script>
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="hide-contextmenu" id="annotation-menu">
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('Component');">Mark as Component</span>
+    </div>
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('Equipment Class');">Mark as Equipment Class</span>
+    </div>
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('Failure Mode');">Mark as Failure Mode</span>
+    </div>
+</div>
 
 <!--Details Modal-->
 <div class="modal" id="details-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -66,7 +87,10 @@
                 <button id="search-button" class="btn btn-default" onclick="Search();"><span class="ms-Icon ms-Icon--Search"></span></button>
             </span>
         </div>
-        <br />
+        <div class="form-check search-subscribe-container">
+            <input type="checkbox" class="form-check-input" id="search-subscribe-cb" onchange="HandleSubscribe(event)">
+            <label class="form-check-label" for="search-subscribe-cb">Subscribe</label>
+        </div>
         <button style="width:100%" class="btn btn-default" onclick="EntityMapClick()">View Entity Map</button>
         <br />
         <br />
@@ -87,11 +111,13 @@
                 <span id="loading-indicator" class="ms-Spinner ms-Spinner--large" style="display:none;"></span>
             </div>
         </div>
-        <div id="doc-details-div">
+        <div id="doc-details-div" class="col-md-9">
         </div>
-        <div class="clearfix">
-            <ul id="paginationFooter" class="pagination pull-left"></ul>
+        <div id="doc-standards-div" class="col-md-2 search-row-standards">
         </div>
+    </div>
+    <div class="clearfix">
+        <ul id="paginationFooter" class="pagination pull-left"></ul>
     </div>
 </div>
 
