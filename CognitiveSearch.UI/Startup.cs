@@ -47,6 +47,7 @@ namespace CognitiveSearch.UI
 
             services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
             services.AddDbContext<SubscribeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
+            services.AddDbContext<StandardContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
 
             services.AddOptions();
 
