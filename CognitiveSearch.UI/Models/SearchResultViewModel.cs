@@ -23,6 +23,6 @@ namespace CognitiveSearch.UI.Models
 
         public Boolean subscribed { get; set; }
 
-        public string[] standards;
+        public string[] standards { get; set; }
     }
 }

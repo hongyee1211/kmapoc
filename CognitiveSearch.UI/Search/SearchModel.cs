@@ -17,8 +17,10 @@ namespace CognitiveSearch.UI
             "PlantCode",
             "Manufacturer",
             "EquipmentClass",
-            "EquipmentType",
+            //"EquipmentType",
             "Abbreviation",
+            "Component",
+            "FailureMode",
             "people",
         };
 
@@ -33,6 +35,8 @@ namespace CognitiveSearch.UI
             "EquipmentClass",
             //"EquipmentType",
             //"Abbreviation",
+            "Component",
+            "FailureMode",
             "people",
         };
 
@@ -59,6 +63,8 @@ namespace CognitiveSearch.UI
             "EquipmentClass",
             "EquipmentType",
             "Abbreviation",
+            "Component",
+            "FailureMode",
             //"language",
             //"translated_text",
             "merged_content",

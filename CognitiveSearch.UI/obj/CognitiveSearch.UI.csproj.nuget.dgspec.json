@@ -46,11 +46,23 @@
               "target": "Package",
               "version": "[2.13.1, )"
             },
+            "Microsoft.Azure.KeyVault": {
+              "target": "Package",
+              "version": "[3.0.5, )"
+            },
             "Microsoft.Azure.Search": {
               "target": "Package",
               "version": "[10.1.0, )"
             },
+            "Microsoft.Azure.Services.AppAuthentication": {
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.Extensions.Configuration.AzureKeyVault": {
               "target": "Package",
               "version": "[3.1.8, )"
             },

@@ -527,6 +527,16 @@ pre {
     text-align: left;
 }
 
+.search-row-standards {
+    background-color: #666;
+    border-radius: 10px;
+    margin: 10px 10px 10px -20px !important;
+    padding: 10px;
+    text-align: left;
+    color: #fff;
+    width: 200% !important;
+}
+
 .search-ratings-star-cluster {
     color: #fff;
     text-align: center;
@@ -664,6 +674,15 @@ pre {
     color: #000;
 }
 
+.tag-Component {
+    background-color: dodgerblue;
+    color: #000;
+}
+
+.tag-FailureMode {
+    background-color: mediumpurple;
+}
+    
 #tags-panel {
     margin-top: 60px;
 }
@@ -759,6 +778,7 @@ ul.breadcrumb li {
     font-style: normal;
     font-weight: normal;
     line-height: 1;
+    color: #fff;
 }
 
 .node {
@@ -864,6 +884,14 @@ body {
 
 .panel-default > .panel-heading-Manufacturer {
     color: darkorchid !important;
+}
+
+.panel-default > .panel-heading-Component {
+    color: dodgerblue !important;
+}
+
+.panel-default > .panel-heading-FailureMode {
+    color: mediumpurple !important;
 }
 
 .panel-default > .panel-heading-PlantCode {
@@ -1040,6 +1068,7 @@ b {
     font-size: 11px !important;
     padding: 7px 0px;
     margin-left: -5px;
+    color: #fff;
 }
 
 .searchScore_red {
@@ -1133,6 +1162,29 @@ b {
     margin: 0.5em;
 }
 
+.standards_icon {
+    width: 40px !important;
+    height: 40px !important;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.iso_icon {
+    background-image: url("../images/iso_icon.svg");
+    width: 30px !important;
+    height: 30px !important;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+.nfpa_icon {
+    background-image: url("../images/nfpa_icon.svg");
+    width: 30px !important;
+    height: 30px !important;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
 
 .show-contextmenu {
     z-index: 10000;

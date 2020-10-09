@@ -197,6 +197,29 @@ function UpdateMap(data) {
     }
 }
 
+function UpdateStandards(standards) {
+    var resultsHtml = "";
+
+    resultsHtml += '<div class="search-row-standards" style="min-height: 2100px !important;">';
+    resultsHtml += '<h4 style="text-align:center;">Related Documents Standard</h4>';
+    for (var i = 0; i < standards.length; i++) {
+        var iconStr = standards[i].slice(0, parseInt(standards[i].indexOf(" ")));
+        var iconCSS = "";
+        if (iconStr == "ISO") {
+            iconCSS = "../images/iso_icon.png";
+        } else if (iconStr == "NFPA") {
+            iconCSS = "../images/nfpa_icon2.png";
+        } else if (iconStr == "API") {
+            iconCSS = "../images/api_icon.png";
+        } else {
+            iconCSS = "../images/logo.png";
+        }
+        resultsHtml += '<div><img src="' + iconCSS + '" class="standards_icon"><h5 style="position: absolute;float: right;display: unset; margin-top: 0px;width: 130%">' + standards[i] + '</h5></div>';
+    }
+    resultsHtml += "</div>";
+    $("#doc-standards-div").html(resultsHtml);
+}
+
 function UpdateResults(data) {
     var resultsHtml = '';
     let search = document.getElementById("q").value;

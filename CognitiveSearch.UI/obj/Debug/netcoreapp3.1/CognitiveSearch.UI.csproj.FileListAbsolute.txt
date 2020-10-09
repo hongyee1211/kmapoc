@@ -235,9 +235,6 @@ C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Power
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Owin.dll
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.PowerBI.AspNet.WebForms.dll
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\Razor\Views\QuestionAndAnswer\EmbedReport.cshtml.g.cs
-C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.csproj.CoreCompileInputs.cache
-C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cs
-C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cache
 C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\System.Web.Mvc.dll
 C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\System.Web.Razor.dll
 C:\kmapoc2\azure-search-knowledge-mining\02 - Web UI Template\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\System.Web.Helpers.dll
@@ -330,5 +327,17 @@ C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\runtimes\win-x6
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
-C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\Razor\Views\Ratings\Index.cshtml.g.cs
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\ptsg-5ekacogqna01 - Web Deploy2\profile.arm.json
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Azure.KeyVault.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Azure.KeyVault.WebKey.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Azure.Services.AppAuthentication.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.AzureKeyVault.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.csproj.CoreCompileInputs.cache
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cs
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\CognitiveSearch.UI.MvcApplicationPartsAssemblyInfo.cache
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\Razor\Views\ChatHongYee\Index.cshtml.g.cs
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Debug\netcoreapp3.1\Razor\Views\Subscribe\Index.cshtml.g.cs

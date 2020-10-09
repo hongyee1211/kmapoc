@@ -88,6 +88,7 @@ function Update(viewModel) {
     currentPage = viewModel.currentPage;
 
     var data = viewModel.documentResult;
+    var standards = viewModel.standards;
     documentCount = data.count;
     results = data.results;
     facets = data.facets;
@@ -101,6 +102,9 @@ function Update(viewModel) {
 
     //Results List
     UpdateResults(data);
+
+    // Standards List
+    UpdateStandards(standards);
 
     //Map
     UpdateMap(data);
