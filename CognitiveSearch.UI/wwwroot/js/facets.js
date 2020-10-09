@@ -89,6 +89,10 @@ function UpdateFacets() {
                 cssClass = "Manufacturer";
             } else if (name == "PlantCode") {
                 cssClass = "PlantCode";
+            } else if (name == "Component") {
+                cssClass = "Component";
+            } else if (name == "FailureMode") {
+                cssClass = "FailureMode";
             }
 
             facetResultsHTML += `<div class="panel panel-default">

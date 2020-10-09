@@ -28,6 +28,7 @@ namespace CognitiveSearch.UI
                        WebHost.CreateDefaultBuilder(args)
                .ConfigureAppConfiguration((ctx, builder) =>
                {
+                   //to comment out if using connection string stored in appsettings.json
                    var keyVaultEndpoint = GetKeyVaultEndpoint();
                    if (!string.IsNullOrEmpty(keyVaultEndpoint))
                    {
@@ -38,6 +39,7 @@ namespace CognitiveSearch.UI
                        builder.AddAzureKeyVault(
                            keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
                    }
+                   //end of section to comment
                }
             ).UseStartup<Startup>()
              .Build();

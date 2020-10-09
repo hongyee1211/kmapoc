@@ -675,6 +675,15 @@ pre {
     color: #000;
 }
 
+.tag-Component {
+    background-color: dodgerblue;
+    color: #000;
+}
+
+.tag-FailureMode {
+    background-color: mediumpurple;
+}
+    
 #tags-panel {
     margin-top: 60px;
 }
@@ -875,6 +884,14 @@ body {
 
 .panel-default > .panel-heading-Manufacturer {
     color: darkorchid !important;
+}
+
+.panel-default > .panel-heading-Component {
+    color: dodgerblue !important;
+}
+
+.panel-default > .panel-heading-FailureMode {
+    color: mediumpurple !important;
 }
 
 .panel-default > .panel-heading-PlantCode {
