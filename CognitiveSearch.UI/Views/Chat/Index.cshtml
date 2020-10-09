@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script crossorigin="anonymous" src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+<br />
+<br />
+<div id="main-display-container">
+    <div class="row">
+        <div id="chat-container" class="col-md-3">
+            <div id="search-input-group" class="input-group">
+                <input type="text" class="form-control" name="chatMessage" id="chatMessage" placeholder="Chat..." autocomplete="off">
+                <span class="input-group-btn">
+                    <button id="search-button" class="btn btn-default" onclick="sendChat();"><span class="ms-Icon ms-Icon--Search"></span></button>
+                </span>
+            </div>
+            <span id="chat-reply" class="label label-info"></span>
+        </div>
+        <div class="col-md-7">
+            <div id="webchat" role="main"></div>
+        </div>
+        <div class="col-md-2">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading panel-heading-EquipmentClass">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#chat-equipment-section">EquipmentClass</a>
+                        </h4>
+                    </div>
+                </div>
+                <div id="chat-equipment-section" class="panel-collapse collapse">
+                    <div class="panel-body" id="chat-equipment-class-filter-list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $.ajax({
+        url: 'https://directline.botframework.com/v3/directline/conversations',
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer 7OMGPJQSkFo.HxTzBCxwAejhMqLISB8PXSDBHKaogWXOn6I0roaBsSE'
+        },
+        success: function (result) {
+            console.log(result)
+            webSocket = new WebSocket(result.streamUrl);
+            webSocket.onmessage = function (event) {
+                console.log(event.data);
+            }
+            $.ajax({
+                url: 'https://directline.botframework.com/v3/directline/conversations/'+result.conversationId+'/activities',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "locale": "en-EN",
+                    "type": "message",
+                    "from": {
+                        "id": "user1"
+                    },
+                    "text": "hello"
+                }),
+                headers: {
+                    'Authorization': 'Bearer 7OMGPJQSkFo.HxTzBCxwAejhMqLISB8PXSDBHKaogWXOn6I0roaBsSE'
+                },
+                success: function (result) {
+                    console.log(result)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+
+    window.WebChat.renderWebChat(
+        {
+            directLine: window.WebChat.createDirectLine({
+                token: '7OMGPJQSkFo.HxTzBCxwAejhMqLISB8PXSDBHKaogWXOn6I0roaBsSE'
+            }),
+            userID: 'YOUR_USER_ID',
+            locale: 'en-US',
+            botAvatarInitials: 'WC',
+            userAvatarInitials: 'WW'
+        },
+        document.getElementById('webchat')
+    );
+</script>
