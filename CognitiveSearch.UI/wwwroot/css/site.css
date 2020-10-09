@@ -528,14 +528,13 @@ pre {
 }
 
 .search-row-standards {
-    min-height: 2280px !important;
     background-color: #666;
     border-radius: 10px;
-    margin: 10px !important;
+    margin: 10px 10px 10px -20px !important;
     padding: 10px;
     text-align: left;
-    color: #fff;
-    width: 23% !important;
+    color: #00a19c;
+    width: 200% !important;
 }
 
 .search-ratings-star-cluster {
@@ -770,6 +769,7 @@ ul.breadcrumb li {
     font-style: normal;
     font-weight: normal;
     line-height: 1;
+    color: #fff;
 }
 
 .node {
@@ -1051,6 +1051,7 @@ b {
     font-size: 11px !important;
     padding: 7px 0px;
     margin-left: -5px;
+    color: #fff;
 }
 
 .searchScore_red {
@@ -1145,8 +1146,25 @@ b {
 }
 
 .standards_icon {
-    width: 20px !important;
-    height: 20px !important;
+    width: 40px !important;
+    height: 40px !important;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.iso_icon {
+    background-image: url("../images/iso_icon.svg");
+    width: 30px !important;
+    height: 30px !important;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+}
+
+.nfpa_icon {
+    background-image: url("../images/nfpa_icon.svg");
+    width: 30px !important;
+    height: 30px !important;
     background-repeat: no-repeat;
     margin-right: 10px;
 }
