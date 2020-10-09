@@ -52,11 +52,11 @@ namespace CognitiveSearch.UI
                 options.HandleSameSiteCookieCompatibility();
             });
 
-            //services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
-            //services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(DBConnStr.connStr, sqlServerOptionsAction => sqlServerOptionsAction.CommandTimeout(60)));
             services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(DBConnStr.connStr, sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
             services.AddDbContext<SubscribeContext>(options => options.UseSqlServer(DBConnStr.connStr, sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
             services.AddDbContext<StandardContext>(options => options.UseSqlServer(DBConnStr.connStr, sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
+            //services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
+            //services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(DBConnStr.connStr, sqlServerOptionsAction => sqlServerOptionsAction.CommandTimeout(60)));
 
             services.AddOptions();
 
