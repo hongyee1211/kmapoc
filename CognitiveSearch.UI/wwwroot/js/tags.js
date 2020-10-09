@@ -10,7 +10,7 @@ function GetTagsHTML(result) {
 
     var i = 0;
 
-    if (tags[0].key == "people") [tags[0], tags[3]] = [tags[3], tags[0]];
+    if (tags[0].key == "people") [tags[0], tags[4]] = [tags[4], tags[0]];
     
     tags.forEach(function (item, index, array) {
         var name = item.key;
