@@ -11,6 +11,7 @@ body {
     position: relative;
     padding-bottom: 6rem;
     background-color: #333 !important;
+    overflow-x:hidden;
 }
 
 .area-list {
@@ -909,6 +910,7 @@ body {
 
 .ms-Label {
     color: #fff !important;
+    max-width: 170px;
 }
 
 
@@ -976,8 +978,8 @@ b {
 
 .keyPhaseThumbs {
     position: absolute;
-    float: right;
-    display: unset;
+    min-height:20px;
+    min-width:20px;
 }
 
 .menuThumbsUp {
