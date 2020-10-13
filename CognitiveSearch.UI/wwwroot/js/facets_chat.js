@@ -187,7 +187,13 @@ function ChatHandleMultipleFacets(filters) {
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i]
         var result = chatSelectedFacets.find(function (f) { return f.key === key; });
-        if (result) {
+        if (filters[key].length <= 0) {
+            //ignore
+        }
+        else if (result) {
+            if (result.value == null) {
+                result.value = [];
+            }
             result.value = result.value.concat(filters[key].filter((item) => result.value.indexOf(item) < 0))
         }
         else {

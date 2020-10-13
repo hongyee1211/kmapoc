@@ -538,6 +538,7 @@ pre {
     width: 200% !important;
 }
 
+
 .search-ratings-star-cluster {
     color: #fff;
     text-align: center;
@@ -978,8 +979,10 @@ b {
 
 .keyPhaseThumbs {
     position: absolute;
-    min-height:20px;
-    min-width:20px;
+    min-height: 20px;
+    min-width: 20px;
+    float: right;
+    display: unset;
 }
 
 .menuThumbsUp {
@@ -1170,6 +1173,7 @@ b {
     background-repeat: no-repeat;
     margin-right: 10px;
     margin-bottom: 10px;
+    object-fit: contain;
 }
 
 .iso_icon {

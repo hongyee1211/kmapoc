@@ -5,133 +5,76 @@
 }
 @model CognitiveSearch.UI.Models.ChatViewModel
 <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="~/js/results_chat.js"></script>
+<script src="~/js/facets_chat.js"></script>
+<script src="~/js/search_chat.js"></script>
 <script src="~/js/chat.js"></script>
 <script>
     aspViewModel = @Html.Raw(Json.Serialize(Model));
     chatUserId = aspViewModel.userId;
     chatToken = aspViewModel.token;
-    var chatbotSocket = null;
-    var conversationId = null;
     $(function () {
         $("#chatMessage").keyup(function (e) {
             if (e.keyCode === 13) {
                 sendChatMessage();
             }
         });
-        $.ajax({
-            url: 'https://directline.botframework.com/v3/directline/conversations',
-            type: 'POST',
-            contentType: 'application/json',
-            headers: {
-                'Authorization': 'Bearer ' + chatToken
-            },
-            success: function (result) {
-                chatbotSocket = new WebSocket(result.streamUrl);
-                conversationId = result.conversationId;
-                chatbotSocket.onmessage = function (event) {
-                    if (event.data != "") {
-                        let activities = JSON.parse(event.data).activities;
-                        for (i = 0; i < activities.length; i++) {
-                            if (activities[i].from.id != chatUserId) {
-                                createMessage("left", activities[i].text)
-                                if (activities[i].channelData != null) {
-                                    ChatHandleMultipleFacets(activities[i].channelData["Filters"])
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        console.log(event);
-                    }
-                }
-            },
-            error: function (error) {
-                console.log(error)
-            }
+        $(window).resize(function () {
+            let documentDiv = document.getElementById('chat-doc-details-div')
+            documentDiv.clientHeight;
+            let standardsDiv = $("#chat-doc-standards-div")
+            standardsDiv.css("min-height", documentDiv.clientHeight - 10 + 'px');
         });
+        ConnectToChatBot();
     });
-
-    function sendChatMessage() {
-        if (chatbotSocket != null) {
-            let message = $('#chatMessage').val();
-            createMessage("right", message);
-            $('#chatMessage').val('');
-            $.ajax({
-                url: 'https://directline.botframework.com/v3/directline/conversations/' + conversationId + '/activities',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    "locale": "en-EN",
-                    "type": "message",
-                    "from": {
-                        "id": chatUserId
-                    },
-                    "text": message,
-                }),
-                headers: {
-                    'Authorization': 'Bearer ' + chatToken
-                },
-                success: function (result) {
-                    console.log(result)
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            });
-        }
-    }
-
-
-
-    function createMessage(chatSide,message) {
-        let sideClass = "right-msg"
-        let userImage = "https://image.flaticon.com/icons/svg/145/145867.svg"
-        if (chatSide == "left") {
-            sideClass = "left-msg"
-            userImage = "https://image.flaticon.com/icons/svg/327/327779.svg"
-        }
-
-        let chatHTML = `<div class="msg ${sideClass}">
-                                <div class="msg-img"
-                                     style="background-image: url(${userImage})"></div>
-
-                                <div class="msg-bubble">
-                                    <div class="msg-text">
-                                        ${message}
-                                    </div>
-                                </div>
-                            </div>`
-        let chatArea = $("#msger-chat-area");
-        chatArea.append(chatHTML)
-        //chatArea.animate({ scrollTop: chatArea.scrollHeight }, 'slow');
-
-        //jquery scroll height not working as expected
-        var objDiv = document.getElementById("msger-chat-area");
-        objDiv.scrollTop = objDiv.scrollHeight;
-    }
 </script>
 
 <div id="main-display-container">
     <div class="row">
-        <div id="chat-container" class="col-md-3">
-            <div id="results-container" class="row">
-                <div class="col-md-12" style="height: 70vh;">
-                    <section class="msger">
-                        <header class="msger-header">
-                        </header>
-                        <main class="msger-chat" id="msger-chat-area">
-                        </main>
+        <div class="col-md-10">
+            <div class="row">
+                <div id="chat-container" class="col-md-4">
+                    <div id="results-container" class="row">
+                        <div class="col-md-12" style="height: 70vh;">
+                            <section class="msger">
+                                <header class="msger-header">
+                                </header>
+                                <main class="msger-chat" id="msger-chat-area">
+                                </main>
 
-                        <div class="msger-inputarea">
-                            <input type="text" class="msger-input" id="chatMessage" placeholder="Enter your message...">
-                            <button onclick="sendChatMessage();" class="msger-send-btn">Send</button>
+                                <div class="msger-inputarea">
+                                    <input type="text" class="msger-input" id="chatMessage" placeholder="Enter your message...">
+                                    <button onclick="sendChatMessage();" class="msger-send-btn">Send</button>
+                                </div>
+                            </section>
                         </div>
-                    </section>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="webchat" role="main"></div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-7">
-            <div id="webchat" role="main"></div>
+            <div class="row" style="display:block; margin-top:50px">
+                <div>
+                    <div style="margin:0 10px 10px 10px;">
+                        <h2 id="chat-doc-count" style="margin-top:-10px; font-size:14px; display:inline; color: #fff;"> </h2>
+                        <div id="maps-viewer" class="hide"></div>
+                        <div style="display:inline;position: relative;top:-10px;left:10px;">
+                            <span id="loading-indicator" class="ms-Spinner ms-Spinner--large" style="display:none;"></span>
+                        </div>
+                    </div>
+                    <div id="chat-doc-details-div" class="col-md-9">
+                    </div>
+                    <div class="col-md-3">
+                        <div id="chat-doc-standards-div" class="chat-search-row-standards hide">
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <ul id="chat-paginationFooter" class="pagination pull-left"></ul>
+                </div>
+            </div>
         </div>
         <div class="col-md-2">
             <div>

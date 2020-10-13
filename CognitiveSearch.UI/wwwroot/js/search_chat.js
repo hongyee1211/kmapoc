@@ -42,15 +42,30 @@ function ChatUpdate(viewModel) {
 
     var data = viewModel.documentResult;
     var standards = viewModel.standards;
-    chatDocumentCount = data.count;
-    chatResults = data.results;
+    documentCount = data.count;
+    results = data.results;
     chatFacets = data.facets;
-    chatTags = data.tags;
-    chatDocumentToken = data.token;
-    chatSearchId = data.searchId;
+    tags = data.tags;
+    token = data.token;
+    searchId = data.searchId;
 
     //Facets
     ChatUpdateFacets();
+
+    //Results List
+    ChatUpdateResults(data, "#chat-doc-count","#chat-doc-details-div");
+
+    //// Standards List
+    ChatUpdateStandards(standards);
+
+    ////Map
+    //ChatUpdateMap(data);
+
+    ////Pagination
+    ChatUpdatePagination(data.count);
+
+    //// Log Search Events
+    //ChatLogSearchAnalytics(data.count);
 
     //Filters
     ChatUpdateFilterReset();

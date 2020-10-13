@@ -169,3 +169,21 @@
     height: 100%;
     width: 100%;
 }
+
+.chat-max-lines {
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    line-height: 1.8em;
+}
+
+.chat-search-row-standards {
+    background-color: #666;
+    border-radius: 10px;
+    margin: 10px 10px 10px -20px !important;
+    padding: 10px;
+    text-align: left;
+    color: #fff;
+    width: 100% !important;
+}

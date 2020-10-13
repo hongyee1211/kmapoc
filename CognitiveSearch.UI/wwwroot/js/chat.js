@@ -1,5 +1,7 @@
 ﻿var chatContext = null;
 var categoryTypeList = ["Abbreviation", "Component", "Equipment Class", "FMEA", "Manufacturer", "Plant Code", "Standards"];
+var chatbotSocket = null;
+var conversationId = null;
 
 $(document).bind("click", function (event) {
     let categoryMenu = document.getElementById("category-rating-menu");
@@ -59,4 +61,97 @@ function CategoryLabeling(category, currentCategory, value) {
             //do nothing
         }
     )
+}
+
+function ConnectToChatBot() {
+    $.ajax({
+        url: 'https://directline.botframework.com/v3/directline/conversations',
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + chatToken
+        },
+        success: function (result) {
+            chatbotSocket = new WebSocket(result.streamUrl);
+            conversationId = result.conversationId;
+            chatbotSocket.onmessage = function (event) {
+                if (event.data != "") {
+                    let activities = JSON.parse(event.data).activities;
+                    for (i = 0; i < activities.length; i++) {
+                        if (activities[i].from.id != chatUserId) {
+                            createMessage("left", activities[i].text)
+                            if (activities[i].channelData != null) {
+                                ChatHandleMultipleFacets(activities[i].channelData["Filters"].Entities)
+                            }
+                        }
+                    }
+                }
+                else {
+                    console.log(event);
+                }
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+}
+
+function sendChatMessage() {
+    if (chatbotSocket != null) {
+        let message = $('#chatMessage').val();
+        createMessage("right", message);
+        $('#chatMessage').val('');
+        $.ajax({
+            url: 'https://directline.botframework.com/v3/directline/conversations/' + conversationId + '/activities',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "locale": "en-EN",
+                "type": "message",
+                "from": {
+                    "id": chatUserId
+                },
+                "text": message,
+            }),
+            headers: {
+                'Authorization': 'Bearer ' + chatToken
+            },
+            success: function (result) {
+                console.log(result)
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+    }
+}
+
+
+
+function createMessage(chatSide, message) {
+    let sideClass = "right-msg"
+    let userImage = "https://image.flaticon.com/icons/svg/145/145867.svg"
+    if (chatSide == "left") {
+        sideClass = "left-msg"
+        userImage = "https://image.flaticon.com/icons/svg/327/327779.svg"
+    }
+
+    let chatHTML = `<div class="msg ${sideClass}">
+                                <div class="msg-img"
+                                     style="background-image: url(${userImage})"></div>
+
+                                <div class="msg-bubble">
+                                    <div class="msg-text">
+                                        ${message}
+                                    </div>
+                                </div>
+                            </div>`
+    let chatArea = $("#msger-chat-area");
+    chatArea.append(chatHTML)
+    //chatArea.animate({ scrollTop: chatArea.scrollHeight }, 'slow');
+
+    //jquery scroll height not working as expected
+    var objDiv = document.getElementById("msger-chat-area");
+    objDiv.scrollTop = objDiv.scrollHeight;
 }
