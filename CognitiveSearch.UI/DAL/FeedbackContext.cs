@@ -19,6 +19,8 @@ namespace CognitiveSearch.UI.DAL
         public DbSet<FBCategoryRatingModel> CategoryRating { get; set; }
         public DbSet<FBTagAnnotationModel> TagAnnotations { get; set; }
 
+        public DbSet<FBCategoryTagAnnotationModel> CategoryTagAnnotations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<FeedbackModel>(feedback =>
@@ -54,6 +56,11 @@ namespace CognitiveSearch.UI.DAL
             {
                 feedback.HasKey(c => new { c.searchId, c.category, c.name });
                 feedback.ToTable("FeedbackCategoryRatings");
+            });
+            modelBuilder.Entity<FBCategoryTagAnnotationModel>(feedback =>
+            {
+                feedback.HasKey(c => new { c.searchId, c.tag });
+                feedback.ToTable("CategoryTagAnnotations");
             });
             modelBuilder.Entity<FBTagAnnotationModel>(feedback =>
             {

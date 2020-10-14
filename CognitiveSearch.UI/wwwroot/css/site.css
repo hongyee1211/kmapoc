@@ -11,6 +11,7 @@ body {
     position: relative;
     padding-bottom: 6rem;
     background-color: #333 !important;
+    overflow-x:hidden;
 }
 
 .area-list {
@@ -418,7 +419,7 @@ pre {
     text-overflow: ellipsis;
     word-wrap: break-word;
     overflow: hidden;
-    max-height: 10em;
+    max-height: 10.8em;
     line-height: 1.8em;
 }
 
@@ -536,6 +537,7 @@ pre {
     color: #fff;
     width: 200% !important;
 }
+
 
 .search-ratings-star-cluster {
     color: #fff;
@@ -909,6 +911,7 @@ body {
 
 .ms-Label {
     color: #fff !important;
+    max-width: 170px;
 }
 
 
@@ -976,6 +979,8 @@ b {
 
 .keyPhaseThumbs {
     position: absolute;
+    min-height: 20px;
+    min-width: 20px;
     float: right;
     display: unset;
 }
@@ -1168,6 +1173,7 @@ b {
     background-repeat: no-repeat;
     margin-right: 10px;
     margin-bottom: 10px;
+    object-fit: contain;
 }
 
 .iso_icon {

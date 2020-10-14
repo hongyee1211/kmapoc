@@ -195,6 +195,34 @@ namespace CognitiveSearch.UI.Helpers
                 //as opposed to searching first before adding
             }
         }
+
+        public void AddCategoryAnnotation(int searchId, string annotation, string tag)
+        {
+            var feedbackModel = new FBCategoryTagAnnotationModel();
+            feedbackModel.searchId = searchId;
+            feedbackModel.tag = tag;
+            feedbackModel.annotation = annotation;
+            var existing = this._context.CategoryTagAnnotations.FirstOrDefault(f => f.searchId.Equals(feedbackModel.searchId) && f.tag.Equals(feedbackModel.tag));
+
+            if (existing == null)
+            {
+                this._context.CategoryTagAnnotations.Add(feedbackModel);
+            }
+            else
+            {
+                feedbackModel.categoryAnnotationFeedbackId = existing.categoryAnnotationFeedbackId;
+                this._context.Entry(existing).CurrentValues.SetValues(feedbackModel);
+            }
+            try
+            {
+                this._context.SaveChanges();
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException err)
+            {
+                //Ignore as it will ignore err updates with same query+user id
+                //as opposed to searching first before adding
+            }
+        }
     }
 }
 

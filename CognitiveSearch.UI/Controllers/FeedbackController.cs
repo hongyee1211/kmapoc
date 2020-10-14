@@ -47,5 +47,12 @@ namespace CognitiveSearch.UI.Controllers
         {
             feedbackHandler.AddAnnotation(searchFbId, documentName, annotation, tag);
         }
+
+        [Route("AnnotateCategoryTags")]
+        [HttpPost]
+        public void AnnotateTags([FromForm] int searchFbId, [FromForm] string annotation, [FromForm] string tag)
+        {
+            feedbackHandler.AddCategoryAnnotation(searchFbId, annotation, tag);
+        }
     }
 }

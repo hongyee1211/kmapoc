@@ -24,19 +24,22 @@ namespace CognitiveSearch.UI.Helpers
 
             foreach (SearchFacet facet in facets)
             {
-                switch (facet.Key)
+                if (facet.Value != null)
                 {
-                    case "EquipmentClass":
-                        equipmentClass = equipmentClass.Union(facet.Value);
-                        break;
-                    case "FailureMode":
-                        failureMode = failureMode.Union(facet.Value);
-                        break;
-                    case "Components":
-                        components = components.Union(facet.Value);
-                        break;
-                    default:
-                        break;
+                    switch (facet.Key)
+                    {
+                        case "EquipmentClass":
+                            equipmentClass = equipmentClass.Union(facet.Value);
+                            break;
+                        case "FailureMode":
+                            failureMode = failureMode.Union(facet.Value);
+                            break;
+                        case "Components":
+                            components = components.Union(facet.Value);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 

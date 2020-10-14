@@ -1,0 +1,164 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model CognitiveSearch.UI.Models.ChatViewModel
+<link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="~/js/results_chat.js"></script>
+<script src="~/js/facets_chat.js"></script>
+<script src="~/js/search_chat.js"></script>
+<script src="~/js/chat.js"></script>
+<script>
+    aspViewModel = @Html.Raw(Json.Serialize(Model));
+    chatUserId = aspViewModel.userId;
+    chatToken = aspViewModel.token;
+    applicationInstrumentationKey = null;
+    $(function () {
+        $("#chatMessage").keyup(function (e) {
+            if (e.keyCode === 13) {
+                sendChatMessage();
+            }
+        });
+        $('#details-pivot-content').on('contextmenu', ShowAnnotationContextMenu);
+        $('#reference-viewer').on('contextmenu', ShowAnnotationContextMenu);
+        $(document).bind("click", function (event) {
+            document.getElementById("annotation-menu").className = "hide-contextmenu";
+        });
+        $(window).resize(function () {
+            let documentDiv = document.getElementById('chat-doc-details-div')
+            documentDiv.clientHeight;
+            let standardsDiv = $("#chat-doc-standards-div")
+            standardsDiv.css("min-height", documentDiv.clientHeight - 10 + 'px');
+        });
+        ConnectToChatBot();
+    });
+</script>
+
+<div class="hide-contextmenu" id="annotation-menu">
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('Abbreviation');">Mark as Abbreviation</span>
+    </div>
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('Component');">Mark as Component</span>
+    </div>
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('Equipment Class');">Mark as Equipment Class</span>
+    </div>
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('Failure Mode');">Mark as Failure Mode</span>
+    </div>
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('Manufacturer');">Mark as Manufacturer</span>
+    </div>
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('People');">Mark as People</span>
+    </div>
+    <div class="cm-row">
+        <span class="cm-element" onclick="AnnotateSelection('Plant Code');">Mark as Plant Code</span>
+    </div>
+</div>
+
+<!--Details Modal-->
+<div class="modal" id="details-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="details-modal-body" class="modal-body">
+                <div class="row" style="height: 100%;">
+                    <div class="modal-control-group">
+                        <span id="close-control" class="modal-control" data-dismiss="modal"><i class="ms-Icon ms-Icon--Clear"></i></span>
+                    </div>
+                    <div id="details-pivot" class="ms-Pivot col-md-8">
+                        <ul id="details-pivot-links" class="ms-Pivot-links"></ul>
+                        <div id="details-pivot-content">
+                        </div>
+                    </div>
+                    <div id="tags-panel" class="col-md-4">
+                        <div id="transcript-search-box" class="ms-SearchBox">
+                            <input class="ms-SearchBox-field" type="text" value="" id="transcript-search-input" placeholder="Search...">
+                            <label class="ms-SearchBox-label">
+                                <i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+                            </label>
+                            <div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
+                                <button class="ms-CommandButton-button">
+                                    <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Clear"></i></span>
+                                    <span class="ms-CommandButton-label"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="details-viewer" style="display:none"></div>
+                        <div id="tag-viewer"></div>
+                        <hr />
+                        <div id="reference-viewer"></div>
+                    </div>
+                    <input id="result-id" type="hidden" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="main-display-container">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="row">
+                <div id="chat-container" class="col-md-4">
+                    <div id="results-container" class="row">
+                        <div class="col-md-12" style="height: 70vh;">
+                            <section class="msger">
+                                <header class="msger-header">
+                                </header>
+                                <main class="msger-chat" id="msger-chat-area">
+                                </main>
+
+                                <div class="msger-inputarea">
+                                    <input type="text" class="msger-input" id="chatMessage" placeholder="Enter your message...">
+                                    <button onclick="sendChatMessage();" class="msger-send-btn">Send</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="webchat" role="main"></div>
+                </div>
+            </div>
+            <div class="row" style="display:block; margin-top:50px">
+                <div>
+                    <div style="margin:0 10px 10px 10px;">
+                        <h2 id="chat-doc-count" style="margin-top:-10px; font-size:14px; display:inline; color: #fff;"> </h2>
+                        <div id="maps-viewer" class="hide"></div>
+                        <div style="display:inline;position: relative;top:-10px;left:10px;">
+                            <span id="loading-indicator" class="ms-Spinner ms-Spinner--large" style="display:none;"></span>
+                        </div>
+                    </div>
+                    <div id="chat-doc-details-div" class="col-md-9">
+                    </div>
+                    <div class="col-md-3">
+                        <div id="chat-doc-standards-div" class="chat-search-row-standards hide">
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <ul id="chat-paginationFooter" class="pagination pull-left"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div>
+                <div>
+                    <div class="hide" id="chat-search-container">
+                        <button onclick="ChatTriggerSearch();" class="chat-filter-btn">Filter</button>
+                    </div>
+                    <div id="chatFilterReset"></div>
+                    <div class="widget-content">
+                        <div id="chat-facet-nav" class="facet-nav"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hide-contextmenu" id="category-rating-menu">
+</div>

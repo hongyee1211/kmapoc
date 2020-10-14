@@ -197,7 +197,7 @@ function UpdateMap(data) {
     }
 }
 
-function UpdateStandards(standards) {
+function UpdateStandards(standards, standardDom = "#doc-standards-div") {
     var resultsHtml = "";
 
     resultsHtml += '<div class="search-row-standards" style="min-height: 2100px !important;">';
@@ -217,16 +217,16 @@ function UpdateStandards(standards) {
         resultsHtml += '<div><img src="' + iconCSS + '" class="standards_icon"><h5 style="position: absolute;float: right;display: unset; margin-top: 0px;width: 130%">' + standards[i] + '</h5></div>';
     }
     resultsHtml += "</div>";
-    $("#doc-standards-div").html(resultsHtml);
+    $(standardDom).html(resultsHtml);
 }
 
-function UpdateResults(data) {
+function UpdateResults(data, countDom = "#doc-count", detailsDom ="#doc-details-div") {
     var resultsHtml = '';
-    let search = document.getElementById("q").value;
+    let search = "*";
     const regex = /"/gi;
 
     search = search.replaceAll(regex, '&quot;');
-    $("#doc-count").html(` Available Results: ${data.count}`);
+    $(countDom).html(` Available Results: ${data.count}`);
 
     for (var i = 0; i < data.results.length; i++) {
 
@@ -274,7 +274,7 @@ function UpdateResults(data) {
 
         var icon = " ms-Icon--Page";
         var id = azDocument[data.idField]; 
-        var tags = GetTagsHTML(azDocument);
+        var tags = GetTagsHTML(azDocument,);
         var path;
 
         // get path
@@ -352,7 +352,7 @@ function UpdateResults(data) {
             }
 
             var tagsContent = tags ? `<div class="results-body">
-                                        <div id="tagdiv${i}" class="tag-container max-lines" style="margin-top:10px;">${tags}</div>
+                                        <div id="tagdiv${i}" class="tag-container chat-max-lines" style="margin-top:10px;">${tags}</div>
                                     </div>` : "";
             // display:none
             // <div class="col-md-1"><img id="tagimg${i}" src="/images/expand.png" height="30px" onclick="event.stopPropagation(); ShowHideTags(${i});"></div>
@@ -430,7 +430,7 @@ function UpdateResults(data) {
         }
     }
 
-    $("#doc-details-div").html(resultsHtml);
+    $(detailsDom).html(resultsHtml);
 }
 
 function toggleRating(rating, rowId) {

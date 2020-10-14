@@ -20,6 +20,7 @@ using CognitiveSearch.UI.Services.ARM;
 using CognitiveSearch.UI.Services.GraphOperations;
 using CognitiveSearch.UI.DAL;
 using Microsoft.EntityFrameworkCore;
+using CognitiveSearch.UI.Helpers;
 
 namespace CognitiveSearch.UI
 {
@@ -58,7 +59,6 @@ namespace CognitiveSearch.UI
             //services.AddDbContext<SubscribeContext>(options => options.UseSqlServer(DBConnStr.connStr, sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
             //services.AddDbContext<StandardContext>(options => options.UseSqlServer(DBConnStr.connStr, sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
             //services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(DBConnStr.connStr, sqlServerOptionsAction => sqlServerOptionsAction.CommandTimeout(60)));
-
             //if using connection string stored in appsettings.json
             services.AddDbContext<FeedbackContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
             services.AddDbContext<SubscribeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => sqlServerOptions.CommandTimeout(60)));
@@ -114,6 +114,8 @@ namespace CognitiveSearch.UI
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
+
+            SecretHandler.initialize(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
