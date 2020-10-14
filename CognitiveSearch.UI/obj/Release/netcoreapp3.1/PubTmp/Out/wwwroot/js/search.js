@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 // Initialize global properties
-var q, sortType, tempdata, instrumentationKey;
+var q, sortType, tempdata, instrumentationKey, documentCount;
 var results = [];
 var facets = [];
 var selectedFacets = [];
@@ -50,8 +50,6 @@ function Search() {
 
 function UpdateResultsView() {
     // Get center of map to use to score the search results
-    console.log("search")
-
     //Pass the polygon filter to the query: mapPolygon.data.geometry.coordinates[0][1]
     var polygonString = "";
 
@@ -82,12 +80,16 @@ function Update(viewModel) {
 
     // Update UI controls to match view model incase we came from a direct link
     selectedFacets = viewModel.selectedFacets;
+    subscribed = viewModel.subscribed;
     q = viewModel.query;
+
     searchFbId = viewModel.searchFbId;
     $("#q").val(q);
     currentPage = viewModel.currentPage;
 
     var data = viewModel.documentResult;
+    var standards = viewModel.standards;
+    documentCount = data.count;
     results = data.results;
     facets = data.facets;
     tags = data.tags;
@@ -100,6 +102,9 @@ function Update(viewModel) {
 
     //Results List
     UpdateResults(data);
+
+    // Standards List
+    UpdateStandards(standards);
 
     //Map
     UpdateMap(data);
@@ -117,6 +122,7 @@ function Update(viewModel) {
 
     UpdateLocationBar();
 
+    $('#search-subscribe-cb').prop('checked', subscribed);
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 
     FabricInit();

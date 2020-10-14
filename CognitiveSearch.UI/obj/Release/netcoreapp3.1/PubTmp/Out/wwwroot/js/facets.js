@@ -1,6 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+function monitorCategoryTags(category, tag, action) {
+    $.post('/home/monitorcategorytags',
+        {
+            searchFbId: searchFbId,
+            category: category,
+            tag: tag,
+            rating: action
+        },
+        function (data) {
+            //do nothing
+        }
+    )
+}
+
 //Filters
 function UpdateFilterReset() {
     // This allows users to remove filters
@@ -75,6 +89,10 @@ function UpdateFacets() {
                 cssClass = "Manufacturer";
             } else if (name == "PlantCode") {
                 cssClass = "PlantCode";
+            } else if (name == "Component") {
+                cssClass = "Component";
+            } else if (name == "FailureMode") {
+                cssClass = "FailureMode";
             }
 
             facetResultsHTML += `<div class="panel panel-default">
@@ -95,11 +113,16 @@ function UpdateFacets() {
             if (data !== null) {
                 for (var j = 0; j < data.length; j++) {
                     if (data[j].value.toString().length < 100) {
+                        var idName = name + "_" + j;
                         facetResultsHTML += `<div class="ms-CheckBox">
-                                            <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" onclick="ChooseFacet('${name}','${data[j].value}', '${j}');">
-                                            <label id="${name}_${j}" role="checkbox" class="ms-CheckBox-field" tabindex="0" aria-checked="false" name="checkboxa">
-                                                <span class="ms-Label">${data[j].value} (${data[j].count})</span> 
+                                            <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" onclick="ChooseFacet('${name}','${data[j].value}','${j}');"></input>
+                                            <label id="label-${idName}" role="checkbox" class="ms-CheckBox-field" tabindex="0" aria-checked="false" name="checkboxa">
+                                                <span class="ms-Label">
+                                                    ${data[j].value} (${data[j].count})
+                                                </span> 
                                             </label>
+                                            <div class="keyPhaseThumbs menuThumbsUp" style="margin: 7px 3px;" onclick="monitorCategoryTags('${name}','${data[j].value}', ${2});"></div>
+                                            <div class="keyPhaseThumbs menuThumbsDown" style="margin: 7px 3px 7px 28px;" onclick="monitorCategoryTags('${name}','${data[j].value}', ${1});"></div>
                                         </div>`;
                     }
                 }

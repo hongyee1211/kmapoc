@@ -4,7 +4,9 @@ function ChatUpdateFilterReset() {
     var htmlString = '';
     $("#chatFilterReset").html("");
 
-    if (chatSelectedFacets && chatSelectedFacets.length > 0) {
+    let newFacets = tempSelectedFacets.concat(chatSelectedFacets);
+
+    if (newFacets && newFacets.length > 0) {
 
         htmlString += `<div class="panel panel-default">
                             <div class="panel-heading">
@@ -13,7 +15,7 @@ function ChatUpdateFilterReset() {
                             <div>
                                 <div class="panel-body">`;
 
-        chatSelectedFacets.forEach(function (item, index, array) { // foreach facet with a selected value
+        newFacets.forEach(function (item, index, array) { // foreach facet with a selected value
             var name = item.key;
             var result = chatFacets.filter(function (f) { return f.key === name; })[0];
 
@@ -45,12 +47,25 @@ function ChatRemoveFilter(facet, value) {
     if (result) { // if that facet exists
         let idx = result.value.indexOf(value);
         if (idx == 0 && result.value.length <= 1) {
-            chatSelectedFacets.splice(chatSelectedFacets.indexOf(result),1);
+            chatSelectedFacets.splice(chatSelectedFacets.indexOf(result), 1);
         }
         else {
             result.value.splice(idx, 1);
         }
         ChatUpdateFilterReset();
+    }
+    else {
+        result = tempSelectedFacets.find(function (f) { return f.key === facet });
+        if (result) {
+            let idx = result.value.indexOf(value);
+            if (idx == 0 && result.value.length <= 1) {
+                tempSelectedFacets.splice(tempSelectedFacets.indexOf(result), 1);
+            }
+            else {
+                result.value.splice(idx, 1);
+            }
+            ChatUpdateFilterReset();
+        }
     }
     var accordionResult = chatFacets.find(function (f) { return f.key === result.key; })
     if (accordionResult) {
@@ -184,9 +199,11 @@ function ChatChooseFacet(facet, value, position) {
 
 function ChatHandleMultipleFacets(filters) {
     let keys = Object.keys(filters);
+    chatSearchString = "";
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i]
-        var result = chatSelectedFacets.find(function (f) { return f.key === key; });
+        let tempKey = "temp" + keys[i]
+        var result = tempSelectedFacets.find(function (f) { return f.key === tempKey; });
         if (filters[key].length <= 0) {
             //ignore
         }
@@ -195,14 +212,21 @@ function ChatHandleMultipleFacets(filters) {
                 result.value = [];
             }
             result.value = result.value.concat(filters[key].filter((item) => result.value.indexOf(item) < 0))
+            for (let j = 0; j < filters[key].length; j++) {
+                chatSearchString += ",\"" + filters[key][j] + "\""
+            }
         }
         else {
-            chatSelectedFacets.push({
-                key: key,
+            tempSelectedFacets.push({
+                key: tempKey,
                 value: filters[key]
             })
+            chatSearchString += ",\"" + filters[key] + "\""
         }
     }
-    currentPage = 1;
+    if (chatSearchString == "") {
+        chatSearchString = "*"
+    }
+    chatCurrentPage = 1;
     ChatUpdateResultsView();
 }
