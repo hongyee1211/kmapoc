@@ -1,5 +1,5 @@
 ﻿var chatContext = null;
-var categoryTypeList = ["Abbreviation", "Component", "Equipment Class", "FMEA", "Manufacturer", "Plant Code", "Standards"];
+var categoryTypeList = ["Abbreviation", "Component", "Equipment Class", "Manufacturer", "People", "Plant Code"];
 var chatbotSocket = null;
 var conversationId = null;
 

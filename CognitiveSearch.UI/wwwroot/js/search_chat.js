@@ -1,4 +1,6 @@
 ﻿var chatSelectedFacets = [];
+var tempSelectedFacets = [];
+var chatSearchString = "*";
 var chatCurrentPage = 1;
 var chatDocumentCount = 0;
 var chatResults = [];
@@ -22,9 +24,19 @@ function ChatUpdateResultsView() {
         }
     }
 
+    chatSearchString = ""
+    for (let i = 0; i < tempSelectedFacets.length; i++) {
+        for (let j = 0; j < tempSelectedFacets[i].value.length; j++) {
+            chatSearchString += ",\"" + tempSelectedFacets[i].value[j] + "\""
+        }
+    }
+    if (chatSearchString == "") {
+        chatSearchString = "*"
+    }
+
     $.post('/home/searchview',
         {
-            q: "*",
+            q: chatSearchString,
             searchFacets: chatSelectedFacets,
             currentPage: chatCurrentPage,
             polygonString: polygonString
@@ -79,6 +91,6 @@ function ChatUpdate(viewModel) {
 }
 
 function ChatTriggerSearch() {
-    currentPage = 1;
+    chatCurrentPage = 1;
     ChatUpdateResultsView();
 }

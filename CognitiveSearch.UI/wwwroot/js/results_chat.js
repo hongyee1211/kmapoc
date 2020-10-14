@@ -244,7 +244,10 @@ function ChatUpdateResults(data, countDom = "#doc-count", detailsDom = "#doc-det
                                             </div>
                                             <div class="row">
                                                 <div class="search-result">
-                                                    <div class="col-md-12 col-search-details-padding">
+                                                    <div class="col-md-6 col-search-details-padding">
+                                                        ${contentPreview}
+                                                    </div>
+                                                    <div class="col-md-6 col-search-details-padding">
                                                         <h5>${name}</h5>
                                                         ${tagsContent}
                                                         ${resultContent}
