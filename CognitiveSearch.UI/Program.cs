@@ -29,7 +29,7 @@ namespace CognitiveSearch.UI
                .ConfigureAppConfiguration((ctx, builder) =>
                {
                    //to comment out if using connection string stored in appsettings.json
-                   var keyVaultEndpoint = GetKeyVaultEndpoint();
+                   /*var keyVaultEndpoint = GetKeyVaultEndpoint();
                    if (!string.IsNullOrEmpty(keyVaultEndpoint))
                    {
                        var azureServiceTokenProvider = new AzureServiceTokenProvider();
@@ -38,7 +38,7 @@ namespace CognitiveSearch.UI
                                azureServiceTokenProvider.KeyVaultTokenCallback));
                        builder.AddAzureKeyVault(
                            keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
-                   }
+                   }*/
                    //end of section to comment
                }
             ).UseStartup<Startup>()
