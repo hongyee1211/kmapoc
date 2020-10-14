@@ -210,10 +210,26 @@ function treeBoxes(urlService, jsonData) {
 					: (rectNode.height - rectNode.textMargin * 2)
 			})
 			.append('xhtml').html(function (d) {
+				var xhtmlTemp = "";
+				for (var z = 0; z < d.label.length; z++) {
+					var val = "";
+					if (d.label[z].nodeName) {
+						val = d.label[z].nodeName + ": " + d.label[z].label;
+					} else {
+						val = d.label[z].label;
+					}
+
+					if (z == (d.label.length - 1)) {
+						xhtmlTemp += '<h6>' + val + '</h6>';
+					} else {
+						xhtmlTemp += '<h6>' + val + '</h6><br>';
+					}
+					
+				}
 				return '<div style="width: '
 					+ (rectNode.width - rectNode.textMargin * 2) + 'px; height: '
 					+ (rectNode.height - rectNode.textMargin * 2) + 'px;" class="node-text wordwrap">'
-					+ '<h6>' + d.nodeName + '</h6>';
+					+ xhtmlTemp;
 					/*+ '<b>' + d.nodeName + '</b><br><br>'
 					+ '<b>Code: </b>' + d.code + '<br>'
 					+ '<b>Version: </b>' + d.version + '<br>'

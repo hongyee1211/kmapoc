@@ -82,6 +82,64 @@ function ChatUpdate(viewModel) {
     //Filters
     ChatUpdateFilterReset();
 
+    //Update Graph
+	var selectedData = "";
+	var message = "";
+	var name = "chatMessage=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			message = c.substring(name.length, c.length);
+		}
+	}
+
+
+	if (message.match(/give me all pumps manufactured by nuovo pignone at pgb/g)) {
+		document.getElementById("graph1").style.display = "block";
+		document.getElementById("graph2").style.display = "none";
+		document.getElementById("graph3").style.display = "none";
+	} else if (message.match(/give me the same for MLNG/g)) {
+		document.getElementById("graph1").style.display = "none";
+		document.getElementById("graph2").style.display = "block";
+		document.getElementById("graph3").style.display = "none";
+	} else if (message.match(/give me the failure mode for these pumps/g)) {
+		document.getElementById("graph1").style.display = "none";
+		document.getElementById("graph2").style.display = "none";
+		document.getElementById("graph3").style.display = "block";
+	}
+
+
+    /*var v3Example3 = {}
+    var selectedData = "";
+    var message = "";
+    var name = "chatMessage=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            message = c.substring(name.length, c.length);
+        }
+    }
+
+
+    if (message.match(/give me all pumps manufactured by nuovo pignone at pgb/g)) {
+        selectedData = v3Example1;
+    } else if (message.match(/give me the same for MLNG/g)) {
+        selectedData = v3Example2;
+    } else if (message.match(/give me the failure mode for these pumps/g)) {
+        selectedData = v3Example3;
+    }
+    treeBoxes('', selectedData.tree);*/
+
     let container = $("#chat-search-container")
     if (container.hasClass("hide")) {
         container.removeClass("hide");

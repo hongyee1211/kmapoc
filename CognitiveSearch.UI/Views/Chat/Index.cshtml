@@ -126,95 +126,297 @@
                     <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
                     <script src="https://d3js.org/d3.v3.min.js" type="text/javascript"></script>
                     <script src="~/js/tree-boxes.js" type="text/javascript"></script>
-                    <script>
-                        var v3Example = {
-                            "tree": {
-                                "nodeName": "OPU",
-                                "name": "OPU",
-                                "type": "type1",
-                                "label": "PGB - GPP A",
-                                "link": {
-                                    "name": "OPU",
-                                    "nodeName": "OPU",
-                                    "direction": "ASYN"
-                                },
-                                "children": [
-                                    {
-                                        "nodeName": "UNIT",
-                                        "name": "UNIT",
-                                        "type": "type2",
-                                        "label": "AGRU",
-                                        "link": {
-                                            "name": "UNIT",
-                                            "nodeName": "UNIT",
-                                            "direction": "SYNC"
+
+                    <img id="graph1" src="/images/graph1.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">
+                    <img id="graph2" src="/images/graph2.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">
+                    <img id="graph3" src="/images/graph3.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">
+
+                    @*<script>
+            var v3Example = {
+                "tree": {
+                    "nodeName": "OPU",
+                    "type": "type1",
+                    "label": [
+                        {
+                            "nodeName": "",
+                            "label": "PGB - GPP A"
+                        }],
+                    "link": {
+                        "nodeName": "OPU",
+                        "direction": "ASYN"
+                    },
+                    "children": [
+                        {
+                            "nodeName": "UNIT",
+                            "type": "type2",
+                            "label": [
+                                {
+                                    "nodeName": "",
+                                    "label": "AGRU"
+                                }],
+                            "link": {
+                                "nodeName": "UNIT",
+                                "direction": "SYNC"
+                            },
+                            "children": [
+                                {
+                                    "nodeName": "Equipment",
+                                    "type": "type3",
+                                    "label": [
+                                        {
+                                            "nodeName": "",
+                                            "label": "P2-201A"
+                                        }],
+                                    "info": [
+                                        {
+                                            "nodeName": "Class",
+                                            "label": "PUMP"
                                         },
-                                        "children": [
-                                            {
-                                                "nodeName": "Equipment",
-                                                "name": "Equipment",
-                                                "type": "type3",
-                                                "label": "P2-201A, Class: PUMP, Model: 8X16DSTHF/2ST",
-                                                "link": {
-                                                    "name": "Equipment",
-                                                    "nodeName": "Equipment",
-                                                    "direction": "SYNC"
+                                        {
+                                            "nodeName": "Model",
+                                            "label": "8X16DSTHF/2ST"
+                                        }],
+                                    "link": {
+                                        "nodeName": "Equipment",
+                                        "direction": "SYNC"
+                                    },
+                                    "children": [
+                                        {
+                                            "nodeName": "Manufacturer",
+                                            "type": "type4",
+                                            "label": [
+                                                {
+                                                    "nodeName": "",
+                                                    "label": "NUOVO PIGNONE"
+                                                }],
+                                            "link": {
+                                                "nodeName": "Manufacturer",
+                                                "direction": "SYNC"
+                                            }
+                                        },
+                                        {
+                                            "nodeName": "FailureCount",
+                                            "type": "type4",
+                                            "label": [
+                                                {
+                                                    "nodeName": "",
+                                                    "label": "FailureCount"
+                                                }],
+                                            "info": [
+                                                {
+                                                    "nodeName": "Priority 1",
+                                                    "label": "0"
                                                 },
-                                                "children": [
-                                                    {
-                                                        "nodeName": "Manufacturer",
-                                                        "name": "Manufacturer",
-                                                        "type": "type4",
-                                                        "label": "NUOVO PIGNONE",
-                                                        "link": {
-                                                            "name": "Manufacturer",
-                                                            "nodeName": "Manufacturer",
-                                                            "direction": "SYNC"
+                                                {
+                                                    "nodeName": "Priority 2",
+                                                    "label": "0"
+                                                }, {
+                                                    "nodeName": "Priority 3",
+                                                    "label": "25"
+                                                }],
+                                            "link": {
+                                                "nodeName": "FailureCount",
+                                                "direction": "SYNC"
+                                            }
+                                        },
+                                        {
+                                            "nodeName": "Component",
+                                            "type": "type4",
+                                            "label": [
+                                                {
+                                                    "nodeName": "",
+                                                    "label": "Component"
+                                                }],
+                                            "link": {
+                                                "nodeName": "Component",
+                                                "direction": "SYNC"
+                                            },
+                                            "children": [
+                                                {
+                                                    "nodeName": "Failure",
+                                                    "type": "type5",
+                                                    "label": [
+                                                        {
+                                                            "nodeName": "Code",
+                                                            "label": "CIVIL/SCAF"
                                                         },
-
-                                                    },
-                                                    {
-                                                        "nodeName": "FailureCount",
-                                                        "name": "FailureCount",
-                                                        "type": "type4",
-                                                        "label": "Priority 1: 0, Priority 2: 0, Priority 3: 25",
-                                                        "link": {
-                                                            "name": "FailureCount",
-                                                            "nodeName": "FailureCount",
-                                                            "direction": "SYNC"
+                                                        {
+                                                            "nodeName": "Description",
+                                                            "label": "Scafolding"
+                                                        }],
+                                                    "info": [
+                                                        {
+                                                            "nodeName": "Code",
+                                                            "label": ""
                                                         },
-
-                                                    },
-                                                    {
-                                                        "nodeName": "Component",
-                                                        "name": "Component",
-                                                        "type": "type4",
-                                                        "label": "Code: CIVIL/SCAF, Description: Scafolding",
-                                                        "link": {
-                                                            "name": "Component",
-                                                            "nodeName": "Component",
-                                                            "direction": "SYNC"
+                                                        {
+                                                            "nodeName": "StartDate",
+                                                            "label": "03-Jul-2007"
+                                                        }, {
+                                                            "nodeName": "EndDate",
+                                                            "label": "07-Jul-2007"
+                                                        }, {
+                                                            "nodeName": "ProblemCode",
+                                                            "label": "C-SCAF/SCSV"
+                                                        }, {
+                                                            "nodeName": "ProblemDesc",
+                                                            "label": "Scafolding Erect/Removal-Plant Maint. work"
+                                                        }, {
+                                                            "nodeName": "CauseCode",
+                                                            "label": "C-SCA/ERCT"
+                                                        }, {
+                                                            "nodeName": "CauseDesc",
+                                                            "label": "Erected only"
+                                                        }, {
+                                                            "nodeName": "Priority",
+                                                            "label": "3"
+                                                        }],
+                                                    "link": {
+                                                        "nodeName": "Failure",
+                                                        "direction": "SYNC"
+                                                    }
+                                                },
+                                                {
+                                                    "nodeName": "Failure",
+                                                    "type": "type5",
+                                                    "label": [
+                                                        {
+                                                            "nodeName": "Code",
+                                                            "label": "CIVIL/SCAF"
                                                         },
-                                                        "children": [
-                                                            {
-                                                                "nodeName": "Failure",
-                                                                "name": "Failure",
-                                                                "type": "type5",
-                                                                "label": "Failure List",
-                                                                "link": {
-                                                                    "name": "Failure",
-                                                                    "nodeName": "Failure",
-                                                                    "direction": "SYNC"
-                                                                }
-                                                            }]
-                                                    }]
-                                            }]
+                                                        {
+                                                            "nodeName": "Description",
+                                                            "label": "Scafolding"
+                                                        }],
+                                                    "info": [
+                                                        {
+                                                            "nodeName": "Code",
+                                                            "label": ""
+                                                        },
+                                                        {
+                                                            "nodeName": "StartDate",
+                                                            "label": "03-Jul-2007"
+                                                        }, {
+                                                            "nodeName": "EndDate",
+                                                            "label": "07-Jul-2007"
+                                                        }, {
+                                                            "nodeName": "ProblemCode",
+                                                            "label": "C-SCAF/SCSV"
+                                                        }, {
+                                                            "nodeName": "ProblemDesc",
+                                                            "label": "Scafolding Erect/Removal-Plant Maint. work"
+                                                        }, {
+                                                            "nodeName": "CauseCode",
+                                                            "label": "C-SCA/ERCT"
+                                                        }, {
+                                                            "nodeName": "CauseDesc",
+                                                            "label": "Erected only"
+                                                        }, {
+                                                            "nodeName": "Priority",
+                                                            "label": "3"
+                                                        }],
+                                                    "link": {
+                                                        "nodeName": "Failure",
+                                                        "direction": "SYNC"
+                                                    }
+                                                },
+                                                {
+                                                    "nodeName": "Failure",
+                                                    "type": "type5",
+                                                    "label": [
+                                                        {
+                                                            "nodeName": "Code",
+                                                            "label": "I99/I993"
+                                                        },
+                                                        {
+                                                            "nodeName": "Description",
+                                                            "label": "Signal Converters"
+                                                        }],
+                                                    "info": [
+                                                        {
+                                                            "nodeName": "Code",
+                                                            "label": ""
+                                                        },
+                                                        {
+                                                            "nodeName": "StartDate",
+                                                            "label": "12-Feb-2008"
+                                                        }, {
+                                                            "nodeName": "EndDate",
+                                                            "label": "30-Dec-2008"
+                                                        }, {
+                                                            "nodeName": "ProblemCode",
+                                                            "label": "I041/INCF"
+                                                        }, {
+                                                            "nodeName": "ProblemDesc",
+                                                            "label": "Control failure"
+                                                        }, {
+                                                            "nodeName": "CauseCode",
+                                                            "label": "INCF/CS"
+                                                        }, {
+                                                            "nodeName": "CauseDesc",
+                                                            "label": "Out of calibration/setting/tuning"
+                                                        }, {
+                                                            "nodeName": "Priority",
+                                                            "label": "3"
+                                                        }],
+                                                    "link": {
+                                                        "nodeName": "Failure",
+                                                        "direction": "SYNC"
+                                                    }
+                                                },
+                                                {
+                                                    "nodeName": "Failure",
+                                                    "type": "type5",
+                                                    "label": [
+                                                        {
+                                                            "nodeName": "Code",
+                                                            "label": "0M-STURB/LSYS"
+                                                        },
+                                                        {
+                                                            "nodeName": "Description",
+                                                            "label": "LUB SYSTEM"
+                                                        }],
+                                                    "info": [
+                                                        {
+                                                            "nodeName": "Code",
+                                                            "label": ""
+                                                        },
+                                                        {
+                                                            "nodeName": "StartDate",
+                                                            "label": "11-May-2018"
+                                                        }, {
+                                                            "nodeName": "EndDate",
+                                                            "label": "18-Jun-2018"
+                                                        }, {
+                                                            "nodeName": "ProblemCode",
+                                                            "label": "0M-STURB/LDPR"
+                                                        }, {
+                                                            "nodeName": "ProblemDesc",
+                                                            "label": "Low Discharge Pressure"
+                                                        }, {
+                                                            "nodeName": "CauseCode",
+                                                            "label": "M-FILTER/SPLO"
+                                                        }, {
+                                                            "nodeName": "CauseDesc",
+                                                            "label": "Solid Particles in Lubrication Oil"
+                                                        }, {
+                                                            "nodeName": "Priority",
+                                                            "label": "3"
+                                                        }],
+                                                    "link": {
+                                                        "nodeName": "Failure",
+                                                        "direction": "SYNC"
+                                                    }
+                                                }]
+                                        }]
+                                }]
 
-                                    }]
-                            }
-                        }
-                        treeBoxes('', v3Example.tree);
-                    </script>
+                        }]
+                }
+            }
+
+            treeBoxes('', v3Example.tree);
+        </script>*@
                 </div>
             </div>
             <div class="row" style="display:block; margin-top:50px">

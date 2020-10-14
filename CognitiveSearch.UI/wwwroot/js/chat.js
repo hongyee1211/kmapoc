@@ -100,6 +100,14 @@ function ConnectToChatBot() {
 function sendChatMessage() {
     if (chatbotSocket != null) {
         let message = $('#chatMessage').val();
+
+        // tmp set cookies
+        var d = new Date();
+        d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = "chatMessage=" + message + ";" + expires + ";path=/";
+
+
         createMessage("right", message);
         $('#chatMessage').val('');
         $.ajax({
