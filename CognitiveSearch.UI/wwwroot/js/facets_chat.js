@@ -230,35 +230,3 @@ function ChatHandleMultipleFacets(filters) {
     chatCurrentPage = 1;
     ChatUpdateResultsView();
 }
-
-function ChatUpdatePagination(docCount) {
-    var totalPages = Math.round(docCount / 10);
-    // Set a max of 5 items and set the current page in middle of pages
-    var startPage = currentPage;
-
-    var maxPage = startPage + 5;
-    if (totalPages < maxPage)
-        maxPage = totalPages + 1;
-    var backPage = parseInt(chatCurrentPage) - 1;
-    if (backPage < 1)
-        backPage = 1;
-    var forwardPage = parseInt(chatCurrentPage) + 1;
-
-    var htmlString = "";
-    if (chatCurrentPage > 1) {
-        htmlString = `<li><a href="javascript:void(0)" onclick="ChatGoToPage('${backPage}')" class="ms-Icon ms-Icon--ChevronLeftMed"></a></li>`;
-    }
-
-    htmlString += '<li class="active"><a href="#">' + currentPage + '</a></li>';
-
-    if (chatCurrentPage <= totalPages) {
-        htmlString += `<li><a href="javascript:void(0)" onclick="ChatGoToPage('${forwardPage}')" class="ms-Icon ms-Icon--ChevronRightMed"></a></li>`;
-    }
-    $("#pagination").html(htmlString);
-    $("#chat-paginationFooter").html(htmlString);
-}
-
-function ChatGoToPage(page) {
-    chatCurrentPage = page;
-    ChatUpdateResultsView();
-}
