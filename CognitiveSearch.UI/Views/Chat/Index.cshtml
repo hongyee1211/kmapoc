@@ -17,6 +17,7 @@
     chatToken = aspViewModel.token;
     applicationInstrumentationKey = null;
     $(function () {
+        $('.selectpicker').selectpicker('val', ['mustard', 'Relish']);
         $("#chatMessage").keyup(function (e) {
             if (e.keyCode === 13) {
                 sendChatMessage();
@@ -102,9 +103,9 @@
 
 <div id="main-display-container">
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="row">
-                <div id="chat-container" class="col-md-4">
+                <div id="chat-container" class="col-md-3">
                     <div id="results-container" class="row">
                         <div class="col-md-12" style="height: 70vh;">
                             <section class="msger">
@@ -121,18 +122,52 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <ct-visualization id="tree-container"></ct-visualization>
-                    <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-                    <script src="https://d3js.org/d3.v3.min.js" type="text/javascript"></script>
-                    <script src="~/js/tree-boxes.js" type="text/javascript"></script>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div id="chat-filters">
+                        </div>
+                    </div>
+                    <div class="row">
+                        @*Graph code goes here
+                            <ct-visualization id="tree-container"></ct-visualization>
+        <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <script src="https://d3js.org/d3.v3.min.js" type="text/javascript"></script>
+        <script src="~/js/tree-boxes.js" type="text/javascript"></script>*@
 
-                    @*<img id="graph1" src="/images/graph1.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">
-                    <img id="graph2" src="/images/graph2.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">
-                    <img id="graph3" src="/images/graph3.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">*@
+                        @*<img id="graph1" src="/images/graph1.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">
+        <img id="graph2" src="/images/graph2.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">
+        <img id="graph3" src="/images/graph3.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">*@
+                    </div>
 
+                        @*<div id="chat-filters">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger">
+                        Action
+                    </button>
+                    <div id="opu-dropdown-container" class="dropdown-menu show">
+                        <div class="ms-CheckBox chat-checkbox">
+                            <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" onclick="ChatChooseFacet('${name}','${data[j].value}','${j}');"></input>
+                            <label id="chat-label-1" role="checkbox" class="ms-CheckBox-field" tabindex="0" aria-checked="false" name="checkboxa" onclick="ChatChooseFacet('${name}','${data[j].value}','${j}');">
+                                <span class="ms-Label">
+                                    1 (20)
+                                </span>
+                            </label>
+                            <div class="chat-facet-thumbs-up menuThumbsDown" style="margin: 7px 3px 7px 7px;" onclick="ShowCategoryContextMenu(event,'${name}','${data[j].value}');"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div>*@
+                        @*<ct-visualization id="tree-container"></ct-visualization>
+            <script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+            <script src="https://d3js.org/d3.v3.min.js" type="text/javascript"></script>
+            <script src="~/js/tree-boxes.js" type="text/javascript"></script>*@
+
+                        @*<img id="graph1" src="/images/graph1.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">
+            <img id="graph2" src="/images/graph2.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">
+            <img id="graph3" src="/images/graph3.png" alt="Girl in a jacket" width="700" height="400" style="display: none; margin-top: 25px;">*@
+
+                    </div>
+                </div>
             <div class="row" style="display:block; margin-top:50px">
                 <div>
                     <div style="margin:0 10px 10px 10px;">
@@ -154,7 +189,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="hide" id="chat-search-container">
+            <button onclick="ChatTriggerSearch();" class="chat-filter-btn">Search</button>
+        </div>
+        @*<div class="col-md-2">
             <div>
                 <div>
                     <div class="hide" id="chat-search-container">
@@ -166,7 +204,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
 </div>
 <div class="hide-contextmenu" id="category-rating-menu">
