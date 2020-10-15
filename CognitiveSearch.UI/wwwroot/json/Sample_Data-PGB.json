@@ -8,6 +8,7 @@
                 "label": "MLNG"
             }
         ],
+        "info": "",
         "link": {
             "nodeName": "OPU",
             "direction": "ASYN"
@@ -22,6 +23,7 @@
                         "label": "MLNG Process 3"
                     }
                 ],
+                "info": "",
                 "link": {
                     "nodeName": "UNIT",
                     "direction": "SYNC"
@@ -36,6 +38,7 @@
                                 "label": "NUOVO PIGNONE"
                             }
                         ],
+                        "info": "",
                         "link": {
                             "nodeName": "MANUFACTURER",
                             "direction": "SYNC"
@@ -86,6 +89,7 @@
                                                 "label": "Component"
                                             }
                                         ],
+                                        "info": "",
                                         "link": {
                                             "nodeName": "Component",
                                             "direction": "SYNC"
@@ -244,6 +248,7 @@
                                                 "label": "Component"
                                             }
                                         ],
+                                        "info": "",
                                         "link": {
                                             "nodeName": "Component",
                                             "direction": "SYNC"
