@@ -24,19 +24,19 @@ function ChatUpdateResultsView() {
         }
     }
 
-    chatSearchString = ""
-    for (let i = 0; i < tempSelectedFacets.length; i++) {
-        for (let j = 0; j < tempSelectedFacets[i].value.length; j++) {
-            chatSearchString += ",\"" + tempSelectedFacets[i].value[j] + "\""
-        }
-    }
-    if (chatSearchString == "") {
-        chatSearchString = "*"
-    }
+    //chatSearchString = ""
+    //for (let i = 0; i < tempSelectedFacets.length; i++) {
+    //    for (let j = 0; j < tempSelectedFacets[i].value.length; j++) {
+    //        chatSearchString += ",\"" + tempSelectedFacets[i].value[j] + "\""
+    //    }
+    //}
+    //if (chatSearchString == "") {
+    //    chatSearchString = "*"
+    //}
 
     $.post('/home/searchview',
         {
-            q: chatSearchString,
+            q: "*",
             searchFacets: chatSelectedFacets,
             currentPage: chatCurrentPage,
             polygonString: polygonString
@@ -62,7 +62,7 @@ function ChatUpdate(viewModel) {
     searchId = data.searchId;
 
     //Facets
-    ChatUpdateFacets();
+    ChatUpdateFacets2();
 
     //Results List
     ChatUpdateResults(data, "#chat-doc-count","#chat-doc-details-div");
@@ -80,7 +80,7 @@ function ChatUpdate(viewModel) {
     //ChatLogSearchAnalytics(data.count);
 
     //Filters
-    ChatUpdateFilterReset();
+    ChatUpdateFilterReset2();
 
     //Update Graph
     var selectedData = "";
@@ -123,5 +123,17 @@ function ChatUpdate(viewModel) {
 
 function ChatTriggerSearch() {
     chatCurrentPage = 1;
+
+    chatSelectedFacets = []
+    for (let i = 0; i < chatFacets.length; i++) {
+        let name = chatFacets[i].key
+        let value = $(`#select-${name}`).val();
+        if (value.length > 0) {
+            chatSelectedFacets.push({
+                "key": name,
+                "value": value
+            })
+        }
+    }
     ChatUpdateResultsView();
 }

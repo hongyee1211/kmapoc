@@ -4,7 +4,7 @@
     justify-content: space-between;
     width: 100%;
     max-width: 867px;
-    margin: 25px 10px;
+    margin: 0px 10px;
     /*height: calc(100% - 50px);*/
     height: 100%;
     border: var(--border);
@@ -149,6 +149,9 @@
     font-weight: bold;
     cursor: pointer;
     transition: background 0.23s;
+    top:20px;
+    right:20px;
+    position: absolute;
 }
 
 .chat-checkbox{
@@ -185,5 +188,39 @@
     padding: 10px;
     text-align: left;
     color: #fff;
+    width: 100% !important;
+}
+
+#chat-filters{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#chat-filters > .bootstrap-select > .dropdown-menu {
+    max-height: 300px !important;
+    overflow: hidden !important;
+}
+
+#chat-filters > .bootstrap-select > .dropdown-menu > .inner {
+    max-height: 200px !important;
+}
+
+#chat-filters > .filter-category-container {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 19%;
+}
+
+#chat-filters > .bootstrap-select > .dropdown-toggle {
+    background-color: #00a19c;
+}
+
+.bootstrap-select > .dropdown-toggle {
+    background-color: #ffffff;
+    border: solid 1px #00a19c
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100% !important;
 }

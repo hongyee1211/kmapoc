@@ -163,3 +163,17 @@ function createMessage(chatSide, message) {
     var objDiv = document.getElementById("msger-chat-area");
     objDiv.scrollTop = objDiv.scrollHeight;
 }
+
+function myTestFunction(event,id) {
+    var x = $("#" + id).val();
+    console.log(id);
+    $("#" + id + " :selected").each(function () {
+        var bc = $(this).val()
+        $(this).click();
+    });
+}
+
+function trialClick(event, text) {
+    console.log(text)
+    event.stopPropagation();
+}

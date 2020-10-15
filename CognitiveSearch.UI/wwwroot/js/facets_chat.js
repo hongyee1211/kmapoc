@@ -1,4 +1,19 @@
 ﻿//Filters
+function ChatUpdateFilterReset2() {
+    // This allows users to remove filters
+    var htmlString = '';
+    let newFacets = tempSelectedFacets.concat(chatSelectedFacets);
+
+    if (newFacets && newFacets.length > 0) {
+        newFacets.forEach(function (item, index, array) { // foreach facet with a selected value
+            if (item.value && item.value.length > 0) {
+                var name = item.key;
+                $(`#select-${name}`).selectpicker('val', item.value);
+            }
+        });
+    }
+}
+
 function ChatUpdateFilterReset() {
     // This allows users to remove filters
     var htmlString = '';
@@ -147,6 +162,56 @@ function ChatUpdateFacets() {
     $("#chat-facet-nav").append(facetResultsHTML);
 }
 
+// Facets
+function ChatUpdateFacets2() {
+    $("#chat-filters").html("");
+
+    var facetResultsHTML = ''
+    chatFacets.forEach(function (item, index, array) {
+        var name = item.key;
+        var data = item.value;
+
+        if (data !== null && data.length > 0) {
+
+            var title = name.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
+            var cssClass = "others";
+            if (name == "EquipmentClass") {
+                cssClass = "EquipmentClass";
+            } else if (name == "Manufacturer") {
+                cssClass = "Manufacturer";
+            } else if (name == "PlantCode") {
+                cssClass = "PlantCode";
+                title = "OPU";
+            } else if (name == "Component") {
+                cssClass = "Component";
+            } else if (name == "FailureMode") {
+                cssClass = "FailureMode";
+            }
+
+            if (cssClass != "others") {
+
+                facetResultsHTML += `<div class="filter-category-container">
+                <h6 style="color:#ffffff">${title}</h6>
+                <select onchange="myTestFunction(event,'select-${name}')" id="select-${name}" class="filter-select" data-live-search="true" multiple data-selected-text-format="count > 2" title="Filter by...">`
+
+                if (data !== null) {
+                    for (var j = 0; j < data.length; j++) {
+                        if (data[j].value.toString().length < 100) {
+                            var idName = name + "_" + j;
+                            facetResultsHTML += `<option onclick="trialClick(event,'hey')" data-subtext="(${data[j].count})">${data[j].value}</option>`
+                        }
+                    }
+                }
+
+                facetResultsHTML += `</select>
+                            </div>`
+            }
+        }
+    });
+    $("#chat-filters").append(facetResultsHTML);
+    $('.filter-select').selectpicker();
+}
+
 
 function ChatToggleCheckbox(id) {
     let checkbox = $('#chat-label-' + id);
@@ -202,8 +267,8 @@ function ChatHandleMultipleFacets(filters) {
     chatSearchString = "";
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i]
-        let tempKey = "temp" + keys[i]
-        var result = tempSelectedFacets.find(function (f) { return f.key === tempKey; });
+        let tempKey = keys[i]
+        var result = chatSelectedFacets.find(function (f) { return f.key === tempKey; });
         if (filters[key].length <= 0) {
             //ignore
         }
@@ -217,7 +282,7 @@ function ChatHandleMultipleFacets(filters) {
             }
         }
         else {
-            tempSelectedFacets.push({
+            chatSelectedFacets.push({
                 key: tempKey,
                 value: filters[key]
             })
