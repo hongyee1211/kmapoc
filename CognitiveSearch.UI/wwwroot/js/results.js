@@ -203,11 +203,11 @@ function UpdateStandards(standards, standardDom = "#doc-standards-div") {
     resultsHtml += '<div class="search-row-standards" style="min-height: 2100px !important;">';
     resultsHtml += '<h4 style="text-align:center;">Related Documents Standard</h4>';
     for (var i = 0; i < standards.length; i++) {
-        var iconStr = standards[i].slice(0, parseInt(standards[i].indexOf(" ")));
+        var iconStr = standards[i].trim().slice(0, 3);
         var iconCSS = "";
         if (iconStr == "ISO") {
             iconCSS = "../images/iso_icon.png";
-        } else if (iconStr == "NFPA") {
+        } else if (iconStr == "NFP") {
             iconCSS = "../images/nfpa_icon2.png";
         } else if (iconStr == "API") {
             iconCSS = "../images/api_icon.png";
