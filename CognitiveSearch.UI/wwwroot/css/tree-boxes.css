@@ -6,7 +6,7 @@
 
 .svgContainer {
     display: block;
-    margin: auto;
+    margin: auto 15px;
 }
 
 .node {
