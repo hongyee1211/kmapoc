@@ -57,7 +57,7 @@ namespace CognitiveSearch.UI.Controllers
             var config = new ChatViewModel()
             {
                 Token = token,
-                UserId = userId
+                UserId = userId,
             };
 
             return View(config);
