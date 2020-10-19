@@ -196,20 +196,21 @@
     flex-wrap: wrap;
 }
 
-#chat-filters > .bootstrap-select > .dropdown-menu {
+#chat-filters > .bootstrap-select .dropdown-menu {
     max-height: 300px !important;
     overflow: hidden !important;
 }
 
-#chat-filters > .bootstrap-select > .dropdown-menu > .inner {
+.bootstrap-select .dropdown-menu > .inner {
     max-height: 200px !important;
+    overflow: auto !important;
 }
 
-#chat-filters > .filter-category-container {
+.filter-category-container {
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
-    width: 19%;
+    width: 24%;
 }
 
 #chat-filters > .bootstrap-select > .dropdown-toggle {
@@ -223,4 +224,10 @@
 
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100% !important;
+}
+
+.pagination-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
 }

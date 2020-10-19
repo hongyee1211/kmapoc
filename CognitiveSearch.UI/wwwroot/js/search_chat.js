@@ -9,7 +9,7 @@ var chatTags;
 var chatDocumentToken = "";
 var chatSearchId;
 
-function ChatUpdateResultsView() {
+function ChatUpdateResultsView(searchString) {
     // Get center of map to use to score the search results
     //Pass the polygon filter to the query: mapPolygon.data.geometry.coordinates[0][1]
     var polygonString = "";
@@ -25,9 +25,9 @@ function ChatUpdateResultsView() {
     }
 
     //chatSearchString = ""
-    //for (let i = 0; i < tempSelectedFacets.length; i++) {
-    //    for (let j = 0; j < tempSelectedFacets[i].value.length; j++) {
-    //        chatSearchString += ",\"" + tempSelectedFacets[i].value[j] + "\""
+    //for (let i = 0; i < chatSelectedFacets.length; i++) {
+    //    for (let j = 0; j < chatSelectedFacets[i].value.length; j++) {
+    //        chatSearchString += ",\"" + chatSelectedFacets[i].value[j] + "\""
     //    }
     //}
     //if (chatSearchString == "") {
@@ -36,7 +36,7 @@ function ChatUpdateResultsView() {
 
     $.post('/home/searchview',
         {
-            q: "*",
+            q: searchString,
             searchFacets: chatSelectedFacets,
             currentPage: chatCurrentPage,
             polygonString: polygonString
@@ -62,7 +62,7 @@ function ChatUpdate(viewModel) {
     searchId = data.searchId;
 
     //Facets
-    ChatUpdateFacets2();
+    ChatUpdateFacets();
 
     //Results List
     ChatUpdateResults(data, "#chat-doc-count","#chat-doc-details-div");
@@ -80,7 +80,7 @@ function ChatUpdate(viewModel) {
     //ChatLogSearchAnalytics(data.count);
 
     //Filters
-    ChatUpdateFilterReset2();
+    ChatUpdateFilterReset();
 
     //Update Graph
     var selectedData = "";
@@ -124,16 +124,30 @@ function ChatUpdate(viewModel) {
 function ChatTriggerSearch() {
     chatCurrentPage = 1;
 
-    chatSelectedFacets = []
-    for (let i = 0; i < chatFacets.length; i++) {
-        let name = chatFacets[i].key
-        let value = $(`#select-${name}`).val();
-        if (value.length > 0) {
-            chatSelectedFacets.push({
-                "key": name,
-                "value": value
-            })
+    let search = "";
+    let keys = Object.keys(filterSelected);
+    for (let i = 0; i < keys.length; i++) {
+        let key = keys[i]
+        let values = filterSelected[key]
+        for (let j = 0; j < values.length; j++) {
+            search += `,"${values[j]}"`;
         }
     }
-    ChatUpdateResultsView();
+    chatSearchString = search
+    //chatSelectedFacets = []
+    //for (let i = 0; i < chatFacets.length; i++) {
+    //    let name = chatFacets[i].key
+    //    let value = $(`#select-${name}`).val();
+    //    if (value != null && value.length > 0) {
+    //        chatSelectedFacets.push({
+    //            "key": name,
+    //            "value": value
+    //        })
+    //    }
+    //}
+
+    ChatUpdateResultsView(search);
+    $("#entity-map").removeClass("hide")
+    SearchEntities(search)
+
 }

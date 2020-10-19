@@ -34,22 +34,39 @@ $(document).on('click', '.allow-focus', function (e) {
 });
 
 function SearchEntities() {
-    if (currentPage > 1) {
-        if (q !== $("#e").val()) {
-            currentPage = 1;
+    //temporary workaround for chat entity map
+    if (isChat) {
+        if (chatSearchString == null || chatSearchString == "") {
+            let keys = Object.keys(filterSelected);
+            for (let i = 0; i < keys.length; i++) {
+                let key = keys[i]
+                let values = filterSelected[key]
+                for (let j = 0; j < values.length; j++) {
+                    search += `,"${values[j]}"`;
+                }
+            }
         }
+        document.getElementById("entity-loading-indicator").style.display = "block";
+        GetGraph(chatSearchString);
     }
-    q = $("#e").val();
-    $("#q").val(q);
-    UpdateLocationBar();
-    UpdateGraphParameterUI();
+    else {
+        if (currentPage > 1) {
+            if (q !== $("#e").val()) {
+                currentPage = 1;
+            }
+        }
+        q = $("#e").val();
+        $("#q").val(q);
+        UpdateLocationBar();
+        UpdateGraphParameterUI();
 
-    document.getElementById("entity-loading-indicator").style.display = "block";
+        document.getElementById("entity-loading-indicator").style.display = "block";
 
-    GetGraph(q);
+        GetGraph(q);
 
-    // Get center of map to use to score the search results
-    UpdateResultsView();
+        // Get center of map to use to score the search results
+        UpdateResultsView();
+    }
 }
 
 // Load Graph with Search data
@@ -160,7 +177,7 @@ function setupSimulation(simulation) {
         .force("link", d3.forceLink()
             .id(function (d) { return d.id; })
             .distance(function (d) { return d.distance; })
-            .strength(.5))
+            .strength(.3))
         .force("charge", d3.forceManyBody()
             .strength(nodeChargeStrength)
             .theta(nodeChargeAccuracy))

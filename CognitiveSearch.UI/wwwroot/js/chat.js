@@ -81,7 +81,7 @@ function ConnectToChatBot() {
                         if (activities[i].from.id != chatUserId) {
                             createMessage("left", activities[i].text)
                             if (activities[i].channelData != null) {
-                                ChatHandleMultipleFacets(activities[i].channelData["Filters"].Entities)
+                                ChatHandleChannelData(activities[i].channelData["Filters"].Entities)
                             }
                         }
                     }
@@ -164,16 +164,83 @@ function createMessage(chatSide, message) {
     objDiv.scrollTop = objDiv.scrollHeight;
 }
 
-function myTestFunction(event,id) {
-    var x = $("#" + id).val();
-    console.log(id);
-    $("#" + id + " :selected").each(function () {
-        var bc = $(this).val()
-        $(this).click();
-    });
+
+function ChatUpdateGraphFilters(test) {
+    $("#chat-filters").html("");
+
+    var facetResultsHTML = ''
+    let classKeys = Object.keys(chatGraphFilters);
+    for (let i = 0; i < classKeys.length; i++) {
+        let name = classKeys[i];
+        let data = chatGraphFilters[classKeys[i]];
+        if (data !== null && data.length > 0) {
+            var title = name.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
+            var cssClass = "others";
+            if (name == "EquipmentClass") {
+                cssClass = "EquipmentClass";
+            } else if (name == "Manufacturer") {
+                cssClass = "Manufacturer";
+            } else if (name == "PlantCode") {
+                cssClass = "PlantCode";
+                title = "OPU";
+            } else if (name == "Model") {
+                cssClass = "Model";
+            }
+
+            if (cssClass != "others") {
+
+                facetResultsHTML += `<div class="filter-category-container" oncontextmenu="trialContext(event)">
+                <select onchange="filterSelectionChanged(event,'${name}')" id="select-${name}" oncontextmenu="trialContext(event)" class="filter-select" data-live-search="true" multiple data-selected-text-format="static" title="${title}">`
+
+                if (data !== null) {
+                    for (var j = 0; j < data.length; j++) {
+                        if (data[j].value.toString().length < 100) {
+                            if (data[j].childLevel == 0) {
+                                facetResultsHTML += `<option>${data[j].value}</option>`
+                            }
+                            else {
+                                facetResultsHTML += `<option style="margin-left: 15px;">${data[j].value}</option>`
+                            }
+                        }
+                    }
+                }
+
+                facetResultsHTML += `</select>
+                            </div>`
+            }
+        }
+    }
+    $("#chat-filters").append(facetResultsHTML);
+    $('.filter-select').selectpicker();
 }
 
-function trialClick(event, text) {
-    console.log(text)
-    event.stopPropagation();
+untrackedFilterSelected = {};
+filterSelected = {
+    "PlantCode": [],
+    "Manufacturer": [],
+    "EquipmentClass": [],
+    "Model": [],
+}
+parentsFilters = {
+    "EquipmentClass": {},
+    "FailureMode": {},
+    "Manufacturer": {"GE": ["NUOVO PIGNONE"]},
+    "Component": {},
+    "PlantCode": {},
+    "Model": {},
+}
+function filterSelectionChanged(event, key) {
+    let selectionDropdown = $("#select-" + key)
+    let parentList = parentsFilters[key];
+    let parentKeys = Object.keys(parentList);
+    let currentVal = selectionDropdown.val();
+    let newlyMarked = currentVal.filter(value => !filterSelected[key].includes(value))
+    for (let i = 0; i < newlyMarked.length; i++) {
+        if (parentKeys.includes(newlyMarked[i])) {
+            let values = parentList[newlyMarked[i]]
+            currentVal = currentVal.concat(values);
+        }
+    }
+    selectionDropdown.selectpicker('val', currentVal);
+    filterSelected[key] = currentVal;
 }

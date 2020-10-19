@@ -14,17 +14,35 @@ using CognitiveSearch.UI.Helpers;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace CognitiveSearch.UI.Controllers
 {
     public class ChatController : Controller
     {
-        //public IActionResult Index()
-        //{
-        //    var model = new ChatViewModel();
-        //    model.guid = Guid.NewGuid().ToString();
-        //    return View(model);
-        //}
+        private IConfiguration _configuration { get; set; }
+        private DocumentSearchClient _docSearch { get; set; }
+        private string _configurationError { get; set; }
+
+        public ChatController(
+            IConfiguration configuration)
+        {
+            _configuration = configuration;
+            InitializeDocSearch();
+        }
+
+        private void InitializeDocSearch()
+        {
+            try
+            {
+                _docSearch = new DocumentSearchClient(_configuration);
+            }
+            catch (Exception e)
+            {
+                _configurationError = $"The application settings are possibly incorrect. The server responded with this message: " + e.Message.ToString();
+            }
+        }
+
         public async Task<ActionResult> Index()
         {
             var secret = SecretHandler.getBotKey();
@@ -57,7 +75,8 @@ namespace CognitiveSearch.UI.Controllers
             var config = new ChatViewModel()
             {
                 Token = token,
-                UserId = userId
+                UserId = userId,
+                facetableFields = _docSearch.Model.Facets.Select(k => k.Name).ToArray(),
             };
 
             return View(config);
