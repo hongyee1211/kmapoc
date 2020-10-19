@@ -122,7 +122,7 @@ function treeBoxes(urlService, jsonData) {
 		d3.select("svg").remove();
 
 		baseSvg = d3.select('#tree-container').append('svg')
-			.attr('width', 900 + margin.right + margin.left)
+			.attr('width', "100%")
 			.attr('height', 560 + margin.top + margin.bottom)
 			.attr('class', 'svgContainer')
 			.call(d3.behavior.zoom()
