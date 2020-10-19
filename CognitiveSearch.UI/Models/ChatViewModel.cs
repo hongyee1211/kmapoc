@@ -29,7 +29,7 @@ namespace CognitiveSearch.UI.Models
             //List<Filter> failureMode = CreateFilters(fmList);
             string[] mList = new string[] { "ABB", "ALFA LAVAL", "BAKER HUGHES", "BRAN & LUEBBE", "GE", "NUOVO PIGNONE", "PATTERSON", "RELIANCE" };
             List<Filter> manufacturer = CreateFilters(mList);
-            string[] pcList = new string[] { "ABF", "AMSB", "DFP", "EPOMS", "GDCH" };
+            string[] pcList = new string[] { "ABF", "AMSB", "DFP", "EPOMS", "GDCH", "PGB", "MLNG" };
             List<Filter> plantCode = CreateFilters(pcList);
 
             this.Filters = new Dictionary<string, Filter[]>
