@@ -99,16 +99,16 @@ function ChatUpdate(viewModel) {
     }
 
     if (message.match(/give me all pumps manufactured by nuovo pignone at pgb/g)) {
-        $.getJSON("../json/Sample_Data-PGB.json", function (json) {
-            treeBoxes('', json.tree);
+        $.getJSON("../json/testing.json", function (json) {
+            treeBoxes(json);
         });
     } else if (message.match(/give me the same for MLNG/g)) {
         $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
-            treeBoxes('', json.tree);
+            treeBoxes(json.tree);
         });
     } else if (message.match(/give me the failure mode for these pumps/g)) {
         $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
-            treeBoxes('', json.tree);
+            treeBoxes(json.tree);
         });
     }
 
