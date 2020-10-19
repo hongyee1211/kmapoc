@@ -32,20 +32,22 @@ function treeBoxes(urlService, jsonData) {
 		yellow = '#f0ad4e',
 		blueText = '#4ab1eb',
 		purple = '#9467bd',
-		red = "#d81f2a";
+		red = "#d81f2a",
+		lime = "#cbd34c",
+		lightblue = "#93bfeb";
 
 	var margin = {
 		top: 0,
 		right: 0,
-		bottom: 100,
+		bottom: 50,
 		left: 0
 	},
 		// Height and width are redefined later in function of the size of the tree
 		// (after that the data are loaded)
-		width = 800 - margin.right - margin.left,
-		height = 400 - margin.top - margin.bottom;
+		width = 700 - margin.right - margin.left,
+		height = 600 - margin.top - margin.bottom;
 
-	var rectNode = { width: 120, height: 45, textMargin: 5 },
+	var rectNode = { width: 110, height: 45, textMargin: 5 },
 		tooltip = { width: 150, height: 40, textMargin: 5 };
 	var i = 0,
 		duration = 750,
@@ -104,6 +106,10 @@ function treeBoxes(urlService, jsonData) {
 					node.color = purple;
 				if (node.type == 'type5')
 					node.color = red;
+				if (node.type == 'type6')
+					node.color = lime;
+				if (node.type == 'type7')
+					node.color = lightblue;
 			});
 		});
 		height = maxTreeWidth * (rectNode.height + 20) + tooltip.height + 20 - margin.right - margin.left;
@@ -116,8 +122,8 @@ function treeBoxes(urlService, jsonData) {
 		d3.select("svg").remove();
 
 		baseSvg = d3.select('#tree-container').append('svg')
-			.attr('width', width + margin.right + margin.left)
-			.attr('height', height + margin.top + margin.bottom)
+			.attr('width', "100%")
+			.attr('height', 560 + margin.top + margin.bottom)
 			.attr('class', 'svgContainer')
 			.call(d3.behavior.zoom()
 				//.scaleExtent([0.5, 1.5]) // Limit the zoom scale
@@ -222,16 +228,17 @@ function treeBoxes(urlService, jsonData) {
 					}
 
 					if (z == (d.label.length - 1)) {
-						xhtmlTemp += '<h6>' + val + '</h6>';
+						xhtmlTemp += val;
 					} else {
-						xhtmlTemp += '<h6>' + val + '</h6><br>';
+						xhtmlTemp += val + '<br>';
 					}
 					
 				}
+
 				return '<div style="width: '
 					+ (rectNode.width - rectNode.textMargin * 2) + 'px; height: '
-					+ (rectNode.height - rectNode.textMargin * 2) + 'px;" class="node-text wordwrap">'
-					+ xhtmlTemp;
+					+ (rectNode.height - rectNode.textMargin * 2) + 'px; font-size: 10px; display: flex; align-items: center;" class="node-text wordwrap">'
+					+ xhtmlTemp + '</div>';
 					/*+ '<b>' + d.nodeName + '</b><br><br>'
 					+ '<b>Code: </b>' + d.code + '<br>'
 					+ '<b>Version: </b>' + d.version + '<br>'
@@ -251,7 +258,9 @@ function treeBoxes(urlService, jsonData) {
 			.attr('x', rectNode.width / 2)
 			.attr('y', rectNode.height / 2)
 			.attr('width', tooltip.width)
-			.attr('height', tooltip.height)
+			.attr('height', function (d) {
+				return 12 * (d.info.length > 0 ? d.info.length : 0);
+			})
 			.attr('class', 'tooltip-box')
 			.style('fill-opacity', 0.8)
 			.on('mouseover', function (d) {
@@ -265,7 +274,7 @@ function treeBoxes(urlService, jsonData) {
 				reactivateMouseEvents();
 			});
 
-		nodeEnterTooltip.append("text")
+		/*nodeEnterTooltip.append("text")
 			.attr('id', function (d) { return 'nodeInfoTextID' + d.id; })
 			.attr('x', rectNode.width / 2 + tooltip.textMargin)
 			.attr('y', rectNode.height / 2 + tooltip.textMargin * 2)
@@ -278,8 +287,30 @@ function treeBoxes(urlService, jsonData) {
 			.append("tspan")
 			.attr('x', rectNode.width / 2 + tooltip.textMargin)
 			.attr('dy', '1.5em')
-			.text(function (d) { return 'Info: ' + d.label; });
+			.text(function (d) { return 'Info: ' + d.label; });*/
 
+		nodeEnterTooltip.append("text")
+			.each(function (d) {
+				if (d.info.length > 0) {
+					var text = d3.select(this)
+						.attr('id', function (d) { return 'nodeInfoTextID' + d.id; })
+						.attr('x', rectNode.width / 2 + tooltip.textMargin)
+						.attr('y', rectNode.height / 2 + tooltip.textMargin * 2)
+						.attr('width', tooltip.width)
+						.attr('height', tooltip.height)
+						.attr('class', 'tooltip-text')
+						.style('fill', 'white')
+						.text(d.info[0].nodeName + ": " + d.info[0].label);
+
+					for (var i = 1; i < d.info.length; i++) {
+						text.append("tspan")
+							.attr('x', rectNode.width / 2 + tooltip.textMargin)
+							.attr('dy', '1.5em')
+							.text((d.info.length > 0 ? d.info[i].nodeName + ": " + d.info[i].label : ""))
+					}
+				}
+			});
+			
 		// Transition nodes to their new position.
 		var nodeUpdate = node.transition().duration(duration)
 			.attr('transform', function (d) { return 'translate(' + d.y + ',' + d.x + ')'; });
