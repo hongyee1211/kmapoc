@@ -15,6 +15,7 @@ namespace CognitiveSearch.UI.Models
     {
         public string Token { get; set; }
         public string UserId { get; set; }
+        public string[] facetableFields { get; set; }
 
         public Dictionary<string, Filter[]> Filters { get; set; }
 

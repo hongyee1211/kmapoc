@@ -314,7 +314,6 @@ function ChatHandleChannelData(filters) {
         }
     }
     ChatUpdateGraphFilter();
-    //GetGraph(search);
 }
 
 function ChatUpdateGraphFilter() {

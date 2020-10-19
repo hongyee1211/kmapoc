@@ -133,6 +133,7 @@ function ChatTriggerSearch() {
             search += `,"${values[j]}"`;
         }
     }
+    chatSearchString = search
     //chatSelectedFacets = []
     //for (let i = 0; i < chatFacets.length; i++) {
     //    let name = chatFacets[i].key
@@ -144,5 +145,9 @@ function ChatTriggerSearch() {
     //        })
     //    }
     //}
+
     ChatUpdateResultsView(search);
+    $("#entity-map").removeClass("hide")
+    SearchEntities(search)
+
 }
