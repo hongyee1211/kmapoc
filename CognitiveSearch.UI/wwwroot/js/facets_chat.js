@@ -295,12 +295,8 @@ function ChatChooseFacet(facet, value, position) {
 
 function ChatHandleChannelData(filters) {
     let keys = Object.keys(filters);
-    let search = "";
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i]
-        for (let j = 0; j < values.length; j++) {
-            search += `,"${values[j]}"`;
-        }
         if (filterSelected.hasOwnProperty(key)) {
             filterSelected[key] = filterSelected[key].concat(filters[key].filter((item) => filterSelected[key].indexOf(item) < 0))
         }
@@ -312,6 +308,20 @@ function ChatHandleChannelData(filters) {
                 untrackedFilterSelected[key] = filters[key];
             }
         }
+    }
+
+    if (userMessage.match(/give me all pumps manufactured by nuovo pignone at mlng/g)) {
+        $.getJSON("../json/testing.json", function (json) {
+            treeBoxes(json);
+        });
+    } else if (userMessage.match(/give me the same for MLNG/g)) {
+        $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+            treeBoxes(json.tree);
+        });
+    } else if (userMessage.match(/give me the failure mode for these pumps/g)) {
+        $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+            treeBoxes(json.tree);
+        });
     }
     ChatUpdateGraphFilter();
 }

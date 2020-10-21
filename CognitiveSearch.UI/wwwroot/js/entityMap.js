@@ -177,7 +177,7 @@ function setupSimulation(simulation) {
         .force("link", d3.forceLink()
             .id(function (d) { return d.id; })
             .distance(function (d) { return d.distance; })
-            .strength(.3))
+            .strength(.25))
         .force("charge", d3.forceManyBody()
             .strength(nodeChargeStrength)
             .theta(nodeChargeAccuracy))
@@ -190,15 +190,20 @@ var simulation = setupSimulation(d3.forceSimulation());
 
 function UpdateEntityGraph() {
     // Graph implementation
+    let chatMap = $("#entity-map");
+    if (chatMap != null) {
+        $("#entity-map").removeClass("hide")
+    }
+
     var colors = d3.scaleOrdinal(d3.schemeCategory10);
 
     // calculate size
-    var svgElement = $("svg");
+    var svgElement = $("#entity-map-svg");
     viewParams.width = +svgElement.parent().width(); // Get the parent width with jquery instead of d3.
     viewParams.height = +svgElement.height();
 
     // set svg size
-    var svg = d3.select("svg");
+    var svg = d3.select("#entity-map-svg");
     svg.attrs({
         width: viewParams.width,
         height: viewParams.height
@@ -211,8 +216,8 @@ function UpdateEntityGraph() {
             'refX': 10,
             'refY': 0,
             'orient': 'auto',
-            'markerWidth': 10,
-            'markerHeight': 10,
+            'markerWidth': 5,
+            'markerHeight': 5,
             'xoverflow': 'visible'
         })
         .append('svg:path')
@@ -226,7 +231,24 @@ function UpdateEntityGraph() {
         .data(viewParams.links)
         .enter()
         .append("line")
-        .attr("class", "link");
+        .attr("class", "link")
+        .style("stroke", function (d) {
+            return "#ccc"
+            //let idx = d.target
+            //let node = viewParams.nodes[idx]
+            //if (node.facetName == "EquipmentClass") {
+            //    return "violet"; //violet
+            //} else if (node.facetName == "Manufacturer") {
+            //    return "darkorchid"; //darkorchid
+            //} else if (node.facetName == "PlantCode") {
+            //    return "khaki"; //khaki
+            //} else if (node.facetName == "Header") {
+            //    // random color
+            //    return "#ccc"
+            //} else {
+            //    return "#00a19c";
+            //}
+        });
 
     node = svg.selectAll(".node")
         .data(viewParams.nodes)
@@ -282,8 +304,10 @@ function UpdateEntityGraph() {
             $("#e").val(d.name);
             SearchEntities();
         })
-        .append("svg:title")
+        .append("#entity-map-svg:title")
         .text(function (d) {
+            if (d.facetName == 'Header')
+                return "";
             return d.name;
         });
 
@@ -298,7 +322,10 @@ function UpdateEntityGraph() {
             'stroke-opacity': 0,
             'marker-end': 'url(#arrowhead)'
         })
-        .style("pointer-events", "none");
+        .style("pointer-events", "none")
+        .style("stroke", function (d) {
+            return 'green' 
+        });
 
     // Render text in a second pass so it's on top of all the gfx.
     texts = svg.selectAll(".text")
@@ -310,25 +337,34 @@ function UpdateEntityGraph() {
             .attr("dx", 15)
             .attr("dy", ".35em")
             .attr("font-family", "sans-serif")
-            .attr("font-size", "20px")
+            .attr("font-size", "12px")
             .attr("font-weight", "bold")
             .attr("pointer-events", "none")
             .attr("fill", function (d) {
                 return d.layer > 1 ? "#808080" : "#D8D8D8";
             })
-            .text(d => d.name);
+        .text(function (d) {
+            if (d.facetName == 'Header')
+                return "";
+            return d.name;
+        });
 
 
     simulation
         .nodes(viewParams.nodes)
-        .on("tick", ticked);
+        .on("tick", ticked)
+        .on("end", function () {
+            for (let i = 0; viewParams.nodes.length; i++) {
+                viewParams.nodes[i].fx = viewParams.nodes[i].x;
+                viewParams.nodes[i].fy = viewParams.nodes[i].y;
+            }
+        });
     simulation.force("link")
         .links(viewParams.links);
     document.getElementById("entity-loading-indicator").style.display = "none";
 
     // Step the simulation to let it settle
-    for (var i = 0; i < 30; ++i)
-        simulation.tick();
+    simulation.tick(10000);
 }
 
 function ticked() {
@@ -366,8 +402,8 @@ function dragstarted(d) {
     if (!d3.event.active) {
         simulation.alphaTarget(0.3).restart();
     }
-    d.fx = d.x;
-    d.fy = d.y;
+    //d.fx = d.x;
+    //d.fy = d.y;
 }
 function dragged(d) {
 

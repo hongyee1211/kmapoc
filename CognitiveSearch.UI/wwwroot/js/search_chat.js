@@ -83,34 +83,34 @@ function ChatUpdate(viewModel) {
     ChatUpdateFilterReset();
 
     //Update Graph
-    var selectedData = "";
-    var message = "";
-    var name = "chatMessage=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            message = c.substring(name.length, c.length);
-        }
-    }
+    //var selectedData = "";
+    //var message = "";
+    //var name = "chatMessage=";
+    //var decodedCookie = decodeURIComponent(document.cookie);
+    //var ca = decodedCookie.split(';');
+    //for (var i = 0; i < ca.length; i++) {
+    //    var c = ca[i];
+    //    while (c.charAt(0) == ' ') {
+    //        c = c.substring(1);
+    //    }
+    //    if (c.indexOf(name) == 0) {
+    //        message = c.substring(name.length, c.length);
+    //    }
+    //}
 
-    if (message.match(/give me all pumps manufactured by nuovo pignone at pgb/g)) {
-        $.getJSON("../json/testing.json", function (json) {
-            treeBoxes(json);
-        });
-    } else if (message.match(/give me the same for MLNG/g)) {
-        $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
-            treeBoxes(json.tree);
-        });
-    } else if (message.match(/give me the failure mode for these pumps/g)) {
-        $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
-            treeBoxes(json.tree);
-        });
-    }
+    //if (message.match(/give me all pumps manufactured by nuovo pignone at pgb/g)) {
+    //    $.getJSON("../json/testing.json", function (json) {
+    //        treeBoxes(json);
+    //    });
+    //} else if (message.match(/give me the same for MLNG/g)) {
+    //    $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+    //        treeBoxes(json.tree);
+    //    });
+    //} else if (message.match(/give me the failure mode for these pumps/g)) {
+    //    $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+    //        treeBoxes(json.tree);
+    //    });
+    //}
 
     // 
     let container = $("#chat-search-container")
@@ -147,7 +147,6 @@ function ChatTriggerSearch() {
     //}
 
     ChatUpdateResultsView(search);
-    $("#entity-map").removeClass("hide")
     SearchEntities(search)
 
 }

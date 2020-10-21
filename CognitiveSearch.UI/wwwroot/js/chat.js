@@ -136,13 +136,16 @@ function sendChatMessage() {
 }
 
 
-
+var userMessage = ""
 function createMessage(chatSide, message) {
     let sideClass = "right-msg"
     let userImage = "https://image.flaticon.com/icons/svg/145/145867.svg"
     if (chatSide == "left") {
         sideClass = "left-msg"
         userImage = "https://image.flaticon.com/icons/svg/327/327779.svg"
+    }
+    else {
+        userMessage = message
     }
 
     let chatHTML = `<div class="msg ${sideClass}">

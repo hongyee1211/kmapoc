@@ -150,7 +150,7 @@
     cursor: pointer;
     transition: background 0.23s;
     top:20px;
-    right:20px;
+    right:3%;
     position: absolute;
 }
 
@@ -210,7 +210,7 @@
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
-    width: 24%;
+    width: 24.9999%;
 }
 
 #chat-filters > .bootstrap-select > .dropdown-toggle {
