@@ -45,7 +45,7 @@ namespace CognitiveSearch.UI.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var secret = SecretHandler.getBotKey();
+            var secret = ConfigurationHandler.getBotKey();
 
             HttpClient client = new HttpClient();
 

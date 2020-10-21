@@ -55,13 +55,18 @@ namespace CognitiveSearch.UI.Models
                 "ICSB", "KLCONVENTION", "KLCCPS", "CTSB", "HLSB", "KLCCUH", "PET", "VPSB", "PFLNG2", "PTSSB", "PGTSSB", "CEFS", "PLNG2", "TTMMSB", "PIC",
                 "PCML-", "PCP", "EPOMS", "PTVSB", "HCU", "KLCC", "TPC", "PCMI", "PCOSB", "SDA" };
             List<Filter> plantCode = CreateFilters(pcList);
+            string[] mdList = new string[] { "Frame 5", "Frame 6", "AN200" };
+            List<Filter> model = CreateFilters(mdList);
+            string[] dList = new string[] { "Placeholder" };
+            List<Filter> discipline = CreateFilters(dList);
 
             this.Filters = new Dictionary<string, Filter[]>
             {
                 { "PlantCode", plantCode.ToArray()},
                 { "Manufacturer", manufacturer.ToArray()},
                 { "EquipmentClass", equipmentClass.ToArray()},
-                { "Model", component.ToArray()},
+                { "Model", model.ToArray()},
+                { "Discipline", discipline.ToArray()},
             };
         }
 
