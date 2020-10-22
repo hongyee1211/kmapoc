@@ -9,7 +9,7 @@ var chatTags;
 var chatDocumentToken = "";
 var chatSearchId;
 
-function ChatUpdateResultsView() {
+function ChatUpdateResultsView(searchString) {
     // Get center of map to use to score the search results
     //Pass the polygon filter to the query: mapPolygon.data.geometry.coordinates[0][1]
     var polygonString = "";
@@ -25,9 +25,9 @@ function ChatUpdateResultsView() {
     }
 
     //chatSearchString = ""
-    //for (let i = 0; i < tempSelectedFacets.length; i++) {
-    //    for (let j = 0; j < tempSelectedFacets[i].value.length; j++) {
-    //        chatSearchString += ",\"" + tempSelectedFacets[i].value[j] + "\""
+    //for (let i = 0; i < chatSelectedFacets.length; i++) {
+    //    for (let j = 0; j < chatSelectedFacets[i].value.length; j++) {
+    //        chatSearchString += ",\"" + chatSelectedFacets[i].value[j] + "\""
     //    }
     //}
     //if (chatSearchString == "") {
@@ -36,7 +36,7 @@ function ChatUpdateResultsView() {
 
     $.post('/home/searchview',
         {
-            q: "*",
+            q: searchString,
             searchFacets: chatSelectedFacets,
             currentPage: chatCurrentPage,
             polygonString: polygonString
@@ -62,7 +62,7 @@ function ChatUpdate(viewModel) {
     searchId = data.searchId;
 
     //Facets
-    ChatUpdateFacets2();
+    ChatUpdateFacets();
 
     //Results List
     ChatUpdateResults(data, "#chat-doc-count","#chat-doc-details-div");
@@ -80,37 +80,37 @@ function ChatUpdate(viewModel) {
     //ChatLogSearchAnalytics(data.count);
 
     //Filters
-    ChatUpdateFilterReset2();
+    ChatUpdateFilterReset();
 
     //Update Graph
-    var selectedData = "";
-    var message = "";
-    var name = "chatMessage=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            message = c.substring(name.length, c.length);
-        }
-    }
+    //var selectedData = "";
+    //var message = "";
+    //var name = "chatMessage=";
+    //var decodedCookie = decodeURIComponent(document.cookie);
+    //var ca = decodedCookie.split(';');
+    //for (var i = 0; i < ca.length; i++) {
+    //    var c = ca[i];
+    //    while (c.charAt(0) == ' ') {
+    //        c = c.substring(1);
+    //    }
+    //    if (c.indexOf(name) == 0) {
+    //        message = c.substring(name.length, c.length);
+    //    }
+    //}
 
-    if (message.match(/give me all pumps manufactured by nuovo pignone at pgb/g)) {
-        $.getJSON("../json/Sample_Data-PGB.json", function (json) {
-            treeBoxes('', json.tree);
-        });
-    } else if (message.match(/give me the same for MLNG/g)) {
-        $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
-            treeBoxes('', json.tree);
-        });
-    } else if (message.match(/give me the failure mode for these pumps/g)) {
-        $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
-            treeBoxes('', json.tree);
-        });
-    }
+    //if (message.match(/give me all pumps manufactured by nuovo pignone at pgb/g)) {
+    //    $.getJSON("../json/testing.json", function (json) {
+    //        treeBoxes(json);
+    //    });
+    //} else if (message.match(/give me the same for MLNG/g)) {
+    //    $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+    //        treeBoxes(json.tree);
+    //    });
+    //} else if (message.match(/give me the failure mode for these pumps/g)) {
+    //    $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+    //        treeBoxes(json.tree);
+    //    });
+    //}
 
     // 
     let container = $("#chat-search-container")
@@ -124,16 +124,29 @@ function ChatUpdate(viewModel) {
 function ChatTriggerSearch() {
     chatCurrentPage = 1;
 
-    chatSelectedFacets = []
-    for (let i = 0; i < chatFacets.length; i++) {
-        let name = chatFacets[i].key
-        let value = $(`#select-${name}`).val();
-        if (value.length > 0) {
-            chatSelectedFacets.push({
-                "key": name,
-                "value": value
-            })
+    let search = "";
+    let keys = Object.keys(filterSelected);
+    for (let i = 0; i < keys.length; i++) {
+        let key = keys[i]
+        let values = filterSelected[key]
+        for (let j = 0; j < values.length; j++) {
+            search += `,"${values[j]}"`;
         }
     }
-    ChatUpdateResultsView();
+    chatSearchString = search
+    //chatSelectedFacets = []
+    //for (let i = 0; i < chatFacets.length; i++) {
+    //    let name = chatFacets[i].key
+    //    let value = $(`#select-${name}`).val();
+    //    if (value != null && value.length > 0) {
+    //        chatSelectedFacets.push({
+    //            "key": name,
+    //            "value": value
+    //        })
+    //    }
+    //}
+
+    ChatUpdateResultsView(search);
+    SearchEntities(search)
+
 }

@@ -19,7 +19,7 @@ function ChatUpdateFilterReset() {
     var htmlString = '';
     $("#chatFilterReset").html("");
 
-    let newFacets = tempSelectedFacets.concat(chatSelectedFacets);
+    let newFacets = chatSelectedFacets;
 
     if (newFacets && newFacets.length > 0) {
 
@@ -190,15 +190,15 @@ function ChatUpdateFacets2() {
 
             if (cssClass != "others") {
 
-                facetResultsHTML += `<div class="filter-category-container">
+                facetResultsHTML += `<div class="filter-category-container" oncontextmenu="trialContext(event)">
                 <h6 style="color:#ffffff">${title}</h6>
-                <select onchange="myTestFunction(event,'select-${name}')" id="select-${name}" class="filter-select" data-live-search="true" multiple data-selected-text-format="count > 2" title="Filter by...">`
+                <select onchange="myTestFunction(event,'select-${name}')" id="select-${name}" oncontextmenu="trialContext(event)" class="filter-select" data-live-search="true" multiple data-selected-text-format="count > 2" title="Filter by...">`
 
                 if (data !== null) {
                     for (var j = 0; j < data.length; j++) {
                         if (data[j].value.toString().length < 100) {
                             var idName = name + "_" + j;
-                            facetResultsHTML += `<option onclick="trialClick(event,'hey')" data-subtext="(${data[j].count})">${data[j].value}</option>`
+                            facetResultsHTML += `<option onclick="trialClick(event,'hey')" data-subtext="(${data[j].count})" data-content="-> ${data[j].value}">${data[j].value}</option>`
                         }
                     }
                 }
@@ -262,36 +262,81 @@ function ChatChooseFacet(facet, value, position) {
     ChatUpdateFilterReset();
 }
 
-function ChatHandleMultipleFacets(filters) {
+//function ChatHandleMultipleFacets(filters) {
+//    let keys = Object.keys(filters);
+//    chatSearchString = "";
+//    for (let i = 0; i < keys.length; i++) {
+//        let key = keys[i]
+//        let tempKey = keys[i]
+//        var result = chatSelectedFacets.find(function (f) { return f.key === tempKey; });
+//        if (filters[key].length <= 0) {
+//            //ignore
+//        }
+//        else if (result) {
+//            if (result.value == null) {
+//                result.value = [];
+//            }
+//            result.value = result.value.concat(filters[key].filter((item) => result.value.indexOf(item) < 0))
+//            for (let j = 0; j < filters[key].length; j++) {
+//                chatSearchString += ",\"" + filters[key][j] + "\""
+//            }
+//        }
+//        else {
+//            chatSelectedFacets.push({
+//                key: tempKey,
+//                value: filters[key]
+//            })
+//            chatSearchString += ",\"" + filters[key] + "\""
+//        }
+//    }
+//    chatCurrentPage = 1;
+//    ChatUpdateResultsView();
+//}
+
+function ChatHandleChannelData(filters) {
     let keys = Object.keys(filters);
-    chatSearchString = "";
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i]
-        let tempKey = keys[i]
-        var result = chatSelectedFacets.find(function (f) { return f.key === tempKey; });
-        if (filters[key].length <= 0) {
-            //ignore
-        }
-        else if (result) {
-            if (result.value == null) {
-                result.value = [];
-            }
-            result.value = result.value.concat(filters[key].filter((item) => result.value.indexOf(item) < 0))
-            for (let j = 0; j < filters[key].length; j++) {
-                chatSearchString += ",\"" + filters[key][j] + "\""
-            }
+        if (filterSelected.hasOwnProperty(key)) {
+            filterSelected[key] = filterSelected[key].concat(filters[key].filter((item) => filterSelected[key].indexOf(item) < 0))
         }
         else {
-            chatSelectedFacets.push({
-                key: tempKey,
-                value: filters[key]
-            })
-            chatSearchString += ",\"" + filters[key] + "\""
+            if (untrackedFilterSelected[key] != null) {
+                untrackedFilterSelected[key] = untrackedFilterSelected[key].concat(filters[key].filter((item) => untrackedFilterSelected[key].indexOf(item) < 0))
+            }
+            else {
+                untrackedFilterSelected[key] = filters[key];
+            }
         }
     }
-    if (chatSearchString == "") {
-        chatSearchString = "*"
+
+    QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer, function (data) {
+        //let tree = { tree: data[0] };
+        treeBoxes(data)
+    });
+
+    //if (userMessage.match(/give me all pumps manufactured by nuovo pignone at mlng/g)) {
+    //    $.getJSON("../json/testing.json", function (json) {
+    //        treeBoxes(json);
+    //    });
+    //} else if (userMessage.match(/give me the same for MLNG/g)) {
+    //    $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+    //        treeBoxes(json.tree);
+    //    });
+    //} else if (userMessage.match(/give me the failure mode for these pumps/g)) {
+    //    $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+    //        treeBoxes(json.tree);
+    //    });
+    //}
+    ChatUpdateGraphFilter();
+}
+
+function ChatUpdateGraphFilter() {
+    let keys = Object.keys(filterSelected);
+
+    if (keys && keys.length > 0) {
+        for (let i = 0; i < keys.length; i++) {
+            $(`#select-${keys[i]}`).selectpicker('val', filterSelected[keys[i]]);
+        }
     }
-    chatCurrentPage = 1;
-    ChatUpdateResultsView();
 }

@@ -142,7 +142,6 @@
 
 .chat-filter-btn {
     float: right;
-    margin-right: 15px;
     border: 0px;
     background: #00a19c;
     color: #fff;
@@ -150,7 +149,7 @@
     cursor: pointer;
     transition: background 0.23s;
     top:20px;
-    right:20px;
+    right:3%;
     position: absolute;
 }
 
@@ -196,20 +195,21 @@
     flex-wrap: wrap;
 }
 
-#chat-filters > .bootstrap-select > .dropdown-menu {
+#chat-filters > .bootstrap-select .dropdown-menu {
     max-height: 300px !important;
     overflow: hidden !important;
 }
 
-#chat-filters > .bootstrap-select > .dropdown-menu > .inner {
+.bootstrap-select .dropdown-menu > .inner {
     max-height: 200px !important;
+    overflow: auto !important;
 }
 
-#chat-filters > .filter-category-container {
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    width: 19%;
+.filter-category-container {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    width: 19.8333%;
 }
 
 #chat-filters > .bootstrap-select > .dropdown-toggle {
@@ -223,4 +223,10 @@
 
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100% !important;
+}
+
+.pagination-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
 }
