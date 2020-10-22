@@ -310,7 +310,7 @@ function ChatHandleChannelData(filters) {
         }
     }
 
-    QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer function (data) {
+    QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer, function (data) {
         //let tree = { tree: data[0] };
         treeBoxes(data)
     });

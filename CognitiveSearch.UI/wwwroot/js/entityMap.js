@@ -354,7 +354,7 @@ function UpdateEntityGraph() {
         .nodes(viewParams.nodes)
         .on("tick", ticked)
         .on("end", function () {
-            for (let i = 0; viewParams.nodes.length; i++) {
+            for (let i = 0; i < viewParams.nodes.length; i++) {
                 viewParams.nodes[i].fx = viewParams.nodes[i].x;
                 viewParams.nodes[i].fy = viewParams.nodes[i].y;
             }
