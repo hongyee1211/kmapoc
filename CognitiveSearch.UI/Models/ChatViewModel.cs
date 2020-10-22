@@ -21,7 +21,7 @@ namespace CognitiveSearch.UI.Models
 
         public ChatViewModel()
         {
-            string[] ecList = new string[] { "AUXILLIARY CABLE", "CABLE", "EQUIPMENT POWER", "EQUIPMENT", "GENERATOR", "MOTOR", "MOTOR", "PANEL",
+            string[] ecList = new string[] { "AUXILLIARY CABLE", "CABLE", "EQUIPMENT POWER", "EQUIPMENT", "GENERATOR", "MOTOR", "PANEL",
                 "POWER RELAY", "TRANSFORMER", "ANALYSIS", "CONTROL SYSTEM", "FILTER", "FREON GAS", "PRESSURE GAUGE", "SENSOR", "TRANSMISSION", "BLOWER",
                 "COLUMN", "UTILITY EJECTOR", "AIR EXPANDER", "EXPANDER", "TURBO EXPANDER", "STEAM EXPANDER", "FAN", "FILTER", "PUMP CENTRIFUGAL",
                 "PUMP RECIPOCRATING", "SAFETY VALVE", "ROTARY", "STATE", "SUBMERSIBLE PUMP", "STEAM TURBINE", "TANK", "VALVE", "VESSEL", "GAS TURBINE",
@@ -34,9 +34,9 @@ namespace CognitiveSearch.UI.Models
             string[] mList = new string[] { "ABB","DRESSER","DRESSER-RAND","INGERSOLL-RAND","ROLLS ROYCE","BROOK CROMPTON","BROOK HANSEN","ALLWEILER",
                 "ALFA LAVAL","ALSTOM","MITSUBISHI HEAVY INDUSTRIES","HYUNDAI HEAVY INDUSTRIES","ATLAS COPCO","SIEMENS","BAKER HUGHES","BALDOR","BAUER",
                 "BAYLEY","BEGEMANN","BLACKMER","BLAGDON","BOSCH","BRAN & LUEBBE","BROWN & ROOT","BUGATTI","BURGESS","CARRIER","CATERPILLAR","CLYDE UNION",
-                "COOPER ENERGY SERVICES","CROMPTON","CUMMINS","DAVID BROWN","DAWSON & DOWNIE","DELAVAL","DEMAG","DETROIT DIESEL","DOOSAN","DONGYANG",
+                "COOPER ENERGY SERVICES","CROMPTON","CUMMINS","DAVID BROWN","DAWSON & DOWNIE","DEMAG DELAVAL","DETROIT DIESEL","DOOSAN","DONGYANG",
                 "DONGHWA","DRESSER-ROOTS","EBARA","EDWARDS","ELLIOT","FAVCO","FLAKT","FLENDER","FLOWSERVE","FLOWGUARD","FMC","FUJI","GARDNER-DENVER",
-                "GE","NUOVO PIGNONE","GENERAL MOTORS","GOULDS","GRAFFENSTADEN","GRUNDFOS","HALBERG","HALIFAX","HAMILTON","HANSEN","HARBOUR MARINE",
+                "GE","Nuovo Pignone","GENERAL MOTORS","GOULDS","GRAFFENSTADEN","GRUNDFOS","HALBERG","HALIFAX","HAMILTON","HANSEN","HARBOUR MARINE",
                 "HASKEL","HITACHI","HITACHI HEAVY INDUSTRIES","TOSHIBA","MITSUBISHI","HOFFMAN","HOLTEC","HONDA","HOWDEN","HSL ENGINEERING","HYUNDAI",
                 "INGERSOLL-DRESSER","JAPAN STEEL","JAPAN AIRCRAFT","JAPAN MACHINERY COMPANY","JOHN DEERE","KAERCHER","KAESER","KAJI IRON WORKS","KATO",
                 "KOBELCO","KOBE STEEL","KONE","KRUGER","KRUPP","KUBOTA","LIGHTNIN","LINDE","LOHER","LUFKIN","MILTON ROY","MAN TURBO","MANNESMANN",
@@ -80,9 +80,9 @@ namespace CognitiveSearch.UI.Models
                 string parent = null;
                 if(value == "GE")
                 {
-                    children = new string[] { "NUOVO PIGNONE" };
+                    children = new string[] { "Nuovo Pignone" };
                 }
-                else if (value == "NUOVO PIGNONE")
+                else if (value == "Nuovo Pignone")
                 {
                     parent = "GE";
                     childLevel = 1;

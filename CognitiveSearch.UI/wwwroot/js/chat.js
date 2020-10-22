@@ -188,6 +188,8 @@ function ChatUpdateGraphFilters(test) {
                 title = "OPU";
             } else if (name == "Model") {
                 cssClass = "Model";
+            } else if (name == "Discipline") {
+                cssClass = "Discipline";
             }
 
             if (cssClass != "others") {
@@ -223,6 +225,7 @@ filterSelected = {
     "Manufacturer": [],
     "EquipmentClass": [],
     "Model": [],
+    "Discipline": []
 }
 parentsFilters = {
     "EquipmentClass": {},
@@ -231,6 +234,7 @@ parentsFilters = {
     "Component": {},
     "PlantCode": {},
     "Model": {},
+    "Discipline": {}
 }
 function filterSelectionChanged(event, key) {
     let selectionDropdown = $("#select-" + key)
@@ -246,4 +250,8 @@ function filterSelectionChanged(event, key) {
     }
     selectionDropdown.selectpicker('val', currentVal);
     filterSelected[key] = currentVal;
+
+    QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer, function (data) {
+        treeBoxes(data)
+    });
 }

@@ -195,16 +195,19 @@ namespace CognitiveSearch.UI.Helpers
             Dictionary<string, D3Node> childrenDict = new Dictionary<string, D3Node>();
             foreach (var child in childJSONObj)
             {
-                var node = new D3Node()
+                if (!childrenDict.ContainsKey(child.id))
                 {
-                    nodeName = child.id,
-                    type = getType(child.label),
-                    label = new D3Label() { nodeName = "", label = getLabel(child) },
-                    link = new D3Link() { nodeName = "", direction = "SYNC" },
-                    info = getInfo(child),
-                    children = new List<D3Node>()
-                };
-                childrenDict.Add(child.id, node);
+                    var node = new D3Node()
+                    {
+                        nodeName = child.id,
+                        type = getType(child.label),
+                        label = new D3Label() { nodeName = "", label = getLabel(child) },
+                        link = new D3Link() { nodeName = "", direction = "SYNC" },
+                        info = getInfo(child),
+                        children = new List<D3Node>()
+                    };
+                    childrenDict.Add(child.id, node);
+                }
             }
 
             if (parentDetailsJSON == null)
