@@ -1,6 +1,7 @@
 ﻿using CognitiveSearch.UI.DAL;
 using CognitiveSearch.UI.Models.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Graph;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,8 @@ namespace CognitiveSearch.UI.Helpers
             feedback.searchId = searchId;
             feedback.documentName = documentName;
             this._context.ImplicitDocumentResultFeedbacks.Add(feedback);
-            try {
+            try
+            {
                 this._context.SaveChanges();
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException err)
@@ -112,7 +114,7 @@ namespace CognitiveSearch.UI.Helpers
             feedbackModel.searchId = searchId;
             feedbackModel.documentName = documentName;
             feedbackModel.rating = rating;
-            if(comment == null)
+            if (comment == null)
             {
                 comment = "";
             }
@@ -223,20 +225,32 @@ namespace CognitiveSearch.UI.Helpers
                 //as opposed to searching first before adding
             }
         }
+
+        public void GetTest(int searchId, string annotation, string tag)
+        {
+            var output = this._context.CategoryTagAnnotations.Join(this._context.Search, c => c.searchId, s => s.searchId, (c, s) => new
+            {
+                searchId = s.searchId,
+                category = c.tag,
+                annotation = c.annotation,
+                name = s.givenName
+            });
+        }
     }
-}
 
-public class RatingDTO{
-    public string documentName;
-    public int searchId;
-    public int rating;
-}
+    public class RatingDTO
+    {
+        public string documentName;
+        public int searchId;
+        public int rating;
+    }
 
-public class ReviewDTO
-{
-    public string documentName;
-    public int searchId;
-    public int rating;
-    public string comment;
+    public class ReviewDTO
+    {
+        public string documentName;
+        public int searchId;
+        public int rating;
+        public string comment;
+    }
 }
 

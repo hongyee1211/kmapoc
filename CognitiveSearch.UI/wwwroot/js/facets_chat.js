@@ -310,19 +310,24 @@ function ChatHandleChannelData(filters) {
         }
     }
 
-    if (userMessage.match(/give me all pumps manufactured by nuovo pignone at mlng/g)) {
-        $.getJSON("../json/testing.json", function (json) {
-            treeBoxes(json);
-        });
-    } else if (userMessage.match(/give me the same for MLNG/g)) {
-        $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
-            treeBoxes(json.tree);
-        });
-    } else if (userMessage.match(/give me the failure mode for these pumps/g)) {
-        $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
-            treeBoxes(json.tree);
-        });
-    }
+    QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer, function (data) {
+        //let tree = { tree: data[0] };
+        treeBoxes(data)
+    });
+
+    //if (userMessage.match(/give me all pumps manufactured by nuovo pignone at mlng/g)) {
+    //    $.getJSON("../json/testing.json", function (json) {
+    //        treeBoxes(json);
+    //    });
+    //} else if (userMessage.match(/give me the same for MLNG/g)) {
+    //    $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+    //        treeBoxes(json.tree);
+    //    });
+    //} else if (userMessage.match(/give me the failure mode for these pumps/g)) {
+    //    $.getJSON("../json/Sample_Data-MLNG.json", function (json) {
+    //        treeBoxes(json.tree);
+    //    });
+    //}
     ChatUpdateGraphFilter();
 }
 
