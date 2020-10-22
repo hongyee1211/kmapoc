@@ -57,7 +57,6 @@ namespace CognitiveSearch.UI.Helpers
             var children = ConvertInverse(locationEquipmentLinkString, null as string, equipmentLinkString, new string[1] { "Equipment" });
             var main = Convert(opuLocationLinkString, opuString, children);
             var json = JsonSerializer.Serialize<List<D3Node>>(main.Values.ToList<D3Node>());
-            System.IO.File.WriteAllText(@"A:\ACN\output\path.json", json);
             return main;
         }
 
