@@ -178,9 +178,9 @@
 
             })
             .on('mouseout', function (d) {
-                /*d3.select("#pie-chart-container-id").remove();
+                d3.select("#pie-chart-container-id").remove();
                 d3.select("#histogram-container-id").remove();
-                d3.select("#line-chart-container-id").remove(); */
+                d3.select("#line-chart-container-id").remove(); 
             });
 
 

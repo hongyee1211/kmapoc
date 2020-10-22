@@ -8,10 +8,10 @@
     var legendSpacing = 4;
 
     var color = d3.scaleOrdinal(d3.schemeCategory20b);
-    
-    var svg = d3.select('#pie-chart-container')
+
+    d3.select("#pie-chart-container-id").remove();
+    var svg = d3.select('#pie-chart-container').append('svg')
         .attr('id', 'pie-chart-container-id')
-        .append('svg')
         .attr('width', width)
         .attr('height', height)
         .append('g')
