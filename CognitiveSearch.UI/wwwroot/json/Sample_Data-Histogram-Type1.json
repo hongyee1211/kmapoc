@@ -1,57 +1,110 @@
 [
     {
-        "failuredateyr": "2008",
-        "priority": 2,
-        "failurecount": 6
+        "Location": "Co Generation",
+        "FunctionalLocation": "1101-GG59101-CM",
+        "Priority": 3,
+        "FailureCount": 1
     },
     {
-        "failuredateyr": "2009",
-        "priority": 5,
-        "failurecount": 2
+        "Location": "Co Generation",
+        "FunctionalLocation": "1101-GTG59101-CM",
+        "Priority": 3,
+        "FailureCount": 3
     },
     {
-        "failuredateyr": "2010",
-        "priority": 3,
-        "failurecount": 4
+        "Location": "Co Generation",
+        "FunctionalLocation": "1101-GTG59201-CM",
+        "Priority": 3,
+        "FailureCount": 2
     },
     {
-        "failuredateyr": "2011",
-        "priority": 4,
-        "failurecount": 1
+        "Location": "Co Generation",
+        "FunctionalLocation": "1101-GTG59301-CM",
+        "Priority": 2,
+        "FailureCount": 3
     },
     {
-        "failuredateyr": "2012",
-        "priority": 1,
-        "failurecount": 7
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59101",
+        "Priority": 3,
+        "FailureCount": 17
     },
     {
-        "failuredateyr": "2014",
-        "priority": 7,
-        "failurecount": 8
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59201",
+        "Priority": 2,
+        "FailureCount": 2
     },
     {
-        "failuredateyr": "2015",
-        "priority": 8,
-        "failurecount": 5
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59201",
+        "Priority": 3,
+        "FailureCount": 3
     },
     {
-        "failuredateyr": "2016",
-        "priority": 6,
-        "failurecount": 3
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59301",
+        "Priority": 2,
+        "FailureCount": 1
     },
     {
-        "failuredateyr": "2016",
-        "priority": 3,
-        "failurecount": 5
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59301",
+        "Priority": 3,
+        "FailureCount": 3
     },
     {
-        "failuredateyr": "2017",
-        "priority": 2,
-        "failurecount": 4
+        "Location": "Co Generation",
+        "FunctionalLocation": "GG-59101",
+        "Priority": 3,
+        "FailureCount": 1
     },
     {
-        "failuredateyr": "2018",
-        "priority": 4,
-        "failurecount": 7
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59101",
+        "Priority": 2,
+        "FailureCount": 4
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59101",
+        "Priority": 3,
+        "FailureCount": 40
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59201",
+        "Priority": 2,
+        "FailureCount": 1
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59201",
+        "Priority": 3,
+        "FailureCount": 27
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59301",
+        "Priority": 2,
+        "FailureCount": 5
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59301",
+        "Priority": 3,
+        "FailureCount": 20
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59401",
+        "Priority": 2,
+        "FailureCount": 5
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59401",
+        "Priority": 3,
+        "FailureCount": 45
     }
 ]
