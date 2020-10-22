@@ -154,7 +154,26 @@
 
                 return color;
             })
-            .attr('cursor', 'pointer');
+            .attr('cursor', 'pointer')
+            .on('mouseover', function (d) {
+                if (d.data.type == "type1") {
+                    $.getJSON("../json/Sample_Data-Histogram-Type1.json", function (json) {
+                        loopHistogram(json);
+                    });
+                } else if (d.data.type == "type2") {
+                    $.getJSON("../json/Sample_Data-Histogram-Type2.json", function (json) {
+                        loopHistogram(json);
+                    });
+                } else {
+                    $.getJSON("../json/Sample_Data-Histogram-Type3.json", function (json) {
+                        loopHistogram(json);
+                    });
+                }
+
+            })
+            .on('mouseout', function (d) {
+                d3.select("#histogram-container-id").remove();
+            });
 
 
         // Remove any exiting nodes

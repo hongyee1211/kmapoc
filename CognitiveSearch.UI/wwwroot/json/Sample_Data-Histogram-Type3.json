@@ -1,0 +1,57 @@
+[
+    {
+        "failuredateyr": "2008",
+        "priority": 3,
+        "failurecount": 2
+    },
+    {
+        "failuredateyr": "2009",
+        "priority": 3,
+        "failurecount": 5
+    },
+    {
+        "failuredateyr": "2010",
+        "priority": 3,
+        "failurecount": 5
+    },
+    {
+        "failuredateyr": "2011",
+        "priority": 3,
+        "failurecount": 6
+    },
+    {
+        "failuredateyr": "2012",
+        "priority": 3,
+        "failurecount": 2
+    },
+    {
+        "failuredateyr": "2014",
+        "priority": 3,
+        "failurecount": 1
+    },
+    {
+        "failuredateyr": "2015",
+        "priority": 3,
+        "failurecount": 1
+    },
+    {
+        "failuredateyr": "2016",
+        "priority": 2,
+        "failurecount": 4
+    },
+    {
+        "failuredateyr": "2016",
+        "priority": 3,
+        "failurecount": 7
+    },
+    {
+        "failuredateyr": "2017",
+        "priority": 3,
+        "failurecount": 9
+    },
+    {
+        "failuredateyr": "2018",
+        "priority": 3,
+        "failurecount": 2
+    }
+]
