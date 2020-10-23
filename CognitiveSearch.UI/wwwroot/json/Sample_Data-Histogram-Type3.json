@@ -1,57 +1,57 @@
 [
     {
-        "failuredateyr": "2008",
-        "priority": 3,
-        "failurecount": 2
+        "FunctionalLocation": "2008",
+        "Priority": 3,
+        "FailureCount": 2
     },
     {
-        "failuredateyr": "2009",
-        "priority": 3,
-        "failurecount": 5
+        "FunctionalLocation": "2009",
+        "Priority": 3,
+        "FailureCount": 5
     },
     {
-        "failuredateyr": "2010",
-        "priority": 3,
-        "failurecount": 5
+        "FunctionalLocation": "2010",
+        "Priority": 3,
+        "FailureCount": 5
     },
     {
-        "failuredateyr": "2011",
-        "priority": 3,
-        "failurecount": 6
+        "FunctionalLocation": "2011",
+        "Priority": 3,
+        "FailureCount": 6
     },
     {
-        "failuredateyr": "2012",
-        "priority": 3,
-        "failurecount": 2
+        "FunctionalLocation": "2012",
+        "Priority": 3,
+        "FailureCount": 2
     },
     {
-        "failuredateyr": "2014",
-        "priority": 3,
-        "failurecount": 1
+        "FunctionalLocation": "2014",
+        "Priority": 3,
+        "FailureCount": 1
     },
     {
-        "failuredateyr": "2015",
-        "priority": 3,
-        "failurecount": 1
+        "FunctionalLocation": "2015",
+        "Priority": 3,
+        "FailureCount": 1
     },
     {
-        "failuredateyr": "2016",
-        "priority": 2,
-        "failurecount": 4
+        "FunctionalLocation": "2016",
+        "Priority": 2,
+        "FailureCount": 4
     },
     {
-        "failuredateyr": "2016",
-        "priority": 3,
-        "failurecount": 7
+        "FunctionalLocation": "2016",
+        "Priority": 3,
+        "FailureCount": 7
     },
     {
-        "failuredateyr": "2017",
-        "priority": 3,
-        "failurecount": 9
+        "FunctionalLocation": "2017",
+        "Priority": 3,
+        "FailureCount": 9
     },
     {
-        "failuredateyr": "2018",
-        "priority": 3,
-        "failurecount": 2
+        "FunctionalLocation": "2018",
+        "Priority": 3,
+        "FailureCount": 2
     }
 ]

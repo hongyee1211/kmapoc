@@ -4,6 +4,24 @@
 
 <script>
 
+    $(function () {
+        //Temp solution, move this to razor
+        var discipline = "discipline="
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(discipline) == 0) {
+                if (c.substring(discipline.length, c.length).replace("%20", " ") == "Knowledge Management") {
+                    $("#navbar-list").append(`<li class="nav-item">
+                                    <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Category" asp-action="Index">Admin</a>
+                                </li>`)
+                }
+            }
+        }
+    })
     function getProfile() {
         var x = document.getElementById("profileContainer");
         if (x.style.display === "none") {
@@ -18,18 +36,29 @@
         var pivotsHTML = "";
         var displayName = "displayName=";
         var userType = "userType=";
+        var discipline = "discipline="
         var ca = document.cookie.split(';');
         for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
             while (c.charAt(0) == ' ') {
                 c = c.substring(1);
             }
+            console.log(c)
             if (c.indexOf(displayName) == 0) {
                 pivotsHTML += '<div style="color: #fff;"><h6>' + c.substring(displayName.length, c.length).replace("%20", " ") + '</h6></div>';
             }
 
             if (c.indexOf(userType) == 0) {
                 pivotsHTML += '<div style="color: #00a19c;"><h6>' + c.substring(userType.length, c.length).replace("%20", " ") + '</h6></div>';
+            }
+
+            if (c.indexOf(discipline) == 0) {
+                console.log(c.substring(displayName.length, c.length).replace("%20", " "));
+                if (c.substring(displayName.length, c.length).replace("%20", " ") == "Knowledge Management") {
+                    $("#navbar-list").append(`<li class="nav-item">
+                                <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Category" asp-action="Index">Admin</a>
+                            </li>`)
+                }
             }
         }
 
@@ -51,7 +80,7 @@
             @if (AppConfig.Customizable)
             {
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav" id="navbar-list">
                         <!--<li class="nav-item">
                             <a class="navbar-text navbar-text-color" asp-area="" asp-controller="QuestionAndAnswer" asp-action="Index">Question and Answer</a>
                         </li>-->
@@ -70,9 +99,12 @@
                         <li class="nav-item">
                             <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Video" asp-action="Index">Video Search</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Subscribe" asp-action="Index">Subscriptions</a>
-                        </li>
+                        @*@if(Context.Request.Cookies["discipline"] == "Knowledge Management")
+                        {
+                            <li class="nav-item">
+                                <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Category" asp-action="Index">Admin</a>
+                            </li>
+                        }*@
                         <li class="nav-item">
                             <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Chat" asp-action="Index">Chat</a>
                         </li>

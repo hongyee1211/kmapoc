@@ -1,0 +1,75 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model CognitiveSearch.UI.Models.CategoryViewModel
+
+@{
+    ViewData["Title"] = "Ratings";
+}
+
+<script>
+    categories = @Html.Raw(Json.Serialize(Model.categories));
+    console.log(categories);
+    currentPage = 0;
+
+    function updateTable(query = null) {
+        var table = $("#ratings-table-body")
+        table.empty();
+        rowsHtml = '';
+        rowCount = 0;
+        for (i in categories) {
+            category = categories[i]
+            rowCount += 1
+            rowsHtml += `<tr class="ratings-table-rows">
+                                <th scope="row">${rowCount}</th>
+                                <td>${category.category}</td>
+                                <td>${category.annotation}</td>
+                                <td>${category.name}</td>
+                                <td class="ratings-table-column-align ratings-table-delete" onclick="removeCategory('${category.id}');"><span class="fa fa-trash"></span></td>
+                            </tr>`
+        }
+        table.html(rowsHtml);
+    }
+
+    function removeCategory(id) {
+        $.post("/Category/DeleteAnnotation",
+            {
+                tagId: id,
+            },
+            function (data, status) {
+                if (status == "success") {
+                    categories = data
+                    updateTable()
+                }
+            }
+        );
+    };
+
+    function handleFilter() {
+        var input = $("#rating-filter-input").val();
+        updateTable(input)
+    }
+
+    $(function () {
+        updateTable()
+    });
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<div>
+    <div class="content ratings-content">
+        <table class="table">
+            <thead class="ratings-table-header">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Facet</th>
+                    <th scope="col">Annotation</th>
+                    <th scope="col">User</th>
+                    <th class="ratings-table-column-align" scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="ratings-table-body">
+            </tbody>
+        </table>
+    </div>
+</div>

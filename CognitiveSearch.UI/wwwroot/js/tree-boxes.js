@@ -159,20 +159,28 @@
                 if (d.data.type == "type1") {
                     $.getJSON("../json/Sample_Data-Histogram-Type1.json", function (json) {
                         loopHistogram(json);
+                        loopPieChart(json);
+                        loopLineChart(json);
                     });
                 } else if (d.data.type == "type2") {
                     $.getJSON("../json/Sample_Data-Histogram-Type2.json", function (json) {
                         loopHistogram(json);
+                        loopPieChart(json);
+                        loopLineChart(json);
                     });
                 } else {
                     $.getJSON("../json/Sample_Data-Histogram-Type3.json", function (json) {
                         loopHistogram(json);
+                        loopPieChart(json);
+                        loopLineChart(json);
                     });
                 }
 
             })
             .on('mouseout', function (d) {
+                d3.select("#pie-chart-container-id").remove();
                 d3.select("#histogram-container-id").remove();
+                d3.select("#line-chart-container-id").remove(); 
             });
 
 

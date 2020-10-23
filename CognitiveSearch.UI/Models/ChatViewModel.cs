@@ -55,9 +55,14 @@ namespace CognitiveSearch.UI.Models
                 "ICSB", "KLCONVENTION", "KLCCPS", "CTSB", "HLSB", "KLCCUH", "PET", "VPSB", "PFLNG2", "PTSSB", "PGTSSB", "CEFS", "PLNG2", "TTMMSB", "PIC",
                 "PCML-", "PCP", "EPOMS", "PTVSB", "HCU", "KLCC", "TPC", "PCMI", "PCOSB", "SDA" };
             List<Filter> plantCode = CreateFilters(pcList);
-            string[] mdList = new string[] { "Frame 5", "Frame 6", "AN200" };
+            string[] mdList = new string[] { "AN200", "G1T-211B01", "G1T-211C01", "G1T-211D01", "G1T-211E01", 
+                "G1T-211F01", "G1T-211G01", "G1T-211A01", "G2T-211A01", "G2T-211B01", "G2T-211C01", "G2T-211E01",
+                "4KG-2440","5KG-2440","6KG-2440","GTG-59101","GTG-59201","GTG-59301","GTG-59401","GTG-59501",
+                "GT4010","GT4020","GT-94010","GT-94020","GT-94030","GT-94040","GT-94050","40-QRA-600","40-QRA-700",
+                "G4080","9GT940910","9GT940920","9GT940930","9GT940940","9GT940950"
+            };
             List<Filter> model = CreateFilters(mdList);
-            string[] dList = new string[] { "Placeholder" };
+            string[] dList = new string[] { "Process", "Instrument", "Infra", "Asset Reliability", "Electrical", "Mechanical" };
             List<Filter> discipline = CreateFilters(dList);
 
             this.Filters = new Dictionary<string, Filter[]>

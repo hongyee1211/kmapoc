@@ -309,7 +309,7 @@ namespace CognitiveSearch.UI.Helpers
                     var newParent = new D3Node()
                     {
                         nodeName = relationship.inV,
-                        type = getType(relationship.inVLabel),
+                        type = getType("Location"),
                         label = new D3Label() { nodeName = "", label = relationship.inV },
                         link = new D3Link() { nodeName = "", direction = "SYNC" },
                         info = new List<D3Label>(),

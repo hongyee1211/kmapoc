@@ -1,8 +1,10 @@
 ﻿using CognitiveSearch.UI.DAL;
+using CognitiveSearch.UI.Models;
 using CognitiveSearch.UI.Models.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Graph;
+using Microsoft.Owin.Security.Provider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -226,16 +228,35 @@ namespace CognitiveSearch.UI.Helpers
             }
         }
 
-        public void GetTest(int searchId, string annotation, string tag)
+        public List<CategoryRow> GetAllCategoryTags()
         {
-            var output = this._context.CategoryTagAnnotations.Join(this._context.Search, c => c.searchId, s => s.searchId, (c, s) => new
-            {
-                searchId = s.searchId,
-                category = c.tag,
-                annotation = c.annotation,
-                name = s.givenName
-            });
+            var output = this._context.CategoryTagAnnotations
+                .Join(this._context.Search,
+                    c => c.searchId,
+                    s => s.searchId,
+              
+                    (c, s) => new CategoryRow
+                    {
+                        searchId = s.searchId,
+                        category = c.tag,
+                        annotation = c.annotation,
+                        name = s.givenName,
+                        id = c.categoryAnnotationFeedbackId
+                    }).ToList();
+            return output;
         }
+
+        public void DeleteCategoryTag(int tagId)
+        {
+            FBCategoryTagAnnotationModel entry = this._context.CategoryTagAnnotations.FirstOrDefault(x => x.categoryAnnotationFeedbackId.Equals(tagId));
+            if (entry != null)
+            {
+                this._context.CategoryTagAnnotations.Remove(entry);
+            }
+            this._context.SaveChanges();
+        }
+
+        
     }
 
     public class RatingDTO

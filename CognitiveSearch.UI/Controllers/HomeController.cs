@@ -36,6 +36,7 @@ namespace CognitiveSearch.UI.Controllers
         private readonly FeedbackDBHelper feedbackHandler;
         private readonly SubscribeDBHelper subscribeHandler;
         private readonly StandardDBHelper standardHandler;
+        private readonly DisciplineDBHelper disciplineHandler;
 
         private IConfiguration _configuration { get; set; }
         private DocumentSearchClient _docSearch { get; set; }
@@ -49,18 +50,21 @@ namespace CognitiveSearch.UI.Controllers
             IArmOperations armOperations,
             FeedbackContext feedbackContext,
             SubscribeContext subscribeContext,
-            StandardContext standardContext)
+            StandardContext standardContext,
+            DisciplineContext disciplineContext)
         {
             this._context = feedbackContext;
             this.feedbackHandler = new FeedbackDBHelper(feedbackContext);
             this.subscribeHandler = new SubscribeDBHelper(subscribeContext);
             this.standardHandler = new StandardDBHelper(standardContext);
+            this.disciplineHandler = new DisciplineDBHelper(disciplineContext);
             this.tokenAcquisition = tokenAcquisition;
             this.graphApiOperations = graphApiOperations;
             this.armOperations = armOperations;
 
             _configuration = configuration;
             InitializeDocSearch();
+
         }
 
         private void InitializeDocSearch()
@@ -132,9 +136,49 @@ namespace CognitiveSearch.UI.Controllers
                 {
                     Response.Cookies.Append(child.Name.ToString(), child.Value.ToString(), options);
                 }
+                else if (child.Name == "mailNickname")
+                {
+                    Response.Cookies.Append("discipline", getDiscipline(child.Value.ToString()), options);
+                }
             }
 
             return View();
+        }
+
+        private string getDiscipline(string name)
+        {
+            switch (name)
+            {
+                case "Prakash":
+                case "jackie.koh":
+                case "syuhadah_msaid":
+                case "hklim":
+                    return "Process";
+                case "ridzuanwahab":
+                    return "Electrical";
+                case "khoochoonchew":
+                    return "Instrument";
+                case "norazizy_suratanin":
+                case "fadzli_ismail":
+                case "rodzi_salleh":
+                case "fuad_shaarani":
+                    return "Mechanical";
+                case "ho.kokmun":
+                case "yinmin_chung":
+                case "rajeshp":
+                case "mzamri_ibrahim":
+                case "muyahideen_hasamoh":
+                    return "Knowledge Management";
+                case "asnimazura.ali":
+                case "lim.hoongkeng":
+                case "tong.chapwhat":
+                case "neeraj.tiwary":
+                case "nilanjan.sengupta":
+                case "nurmarissa.mazma":
+                case "nguyen.thanhtung":
+                    return "Digital";
+                default: return "Mechanical";
+            }
         }
 
         public static List<FeedbackModel> feedbackModels = new List<FeedbackModel>();
@@ -248,6 +292,7 @@ namespace CognitiveSearch.UI.Controllers
             public string polygonString { get; set; }
             public string groupFilter { get; set; }
             public int searchId { get; set; }
+            public string[] disciplines { get; set; }
         }
 
         [HttpPost]
@@ -267,12 +312,42 @@ namespace CognitiveSearch.UI.Controllers
             string userId = Request.Cookies["userId"];
             string userType = Request.Cookies["userType"];
             string givenName = Request.Cookies["givenName"];
+            string discipline = Request.Cookies["discipline"];
 
             var searchQuery = feedbackHandler.AddSearchQuery(userId, userType, givenName, searchParams.q);
 
             //var feedbacks = feedbackHandler._context.RatingDocument.Where(feedback => feedback.query.Equals(searchParams.q) && feedback.userId.Equals(Request.Cookies["userId"]));
             var documentResults = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, null);
             var isSubscribed = subscribeHandler.CheckIfSubscribed(userId, searchParams.q);
+
+            //ExpertsDisciplineModel[] filterDocuments = null;
+            //if (searchParams.disciplines != null || searchParams.disciplines.Length > 0)
+            //{
+            //    filterDocuments = this.disciplineHandler.GetAllDocuments(searchParams.disciplines);
+            //}
+            //else if (discipline != "Knowledge Management" && discipline != "Digital")
+            //{
+            //    filterDocuments = this.disciplineHandler.GetAllDocuments(discipline);
+            //}
+            //if (filterDocuments != null)
+            //{
+            //    List<SearchResult<Document>> newResults = new List<SearchResult<Document>>();
+            //    for (int i = 0; i < documentResults.Results.Count; i++)
+            //    {
+            //        string documentName = documentResults.Results[i].Document["metadata_storage_name"].ToString();
+            //        for (int j = 0; j < filterDocuments.Length; j++)
+            //        {
+            //            string filterName = filterDocuments[j].myExperts_Filename;
+            //            if (documentName == filterName)
+            //            {
+            //                newResults.Add(documentResults.Results[i]);
+            //                break;
+            //            }
+            //        }
+            //    }
+            //    documentResults.Count = newResults.Count;
+            //    documentResults.Results = newResults;
+            //}
 
             string text = searchParams.q.ToLower().Replace(",", " ");
             var stringFacetsArray = text.Split('"').Where((item, index) => index % 2 != 0).ToList<string>();
