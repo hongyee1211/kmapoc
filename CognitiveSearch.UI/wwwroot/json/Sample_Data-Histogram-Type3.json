@@ -1,0 +1,57 @@
+[
+    {
+        "FunctionalLocation": "2008",
+        "Priority": 3,
+        "FailureCount": 2
+    },
+    {
+        "FunctionalLocation": "2009",
+        "Priority": 3,
+        "FailureCount": 5
+    },
+    {
+        "FunctionalLocation": "2010",
+        "Priority": 3,
+        "FailureCount": 5
+    },
+    {
+        "FunctionalLocation": "2011",
+        "Priority": 3,
+        "FailureCount": 6
+    },
+    {
+        "FunctionalLocation": "2012",
+        "Priority": 3,
+        "FailureCount": 2
+    },
+    {
+        "FunctionalLocation": "2014",
+        "Priority": 3,
+        "FailureCount": 1
+    },
+    {
+        "FunctionalLocation": "2015",
+        "Priority": 3,
+        "FailureCount": 1
+    },
+    {
+        "FunctionalLocation": "2016",
+        "Priority": 2,
+        "FailureCount": 4
+    },
+    {
+        "FunctionalLocation": "2016",
+        "Priority": 3,
+        "FailureCount": 7
+    },
+    {
+        "FunctionalLocation": "2017",
+        "Priority": 3,
+        "FailureCount": 9
+    },
+    {
+        "FunctionalLocation": "2018",
+        "Priority": 3,
+        "FailureCount": 2
+    }
+]

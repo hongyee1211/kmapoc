@@ -12,7 +12,13 @@
 <script src="~/js/gremlin_queries.js"></script>
 <script src="~/js/chat.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/tree-boxes.css">
+<link rel="stylesheet" type="text/css" href="~/css/pie-chart.css">
+<link rel="stylesheet" type="text/css" href="~/css/histogram.css">
+<link rel="stylesheet" type="text/css" href="~/css/line-chart.css">
 <script src="~/js/tree-boxes.js" type="text/javascript"></script>
+<script src="~/js/pie-chart.js" type="text/javascript"></script>
+<script src="~/js/histogram.js" type="text/javascript"></script>
+<script src="~/js/line-chart.js" type="text/javascript"></script>
 <script>
     aspViewModel = @Html.Raw(Json.Serialize(Model));
     chatUserId = aspViewModel.userId;
@@ -134,11 +140,13 @@
                         </div>
                     </div>
                     <div class="row" style="margin:0px">
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <ct-visualization id="tree-container"></ct-visualization>
                         </div>
-                        <div class="col-md-4" style="background-color: #666; height: 610px;">
-                            <div id="testingHY"></div>
+                        <div class="col-md-5" style="background-color: #666; height: 65vh;">
+                            <div id="pie-chart-container"></div>
+                            <div id="histogram-container"></div>
+                            <div id="line-chart-container"></div>
                         </div>
                     </div>
 
