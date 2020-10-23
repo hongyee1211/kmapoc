@@ -34,7 +34,7 @@
         .append('path')
         .attr('d', arc)
         .attr('fill', function (d, i) {
-            return color(d.data.FunctionalLocation);
+            return color(d.data.FunctionalLocation + " (" + d.data.Priority + ")");
         });
 
     var legend = svg.selectAll('.legend')
