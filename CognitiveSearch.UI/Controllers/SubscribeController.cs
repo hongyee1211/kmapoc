@@ -32,6 +32,17 @@ namespace CognitiveSearch.UI.Controllers
             return View(viewModel);
         }
 
+        //public IActionResult Index()
+        //{
+        //    List<SubscribeSearchModel> subscriptions = Retrieve();
+
+        //    var viewModel = new SubscribeViewModel
+        //    {
+        //        subscriptions = subscriptions,
+        //    };
+        //    return View(viewModel);
+        //}
+
         [HttpPost]
         public List<SubscribeSearchModel> Unsubscribe(string query)
         {

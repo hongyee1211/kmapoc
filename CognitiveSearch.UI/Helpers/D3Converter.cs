@@ -57,7 +57,6 @@ namespace CognitiveSearch.UI.Helpers
             var children = ConvertInverse(locationEquipmentLinkString, null as string, equipmentLinkString, new string[1] { "Equipment" });
             var main = Convert(opuLocationLinkString, opuString, children);
             var json = JsonSerializer.Serialize<List<D3Node>>(main.Values.ToList<D3Node>());
-            System.IO.File.WriteAllText(@"A:\ACN\output\path.json", json);
             return main;
         }
 
@@ -310,7 +309,7 @@ namespace CognitiveSearch.UI.Helpers
                     var newParent = new D3Node()
                     {
                         nodeName = relationship.inV,
-                        type = getType(relationship.inVLabel),
+                        type = getType("Location"),
                         label = new D3Label() { nodeName = "", label = relationship.inV },
                         link = new D3Link() { nodeName = "", direction = "SYNC" },
                         info = new List<D3Label>(),
