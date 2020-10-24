@@ -23,8 +23,10 @@
             rowsHtml += `<tr class="ratings-table-rows">
                                 <th scope="row">${rowCount}</th>
                                 <td>${category.category}</td>
+                                <td>${category.current}</td>
                                 <td>${category.annotation}</td>
                                 <td>${category.name}</td>
+                                <td class="ratings-table-column-align ratings-table-delete" onclick="approveCategory('${category.id}');"><span class="fa fa-check"></span></td>
                                 <td class="ratings-table-column-align ratings-table-delete" onclick="removeCategory('${category.id}');"><span class="fa fa-trash"></span></td>
                             </tr>`
         }
@@ -33,6 +35,20 @@
 
     function removeCategory(id) {
         $.post("/Category/DeleteAnnotation",
+            {
+                tagId: id,
+            },
+            function (data, status) {
+                if (status == "success") {
+                    categories = data
+                    updateTable()
+                }
+            }
+        );
+    };
+
+    function approveCategory(id) {
+        $.post("/Category/ApproveAnnotation",
             {
                 tagId: id,
             },
@@ -63,9 +79,11 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Facet</th>
+                    <th scope="col">Current Tag</th>
                     <th scope="col">Annotation</th>
                     <th scope="col">User</th>
-                    <th class="ratings-table-column-align" scope="col"></th>
+                    <th class="ratings-table-column-align" style="width:50px" scope="col">Approve</th>
+                    <th class="ratings-table-column-align" style="width:50px" scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody id="ratings-table-body">

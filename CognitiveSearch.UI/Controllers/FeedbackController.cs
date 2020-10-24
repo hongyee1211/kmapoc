@@ -50,9 +50,9 @@ namespace CognitiveSearch.UI.Controllers
 
         [Route("AnnotateCategoryTags")]
         [HttpPost]
-        public void AnnotateTags([FromForm] int searchFbId, [FromForm] string annotation, [FromForm] string tag)
+        public void AnnotateCategoryTags([FromForm] int searchFbId, [FromForm] string annotation, [FromForm] string tag, [FromForm] string current)
         {
-            feedbackHandler.AddCategoryAnnotation(searchFbId, annotation, tag);
+            feedbackHandler.AddCategoryAnnotation(searchFbId, annotation, tag, current);
         }
     }
 }

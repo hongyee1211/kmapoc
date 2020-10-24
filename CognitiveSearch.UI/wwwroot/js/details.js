@@ -342,7 +342,7 @@ function GetMapsHTML(result) {
     return mapsContainerHTML;
 }
 
-
+var transcriptFullContent = ""
 // this function will get a table with the text content of the file, 
 function GetTranscriptHTML(result) {
 
@@ -361,7 +361,7 @@ function GetTranscriptHTML(result) {
         // otherwise, let's try getting the content -- although it won't have any image data.
         full_content = result.content.trim();
     }
-
+    transcriptFullContent = full_content;
     if (full_content === null || full_content === "")
     {
       // not much to display

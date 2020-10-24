@@ -320,34 +320,35 @@ namespace CognitiveSearch.UI.Controllers
             var documentResults = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, null);
             var isSubscribed = subscribeHandler.CheckIfSubscribed(userId, searchParams.q);
 
-            //ExpertsDisciplineModel[] filterDocuments = null;
-            //if (searchParams.disciplines != null || searchParams.disciplines.Length > 0)
-            //{
-            //    filterDocuments = this.disciplineHandler.GetAllDocuments(searchParams.disciplines);
-            //}
-            //else if (discipline != "Knowledge Management" && discipline != "Digital")
-            //{
-            //    filterDocuments = this.disciplineHandler.GetAllDocuments(discipline);
-            //}
-            //if (filterDocuments != null)
-            //{
-            //    List<SearchResult<Document>> newResults = new List<SearchResult<Document>>();
-            //    for (int i = 0; i < documentResults.Results.Count; i++)
-            //    {
-            //        string documentName = documentResults.Results[i].Document["metadata_storage_name"].ToString();
-            //        for (int j = 0; j < filterDocuments.Length; j++)
-            //        {
-            //            string filterName = filterDocuments[j].myExperts_Filename;
-            //            if (documentName == filterName)
-            //            {
-            //                newResults.Add(documentResults.Results[i]);
-            //                break;
-            //            }
-            //        }
-            //    }
-            //    documentResults.Count = newResults.Count;
-            //    documentResults.Results = newResults;
-            //}
+            ExpertsDisciplineModel[] filterDocuments = null;
+            if (searchParams.disciplines != null && searchParams.disciplines.Length > 0)
+            {
+                filterDocuments = this.disciplineHandler.GetAllDocuments(searchParams.disciplines);
+            }
+            if (filterDocuments != null)
+            {
+                List<int> sortedIndexes = new List<int>();
+                List<SearchResult<Document>> newResults = new List<SearchResult<Document>>();
+                for (int i = 0; i < documentResults.Results.Count; i++)
+                {
+                    string documentName = documentResults.Results[i].Document["metadata_storage_name"].ToString();
+                    for (int j = 0; j < filterDocuments.Length; j++)
+                    {
+                        string filterName = filterDocuments[j].myExperts_Filename;
+                        if (documentName == filterName)
+                        {
+                            newResults.Add(documentResults.Results[i]);
+                            sortedIndexes.Add(i);
+                            break;
+                        }
+                    }
+                }
+                for(int i = 0; i < sortedIndexes.Count; i++)
+                {
+                    documentResults.Results.RemoveAt(sortedIndexes[i]-i);
+                }
+                documentResults.Results = newResults.Concat(documentResults.Results).ToList();
+            }
 
             string text = searchParams.q.ToLower().Replace(",", " ");
             var stringFacetsArray = text.Split('"').Where((item, index) => index % 2 != 0).ToList<string>();
@@ -378,7 +379,8 @@ namespace CognitiveSearch.UI.Controllers
                 searchFbId = searchQuery.searchId,
                 applicationInstrumentationKey = _configuration.GetSection("InstrumentationKey")?.Value,
                 facetableFields = _docSearch.Model.Facets.Select(k => k.Name).ToArray(),
-                standards = standards
+                standards = standards,
+                discipline = discipline
             };
             return viewModel;
         }

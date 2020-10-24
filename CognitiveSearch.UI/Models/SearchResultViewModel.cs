@@ -24,5 +24,7 @@ namespace CognitiveSearch.UI.Models
         public Boolean subscribed { get; set; }
 
         public string[] standards { get; set; }
+
+        public string discipline { get; set; }
     }
 }

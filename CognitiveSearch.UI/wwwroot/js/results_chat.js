@@ -279,7 +279,6 @@ function ChatUpdatePagination(docCount) {
 }
 
 function ChatGoToPage(page) {
-    chatCurrentPage = page;
-    ChatUpdateResultsView();
+    ChatTriggerSearch(page);
 }
 

@@ -17,5 +17,6 @@ namespace CognitiveSearch.UI.Models
         public string category { get; set; }
         public string annotation { get; set; }
         public string name { get; set; }
+        public string current { get; set; }
     }
 }

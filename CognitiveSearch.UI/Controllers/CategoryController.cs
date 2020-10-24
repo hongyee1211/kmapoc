@@ -40,9 +40,17 @@ namespace CognitiveSearch.UI.Controllers
         }
 
         [HttpPost]
-        public List<CategoryRow> DeleteAnnotation(int tagId)
+        public List<CategoryRow> DeleteAnnotation([FromForm] int tagId)
         {
             dbHandler.DeleteCategoryTag(tagId);
+            List<CategoryRow> categories = dbHandler.GetAllCategoryTags();
+            return categories;
+        }
+
+        [HttpPost]
+        public List<CategoryRow> ApproveAnnotation([FromForm] int tagId)
+        {
+            dbHandler.ApproveCategoryTag(tagId);
             List<CategoryRow> categories = dbHandler.GetAllCategoryTags();
             return categories;
         }

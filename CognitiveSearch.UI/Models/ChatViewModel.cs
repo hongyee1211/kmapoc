@@ -16,6 +16,7 @@ namespace CognitiveSearch.UI.Models
         public string Token { get; set; }
         public string UserId { get; set; }
         public string[] facetableFields { get; set; }
+        public string discipline { get; set; }
 
         public Dictionary<string, Filter[]> Filters { get; set; }
 
@@ -55,7 +56,7 @@ namespace CognitiveSearch.UI.Models
                 "ICSB", "KLCONVENTION", "KLCCPS", "CTSB", "HLSB", "KLCCUH", "PET", "VPSB", "PFLNG2", "PTSSB", "PGTSSB", "CEFS", "PLNG2", "TTMMSB", "PIC",
                 "PCML-", "PCP", "EPOMS", "PTVSB", "HCU", "KLCC", "TPC", "PCMI", "PCOSB", "SDA" };
             List<Filter> plantCode = CreateFilters(pcList);
-            string[] mdList = new string[] { "AN200", "G1T-211B01", "G1T-211C01", "G1T-211D01", "G1T-211E01", 
+            string[] mdList = new string[] { "AN200", "G1T-211B01", "G1T-211C01", "G1T-211D01", "G1T-211E01",
                 "G1T-211F01", "G1T-211G01", "G1T-211A01", "G2T-211A01", "G2T-211B01", "G2T-211C01", "G2T-211E01",
                 "4KG-2440","5KG-2440","6KG-2440","GTG-59101","GTG-59201","GTG-59301","GTG-59401","GTG-59501",
                 "GT4010","GT4020","GT-94010","GT-94020","GT-94030","GT-94040","GT-94050","40-QRA-600","40-QRA-700",

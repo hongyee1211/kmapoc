@@ -14,5 +14,7 @@ namespace CognitiveSearch.UI.Models.Data
         public int searchId { get; set; }
         public string annotation { get; set; }
         public string tag { get; set; }
+        public string current { get; set; }
+        public int allow { get; set; }
     }
 }
