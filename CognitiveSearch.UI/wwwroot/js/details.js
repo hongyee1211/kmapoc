@@ -10,6 +10,7 @@ function ShowDocument(id) {
             searchFbId: searchFbId,
         },
         function (data) {
+            $("#mrc-answer-body").html("*Ask a question regarding the document such as: who is the author?");
             result = data.result;
 
             var pivotLinksHTML = "";
