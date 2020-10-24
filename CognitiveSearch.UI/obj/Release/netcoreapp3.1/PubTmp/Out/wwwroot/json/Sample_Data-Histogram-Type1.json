@@ -1,0 +1,110 @@
+[
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "1101-GG59101-CM",
+        "Priority": 3,
+        "FailureCount": 1
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "1101-GTG59101-CM",
+        "Priority": 3,
+        "FailureCount": 3
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "1101-GTG59201-CM",
+        "Priority": 3,
+        "FailureCount": 2
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "1101-GTG59301-CM",
+        "Priority": 2,
+        "FailureCount": 3
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59101",
+        "Priority": 3,
+        "FailureCount": 17
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59201",
+        "Priority": 2,
+        "FailureCount": 2
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59201",
+        "Priority": 3,
+        "FailureCount": 3
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59301",
+        "Priority": 2,
+        "FailureCount": 1
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "G-59301",
+        "Priority": 3,
+        "FailureCount": 3
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GG-59101",
+        "Priority": 3,
+        "FailureCount": 1
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59101",
+        "Priority": 2,
+        "FailureCount": 4
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59101",
+        "Priority": 3,
+        "FailureCount": 40
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59201",
+        "Priority": 2,
+        "FailureCount": 1
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59201",
+        "Priority": 3,
+        "FailureCount": 27
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59301",
+        "Priority": 2,
+        "FailureCount": 5
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59301",
+        "Priority": 3,
+        "FailureCount": 20
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59401",
+        "Priority": 2,
+        "FailureCount": 5
+    },
+    {
+        "Location": "Co Generation",
+        "FunctionalLocation": "GTG-59401",
+        "Priority": 3,
+        "FailureCount": 45
+    }
+]

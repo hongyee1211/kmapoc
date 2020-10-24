@@ -1,0 +1,160 @@
+{
+    "tree": {
+        "nodeName": "OPU",
+        "type": "type1",
+        "label": [
+            {
+                "nodeName": "",
+                "label": "MLNG"
+            }
+        ],
+        "info": "",
+        "link": {
+            "nodeName": "OPU",
+            "direction": "ASYN"
+        },
+        "children": [
+            {
+                "nodeName": "UNIT",
+                "type": "type2",
+                "label": [
+                    {
+                        "nodeName": "",
+                        "label": "MLNG Process 3"
+                    }
+                ],
+                "info": "",
+                "link": {
+                    "nodeName": "UNIT",
+                    "direction": "SYNC"
+                },
+                "children": [
+                    {
+                        "nodeName": "MANUFACTURER",
+                        "type": "type3",
+                        "label": [
+                            {
+                                "nodeName": "",
+                                "label": "NUOVO PIGNONE"
+                            }
+                        ],
+                        "info": "",
+                        "link": {
+                            "nodeName": "MANUFACTURER",
+                            "direction": "SYNC"
+                        },
+                        "children": [
+                            {
+                                "nodeName": "EQUIPMENT",
+                                "type": "type4",
+                                "label": [
+                                    {
+                                        "nodeName": "",
+                                        "label": "7P91413A"
+                                    }
+                                ],
+                                "info": [
+                                    {
+                                        "nodeName": "Class",
+                                        "label": "PUMP"
+                                    },
+                                    {
+                                        "nodeName": "Model",
+                                        "label": "60F-IL C/C"
+                                    },
+                                    {
+                                        "nodeName": "Failure Priority 1",
+                                        "label": "0"
+                                    },
+                                    {
+                                        "nodeName": "Failure Priority 2",
+                                        "label": "0"
+                                    },
+                                    {
+                                        "nodeName": "Failure Priority 3",
+                                        "label": "2"
+                                    }
+                                ],
+                                "link": {
+                                    "nodeName": "EQUIPMENT",
+                                    "direction": "SYNC"
+                                },
+                                "children": [
+                                    {
+                                        "nodeName": "COMPONENT",
+                                        "type": "type5",
+                                        "label": [
+                                            {
+                                                "nodeName": "",
+                                                "label": "COMPONENT"
+                                            }
+                                        ],
+                                        "info": "",
+                                        "link": {
+                                            "nodeName": "COMPONENT",
+                                            "direction": "SYNC"
+                                        },
+                                        "children": [
+                                            {
+                                                "nodeName": "FAILURE",
+                                                "type": "type6",
+                                                "label": [
+                                                    {
+                                                        "nodeName": "Code",
+                                                        "label": "0M-PMPCF/BRNG"
+                                                    },
+                                                    {
+                                                        "nodeName": "Description",
+                                                        "label": "Bearing"
+                                                    }
+                                                ],
+                                                "info": [
+                                                    {
+                                                        "nodeName": "Code",
+                                                        "label": ""
+                                                    },
+                                                    {
+                                                        "nodeName": "StartDate",
+                                                        "label": "12-May-2018"
+                                                    },
+                                                    {
+                                                        "nodeName": "EndDate",
+                                                        "label": "18-May-2018"
+                                                    },
+                                                    {
+                                                        "nodeName": "ProblemCode",
+                                                        "label": "0M-PMPCF/VIBR"
+                                                    },
+                                                    {
+                                                        "nodeName": "ProblemDesc",
+                                                        "label": "High Vibration/Axial Displacement"
+                                                    },
+                                                    {
+                                                        "nodeName": "CauseCode",
+                                                        "label": "MEFL/LLUB"
+                                                    },
+                                                    {
+                                                        "nodeName": "CauseDesc",
+                                                        "label": "Lack of Lubrication"
+                                                    },
+                                                    {
+                                                        "nodeName": "Priority",
+                                                        "label": "3"
+                                                    }
+                                                ],
+                                                "link": {
+                                                    "nodeName": "Failure",
+                                                    "direction": "SYNC"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

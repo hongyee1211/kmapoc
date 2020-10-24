@@ -1,0 +1,12 @@
+[
+    {
+        "FunctionalLocation": "GTG-59101",
+        "Priority": 2,
+        "FailureCount": 4
+    },
+    {
+        "FunctionalLocation": "GTG-59101",
+        "Priority": 3,
+        "FailureCount": 40
+    }
+]
