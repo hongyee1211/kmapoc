@@ -16,6 +16,7 @@
     searchId = @Html.Raw(Json.Serialize((Model.searchId)));
     searchFbId = @Html.Raw(Json.Serialize((Model.searchFbId)));
     applicationInstrumentationKey = @Html.Raw(Json.Serialize(Model.applicationInstrumentationKey));
+    isChat = false;
     $(function () {
         $('#details-pivot-content').on('contextmenu', ShowAnnotationContextMenu);
         $('#reference-viewer').on('contextmenu', ShowAnnotationContextMenu);

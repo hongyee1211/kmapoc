@@ -77,6 +77,7 @@ namespace CognitiveSearch.UI.Controllers
                 Token = token,
                 UserId = userId,
                 facetableFields = _docSearch.Model.Facets.Select(k => k.Name).ToArray(),
+                discipline = Request.Cookies["discipline"]
             };
 
             return View(config);

@@ -20,6 +20,7 @@ namespace CognitiveSearch.UI.Helpers
             gremlinServer = new GremlinServer(config.Host, 443, true, dbCollection, config.PrimaryKey);
 
             var gremlinClient = new GremlinClient(gremlinServer, new GraphSONReader(), new GraphSONWriter());
+            var resultSet = gremlinClient.SubmitAsync<dynamic>("g.V().hasLabel('OPU')").Result;
             Console.WriteLine("Connection Successful");
         }
 
@@ -76,7 +77,7 @@ namespace CognitiveSearch.UI.Helpers
                 gremlinQuery += ".hasLabel('OPU')";
             }
             gremlinQuery += ".out().out()";
-            gremlinQuery += gremlinHasBuilder(new string[2] { "Equipment", "EquipmentModel" }, equipmentModel);
+            gremlinQuery += gremlinHasBuilder(new string[1] { "EquipmentModel" }, equipmentModel);
             gremlinQuery += gremlinHasBuilder(new string[1] { "Manufacturer" }, manufacturer);
             gremlinQuery += gremlinHasBuilder(new string[1] { "EquipmentClass" }, equipmentClass);
             gremlinQuery += ".outE('is_located_at')";
@@ -102,6 +103,59 @@ namespace CognitiveSearch.UI.Helpers
             }
             gremlinQuery += ".out().out()";
             gremlinQuery += gremlinHasBuilder(new string[2] { "Equipment", "EquipmentModel"}, equipmentModel);
+            gremlinQuery += gremlinHasBuilder(new string[2] { "Equipment", "Manufacturer" }, manufacturer);
+            gremlinQuery += gremlinHasBuilder(new string[1] { "EquipmentClass" }, equipmentClass);
+
+            using (var client = new GremlinClient(gremlinServer))
+            {
+                var resultSet = client.SubmitAsync<dynamic>(gremlinQuery).Result;
+                if(resultSet.Count == 0)
+                {
+                    return null;
+                }
+                string equipmentLink = JsonConvert.SerializeObject(resultSet);
+                return equipmentLink;
+            }
+        }
+
+        public string getUnitEquipmentRelationshipBruteForce(string[] plantCode, string[] equipmentModel, string[] equipmentClass, string[] manufacturer)
+        {
+            string gremlinQuery = "g.V()";
+            if (plantCode.Length > 0)
+            {
+                gremlinQuery += gremlinHasBuilder(new string[2] { "OPU", "PlantCode" }, plantCode);
+            }
+            else
+            {
+                gremlinQuery += ".hasLabel('OPU')";
+            }
+            gremlinQuery += ".out().out()";
+            gremlinQuery += gremlinHasBuilder(new string[1] { "pk" }, equipmentModel);
+            gremlinQuery += gremlinHasBuilder(new string[1] { "Manufacturer" }, manufacturer);
+            gremlinQuery += gremlinHasBuilder(new string[1] { "EquipmentClass" }, equipmentClass);
+            gremlinQuery += ".outE('is_located_at')";
+
+            using (var client = new GremlinClient(gremlinServer))
+            {
+                var resultSet = client.SubmitAsync<dynamic>(gremlinQuery).Result;
+                string equipmentLink = JsonConvert.SerializeObject(resultSet);
+                return equipmentLink;
+            }
+        }
+
+        public string getEquipmentDetailsBruteForce(string[] plantCode, string[] equipmentModel, string[] equipmentClass, string[] manufacturer)
+        {
+            string gremlinQuery = "g.V()";
+            if (plantCode.Length > 0)
+            {
+                gremlinQuery += gremlinHasBuilder(new string[2] { "OPU", "PlantCode" }, plantCode);
+            }
+            else
+            {
+                gremlinQuery += ".hasLabel('OPU')";
+            }
+            gremlinQuery += ".out().out()";
+            gremlinQuery += gremlinHasBuilder(new string[2] { "Equipment", "pk" }, equipmentModel);
             gremlinQuery += gremlinHasBuilder(new string[2] { "Equipment", "Manufacturer" }, manufacturer);
             gremlinQuery += gremlinHasBuilder(new string[1] { "EquipmentClass" }, equipmentClass);
 

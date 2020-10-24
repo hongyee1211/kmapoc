@@ -26,8 +26,17 @@ namespace CognitiveSearch.UI.Controllers
         {
             string opu = connection.getPlantCodeDetails(plantCode);
             string opuLink = connection.getPlantCodeUnitRelationship(plantCode);
-            string equipmentLink = connection.getUnitEquipmentRelationship(plantCode, equipmentModel, equipmentClass, manufacturer);
             string equipment = connection.getEquipmentDetails(plantCode, equipmentModel, equipmentClass, manufacturer);
+            string equipmentLink = "";
+            if (equipment != null)
+            {
+                equipmentLink = connection.getUnitEquipmentRelationship(plantCode, equipmentModel, equipmentClass, manufacturer);
+            }
+            else
+            {
+                equipmentLink = connection.getUnitEquipmentRelationshipBruteForce(plantCode, equipmentModel, equipmentClass, manufacturer);
+                equipment = connection.getEquipmentDetailsBruteForce(plantCode, equipmentModel, equipmentClass, manufacturer);
+            }
             var output = D3Converter.StaticQuery(opu, opuLink, equipmentLink, equipment);
             return new JsonResult(output.Values.ToArray());
         }

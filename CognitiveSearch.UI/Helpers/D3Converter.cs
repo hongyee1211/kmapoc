@@ -15,46 +15,9 @@ namespace CognitiveSearch.UI.Helpers
 {
     public static class D3Converter
     {
-        public static Dictionary<string, D3Node> Convert()
-        {
-            string opuString = "";
-            string opuLocationLinkString = "";
-            string locationEquipmentLinkString = "";
-            string equipmentLinkString = "";
-            using (StreamReader r = new StreamReader("1. OPU Node.txt"))
-            {
-                opuString = r.ReadToEnd();
-            }
-            using (StreamReader r = new StreamReader("1a. OPU-Location Relationship.txt"))
-            {
-                opuLocationLinkString = r.ReadToEnd();
-            }
-            using (StreamReader r = new StreamReader("give me location of AN200 equipment at mlng - relationship link.txt"))
-            {
-                locationEquipmentLinkString = r.ReadToEnd();
-            }
-            using (StreamReader r = new StreamReader("give me all AN200 at mlng.txt"))
-            {
-                equipmentLinkString = r.ReadToEnd();
-            }
-            //string opuString = "[\n  {\n    \"id\": \"M060\",\n    \"label\": \"OPU\",\n    \"type\": \"vertex\",\n    \"properties\": {\n      \"pk\": [\n        {\n          \"id\": \"M060|pk\",\n          \"value\": \"M060\"\n        }\n      ],\n      \"PlantCode\": [\n        {\n          \"id\": \"9e9dbd5e-e2b8-46ac-83e1-f1917c688047\",\n          \"value\": \"MLNG\"\n        }\n      ],\n      \"PlantName\": [\n        {\n          \"id\": \"ee274181-a217-4f4b-ba8c-48f8f0d59e34\",\n          \"value\": \"MLNG Maint Planning Plant\"\n        }\n      ]\n    }\n  }\n]";
-            //string opuLocationLinkString = "[\n  {\n    \"id\": \"M060-MOD3 UNIT 1100-15\",\n    \"label\": \"has\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Location\",\n    \"outVLabel\": \"OPU\",\n    \"inV\": \"MOD3 UNIT 1100\",\n    \"outV\": \"M060\"\n  },\n  {\n    \"id\": \"M060-MOD2 UNIT 5700-13\",\n    \"label\": \"has\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Location\",\n    \"outVLabel\": \"OPU\",\n    \"inV\": \"MOD2 UNIT 5700\",\n    \"outV\": \"M060\"\n  }\n]";
-            //string locationEquipmentLinkString = "[\n  {\n    \"id\": \"MOD3 UNIT 1100-3EM1105F-996\",\n    \"label\": \"consist of\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Equipment\",\n    \"outVLabel\": \"Location\",\n    \"inV\": \"3EM1105F\",\n    \"outV\": \"MOD3 UNIT 1100\"\n  },\n  {\n    \"id\": \"MOD3 UNIT 1100-3EM1105E-995\",\n    \"label\": \"consist of\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Equipment\",\n    \"outVLabel\": \"Location\",\n    \"inV\": \"3EM1105E\",\n    \"outV\": \"MOD3 UNIT 1100\"\n  },\n  {\n    \"id\": \"MOD2 UNIT 5700-3EN1105E-995\",\n    \"label\": \"consist of\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Equipment\",\n    \"outVLabel\": \"Location\",\n    \"inV\": \"3EN1105E\",\n    \"outV\": \"MOD2 UNIT 5700\"\n  }\n]";
-
-            var children = ConvertInverse(locationEquipmentLinkString, null as string, equipmentLinkString, new string[1] { "Location" });
-            var main = Convert(opuLocationLinkString, opuString, children);
-            var json = JsonSerializer.Serialize<List<D3Node>>(main.Values.ToList<D3Node>());
-            System.IO.File.WriteAllText(@"A:\ACN\output\path.json", json);
-            return main;
-        }
-
         public static Dictionary<string, D3Node> StaticQuery(string opuString, string opuLocationLinkString, string locationEquipmentLinkString, string equipmentLinkString)
         {
-            //string opuString = "[\n  {\n    \"id\": \"M060\",\n    \"label\": \"OPU\",\n    \"type\": \"vertex\",\n    \"properties\": {\n      \"pk\": [\n        {\n          \"id\": \"M060|pk\",\n          \"value\": \"M060\"\n        }\n      ],\n      \"PlantCode\": [\n        {\n          \"id\": \"9e9dbd5e-e2b8-46ac-83e1-f1917c688047\",\n          \"value\": \"MLNG\"\n        }\n      ],\n      \"PlantName\": [\n        {\n          \"id\": \"ee274181-a217-4f4b-ba8c-48f8f0d59e34\",\n          \"value\": \"MLNG Maint Planning Plant\"\n        }\n      ]\n    }\n  }\n]";
-            //string opuLocationLinkString = "[\n  {\n    \"id\": \"M060-MOD3 UNIT 1100-15\",\n    \"label\": \"has\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Location\",\n    \"outVLabel\": \"OPU\",\n    \"inV\": \"MOD3 UNIT 1100\",\n    \"outV\": \"M060\"\n  },\n  {\n    \"id\": \"M060-MOD2 UNIT 5700-13\",\n    \"label\": \"has\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Location\",\n    \"outVLabel\": \"OPU\",\n    \"inV\": \"MOD2 UNIT 5700\",\n    \"outV\": \"M060\"\n  }\n]";
-            //string locationEquipmentLinkString = "[\n  {\n    \"id\": \"MOD3 UNIT 1100-3EM1105F-996\",\n    \"label\": \"consist of\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Equipment\",\n    \"outVLabel\": \"Location\",\n    \"inV\": \"3EM1105F\",\n    \"outV\": \"MOD3 UNIT 1100\"\n  },\n  {\n    \"id\": \"MOD3 UNIT 1100-3EM1105E-995\",\n    \"label\": \"consist of\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Equipment\",\n    \"outVLabel\": \"Location\",\n    \"inV\": \"3EM1105E\",\n    \"outV\": \"MOD3 UNIT 1100\"\n  },\n  {\n    \"id\": \"MOD2 UNIT 5700-3EN1105E-995\",\n    \"label\": \"consist of\",\n    \"type\": \"edge\",\n    \"inVLabel\": \"Equipment\",\n    \"outVLabel\": \"Location\",\n    \"inV\": \"3EN1105E\",\n    \"outV\": \"MOD2 UNIT 5700\"\n  }\n]";
-
-            var children = ConvertInverse(locationEquipmentLinkString, null as string, equipmentLinkString, new string[1] { "Equipment" });
+            var children = ConvertInverse(locationEquipmentLinkString, null as string, equipmentLinkString, new string[1] { "Location" });
             var main = Convert(opuLocationLinkString, opuString, children);
             var json = JsonSerializer.Serialize<List<D3Node>>(main.Values.ToList<D3Node>());
             return main;

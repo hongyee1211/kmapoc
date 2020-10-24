@@ -4,7 +4,7 @@
     equipmentClass = equipmentClass == null ? [] : equipmentClass;
     manufacturer = manufacturer == null ? [] : manufacturer;
     additiveLength = plantCode.length + equipmentModel.length + manufacturer.length + equipmentClass.length;
-    if (additiveLength > 0) {
+    if (additiveLength > 1) {
         $.post('/api/graph/query',
             {
                 plantCode: plantCode,

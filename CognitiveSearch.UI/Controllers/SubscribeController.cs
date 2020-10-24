@@ -67,13 +67,5 @@ namespace CognitiveSearch.UI.Controllers
             return dbHandler.GetAllUserSubscriptions(userId);
         }
 
-        [HttpPost, HttpGet]
-        public void test()
-        {
-            Console.WriteLine("this");
-            // Delegate the processing of the HTTP POST to the adapter.
-            // The adapter will invoke the bot.
-        }
-
     }
 }

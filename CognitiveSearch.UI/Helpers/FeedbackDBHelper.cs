@@ -200,12 +200,14 @@ namespace CognitiveSearch.UI.Helpers
             }
         }
 
-        public void AddCategoryAnnotation(int searchId, string annotation, string tag)
+        public void AddCategoryAnnotation(int searchId, string annotation, string tag, string current)
         {
             var feedbackModel = new FBCategoryTagAnnotationModel();
             feedbackModel.searchId = searchId;
             feedbackModel.tag = tag;
             feedbackModel.annotation = annotation;
+            feedbackModel.current = current;
+            feedbackModel.allow = 0;
             var existing = this._context.CategoryTagAnnotations.FirstOrDefault(f => f.searchId.Equals(feedbackModel.searchId) && f.tag.Equals(feedbackModel.tag));
 
             if (existing == null)
@@ -230,7 +232,7 @@ namespace CognitiveSearch.UI.Helpers
 
         public List<CategoryRow> GetAllCategoryTags()
         {
-            var output = this._context.CategoryTagAnnotations
+            var output = this._context.CategoryTagAnnotations.Where(x=>x.allow == 0)
                 .Join(this._context.Search,
                     c => c.searchId,
                     s => s.searchId,
@@ -240,6 +242,7 @@ namespace CognitiveSearch.UI.Helpers
                         searchId = s.searchId,
                         category = c.tag,
                         annotation = c.annotation,
+                        current = c.current,
                         name = s.givenName,
                         id = c.categoryAnnotationFeedbackId
                     }).ToList();
@@ -248,15 +251,24 @@ namespace CognitiveSearch.UI.Helpers
 
         public void DeleteCategoryTag(int tagId)
         {
-            FBCategoryTagAnnotationModel entry = this._context.CategoryTagAnnotations.FirstOrDefault(x => x.categoryAnnotationFeedbackId.Equals(tagId));
+            FBCategoryTagAnnotationModel entry = this._context.CategoryTagAnnotations.FirstOrDefault(x => x.categoryAnnotationFeedbackId == tagId);
             if (entry != null)
             {
                 this._context.CategoryTagAnnotations.Remove(entry);
+                this._context.SaveChanges();
             }
-            this._context.SaveChanges();
         }
 
-        
+        public void ApproveCategoryTag(int tagId)
+        {
+            FBCategoryTagAnnotationModel entry = this._context.CategoryTagAnnotations.FirstOrDefault(x => x.categoryAnnotationFeedbackId == tagId);
+            if (entry != null)
+            {
+                this._context.Entry(entry).CurrentValues.SetValues(new { allow = 1});
+                this._context.SaveChanges();
+            }
+        }
+
     }
 
     public class RatingDTO

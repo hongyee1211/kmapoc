@@ -6,21 +6,21 @@
 
     $(function () {
         //Temp solution, move this to razor
-        var discipline = "discipline="
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(discipline) == 0) {
-                if (c.substring(discipline.length, c.length).replace("%20", " ") == "Knowledge Management") {
-                    $("#navbar-list").append(`<li class="nav-item">
-                                    <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Category" asp-action="Index">Admin</a>
-                                </li>`)
-                }
-            }
-        }
+        //var discipline = "discipline="
+        //var ca = document.cookie.split(';');
+        //for (var i = 0; i < ca.length; i++) {
+        //    var c = ca[i];
+        //    while (c.charAt(0) == ' ') {
+        //        c = c.substring(1);
+        //    }
+        //    if (c.indexOf(discipline) == 0) {
+        //        if (c.substring(discipline.length, c.length).replace("%20", " ") == "Knowledge Management") {
+        //            $("#navbar-list").append(`<li class="nav-item">
+        //                            <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Category" asp-action="Index">Admin</a>
+        //                        </li>`)
+        //        }
+        //    }
+        //}
     })
     function getProfile() {
         var x = document.getElementById("profileContainer");
@@ -52,14 +52,13 @@
                 pivotsHTML += '<div style="color: #00a19c;"><h6>' + c.substring(userType.length, c.length).replace("%20", " ") + '</h6></div>';
             }
 
-            if (c.indexOf(discipline) == 0) {
-                console.log(c.substring(displayName.length, c.length).replace("%20", " "));
-                if (c.substring(displayName.length, c.length).replace("%20", " ") == "Knowledge Management") {
-                    $("#navbar-list").append(`<li class="nav-item">
-                                <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Category" asp-action="Index">Admin</a>
-                            </li>`)
-                }
-            }
+            //if (c.indexOf(discipline) == 0) {
+            //    if (c.substring(displayName.length, c.length).replace("%20", " ") == "Knowledge Management") {
+            //        $("#navbar-list").append(`<li class="nav-item">
+            //                    <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Category" asp-action="Index">Admin</a>
+            //                </li>`)
+            //    }
+            //}
         }
 
         $('#profileContainer').html(pivotsHTML);
@@ -99,12 +98,15 @@
                         <li class="nav-item">
                             <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Video" asp-action="Index">Video Search</a>
                         </li>
-                        @*@if(Context.Request.Cookies["discipline"] == "Knowledge Management")
+                        <li class="nav-item">
+                            <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Subscribe" asp-action="Index">Subscription</a>
+                        </li>
+                        @if(Context.Request.Cookies["discipline"] == "Knowledge Management")
                         {
                             <li class="nav-item">
                                 <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Category" asp-action="Index">Admin</a>
                             </li>
-                        }*@
+                        }
                         <li class="nav-item">
                             <a class="navbar-text navbar-text-color" asp-area="" asp-controller="Chat" asp-action="Index">Chat</a>
                         </li>
