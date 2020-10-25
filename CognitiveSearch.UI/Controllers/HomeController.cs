@@ -321,14 +321,14 @@ namespace CognitiveSearch.UI.Controllers
             var isSubscribed = subscribeHandler.CheckIfSubscribed(userId, searchParams.q);
 
             //to Extract merged-content to txt file - disable if not using
-            for (int i = 0; i < documentResults.Results.Count; i++)
-            {
-                string fileName = documentResults.Results[i].Document["metadata_storage_name"].ToString() + ".txt";
-                string fileContent = documentResults.Results[i].Document["merged_content"].ToString();
+            //for (int i = 0; i < documentResults.Results.Count; i++)
+            //{
+            //    string fileName = documentResults.Results[i].Document["metadata_storage_name"].ToString() + ".txt";
+            //    string fileContent = documentResults.Results[i].Document["merged_content"].ToString();
 
                 //change C:\Ashley\TxtDocuments\ to your local folder
-                System.IO.File.WriteAllText(@"C:\Ashley\TxtDocuments\" + fileName, fileContent);
-            }
+            //    System.IO.File.WriteAllText(@"C:\Ashley\TxtDocuments\" + fileName, fileContent);
+            //}
 
             ExpertsDisciplineModel[] filterDocuments = null;
             if (searchParams.disciplines != null && searchParams.disciplines.Length > 0)
