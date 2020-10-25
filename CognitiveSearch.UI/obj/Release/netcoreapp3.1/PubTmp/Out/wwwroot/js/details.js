@@ -65,8 +65,7 @@ function ShowDocument(id) {
 
             $('#metadata-viewer').html(metadataContainerHTML);
 
-            if (result.geoLocation !== null)
-            {
+            if (result.geoLocation !== null) {
                 // Maps Tab Content
                 var mapsContainerHTML = GetMapsHTML(result);
                 $('#maps-viewer').html(mapsContainerHTML);
@@ -102,8 +101,15 @@ function ShowDocument(id) {
             }
 
             //Log Click Events
-            LogClickAnalytics(result.metadata_storage_name, 0);
-            GetSearchReferences(q);
+            if (applicationInstrumentationKey != null) {
+                LogClickAnalytics(result.metadata_storage_name, 0);
+            }
+            if (q != null) {
+                GetSearchReferences(q);
+            }
+            else {
+                GetSearchReferences(chatSearchString);
+            }
         });
 }
 

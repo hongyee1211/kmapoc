@@ -310,7 +310,10 @@ function ChatHandleChannelData(filters) {
             parentKeys = Object.keys(parentList);
             for (let j = 0; j < parentKeys.length; j++) {
                 if (filters[key].includes(parentKeys[j])) {
-                    filterSelected["Model"] = parentList[parentKeys[j]][filterSelected["PlantCode"][0]].filter((item) => filterSelected["Model"].indexOf(item) < 0)
+                    if (parentList[parentKeys[j]].hasOwnProperty(filterSelected["PlantCode"][0]))
+                    {
+                        filterSelected["Model"] = parentList[parentKeys[j]][filterSelected["PlantCode"][0]].filter((item) => filterSelected["Model"].indexOf(item) < 0)
+                    }
                 }
             }
         }

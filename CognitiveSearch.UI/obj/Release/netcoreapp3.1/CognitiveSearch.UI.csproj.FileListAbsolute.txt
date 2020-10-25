@@ -139,3 +139,6 @@ C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Release\netcoreapp3.1\Microsoft.Ext
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Release\netcoreapp3.1\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Release\netcoreapp3.1\Razor\Views\ChatHongYee\Index.cshtml.g.cs
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Release\netcoreapp3.1\Razor\Views\Subscribe\Index.cshtml.g.cs
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Release\netcoreapp3.1\Gremlin.Net.dll
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Release\netcoreapp3.1\Razor\Views\Category\Index.cshtml.g.cs
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Release\netcoreapp3.1\Razor\Views\Chat\Index.cshtml.g.cs

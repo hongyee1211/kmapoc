@@ -1,0 +1,162 @@
+[
+    {
+        "nodeName": "M060",
+        "type": "type1",
+        "label": {
+            "nodeName": "",
+            "label": "MLNG"
+        },
+        "link": {
+            "nodeName": "",
+            "direction": "SYNC"
+        },
+        "children": [
+            {
+                "nodeName": "MOD3 UNIT 1100",
+                "type": "type2",
+                "label": {
+                    "nodeName": "",
+                    "label": "MOD3 UNIT 1100"
+                },
+                "link": {
+                    "nodeName": "",
+                    "direction": "SYNC"
+                },
+                "children": [
+                    {
+                        "nodeName": "3EM1105F",
+                        "type": "type3",
+                        "label": {
+                            "nodeName": "",
+                            "label": "3EM1105F"
+                        },
+                        "link": {
+                            "nodeName": "",
+                            "direction": "SYNC"
+                        },
+                        "children": [
+
+                        ]
+                    },
+                    {
+                        "nodeName": "3EM1105E",
+                        "type": "type3",
+                        "label": {
+                            "nodeName": "",
+                            "label": "3EM1105E"
+                        },
+                        "link": {
+                            "nodeName": "",
+                            "direction": "SYNC"
+                        },
+                        "children": [
+
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeName": "MOD2 UNIT 5700",
+                "type": "type2",
+                "label": {
+                    "nodeName": "",
+                    "label": "MOD2 UNIT 5700"
+                },
+                "link": {
+                    "nodeName": "",
+                    "direction": "SYNC"
+                },
+                "children": [
+
+                ]
+            }
+        ]
+    },
+    {
+        "nodeName": "M061",
+        "type": "type1",
+        "label": {
+            "nodeName": "",
+            "label": "TEST"
+        },
+        "link": {
+            "nodeName": "",
+            "direction": "SYNC"
+        },
+        "children": [
+            {
+                "nodeName": "MOD3 UNIT 1101",
+                "type": "type2",
+                "label": {
+                    "nodeName": "",
+                    "label": "MOD3 UNIT 1101"
+                },
+                "link": {
+                    "nodeName": "",
+                    "direction": "SYNC"
+                },
+                "children": [
+                    {
+                        "nodeName": "3EM1105A",
+                        "type": "type3",
+                        "label": {
+                            "nodeName": "",
+                            "label": "3EM1105A"
+                        },
+                        "link": {
+                            "nodeName": "",
+                            "direction": "SYNC"
+                        },
+                        "children": [
+
+                        ]
+                    },
+                    {
+                        "nodeName": "3EM1105C",
+                        "type": "type3",
+                        "label": {
+                            "nodeName": "",
+                            "label": "3EM1105C"
+                        },
+                        "link": {
+                            "nodeName": "",
+                            "direction": "SYNC"
+                        },
+                        "children": [
+
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeName": "MOD2 UNIT 5700",
+                "type": "type2",
+                "label": {
+                    "nodeName": "",
+                    "label": "MOD2 UNIT 5700"
+                },
+                "link": {
+                    "nodeName": "",
+                    "direction": "SYNC"
+                },
+                "children": [
+                    {
+                        "nodeName": "3EMF105C",
+                        "type": "type3",
+                        "label": {
+                            "nodeName": "",
+                            "label": "3EM1105C"
+                        },
+                        "link": {
+                            "nodeName": "",
+                            "direction": "SYNC"
+                        },
+                        "children": [
+
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

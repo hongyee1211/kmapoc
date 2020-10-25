@@ -80,7 +80,7 @@ namespace CognitiveSearch.UI.Helpers
             gremlinQuery += gremlinHasBuilder(new string[1] { "EquipmentModel" }, equipmentModel);
             gremlinQuery += gremlinHasBuilder(new string[1] { "Manufacturer" }, manufacturer);
             gremlinQuery += gremlinHasBuilder(new string[1] { "EquipmentClass" }, equipmentClass);
-            gremlinQuery += ".outE('is_located_at')";
+            gremlinQuery += ".outE('is_located_at_(FuncLoc-Location)')";
 
             using (var client = new GremlinClient(gremlinServer))
             {
@@ -133,7 +133,7 @@ namespace CognitiveSearch.UI.Helpers
             gremlinQuery += gremlinHasBuilder(new string[1] { "pk" }, equipmentModel);
             gremlinQuery += gremlinHasBuilder(new string[1] { "Manufacturer" }, manufacturer);
             gremlinQuery += gremlinHasBuilder(new string[1] { "EquipmentClass" }, equipmentClass);
-            gremlinQuery += ".outE('is_located_at')";
+            gremlinQuery += ".outE('is_located_at_(FuncLoc-Location)')";
 
             using (var client = new GremlinClient(gremlinServer))
             {
