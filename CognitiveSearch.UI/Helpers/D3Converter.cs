@@ -186,6 +186,15 @@ namespace CognitiveSearch.UI.Helpers
         {
             var parentJSONObj = JsonSerializer.Deserialize<CosmosNode[]>(parentDetailsJSON);
             var linkJSONObj = JsonSerializer.Deserialize<CosmosRelationship[]>(relationshipJSON);
+            Dictionary<string, CosmosRelationship> tempFilteringSolution = new Dictionary<string, CosmosRelationship>();
+            for (int i = 0; i < linkJSONObj.Length; i++)
+            {
+                if (!tempFilteringSolution.ContainsKey(linkJSONObj[i].id))
+                {
+                    tempFilteringSolution.Add(linkJSONObj[i].id, linkJSONObj[i]);
+                }
+            }
+            linkJSONObj = tempFilteringSolution.Values.ToArray();
             if (childrenDict == null)
             {
                 childrenDict = new Dictionary<string, D3Node>();
@@ -249,10 +258,20 @@ namespace CognitiveSearch.UI.Helpers
 
             return outputParentsDict;
         }
-
         public static Dictionary<string, D3Node> ConvertInverse(string relationshipJSON, Dictionary<string, D3Node> childrenDict = null, string[] parentAllowList = null)
         {
             var linkJSONObj = JsonSerializer.Deserialize<CosmosRelationship[]>(relationshipJSON);
+            Dictionary<string, CosmosRelationship> tempFilteringSolution = new Dictionary<string, CosmosRelationship>();
+            for (int i = 0; i < linkJSONObj.Length; i++)
+            {
+                if (!tempFilteringSolution.ContainsKey(linkJSONObj[i].id))
+                {
+                    tempFilteringSolution.Add(linkJSONObj[i].id, linkJSONObj[i]);
+                }
+            }
+            linkJSONObj = tempFilteringSolution.Values.ToArray();
+
+
             Dictionary<string, D3Node> parentDict = new Dictionary<string, D3Node>();
             if (childrenDict == null)
             {
