@@ -156,26 +156,73 @@
             })
             .attr('cursor', 'pointer')
             .on('mouseover', function (d) {
-                if (d.data.type == "type1") {
-                    $.getJSON("../json/Sample_Data-Histogram-Type1.json", function (json) {
-                        loopHistogram(json);
-                        loopPieChart(json);
-                        loopLineChart(json);
+                if (d.data.type == "type1" || d.data.type == "type3") {
+                    var searchString = "";
+                    if (d.data.type == "type1") {
+                        var child = d.data.children;
+                        for (var i = 0; i < child.length; i++) {
+                            var child2 = child[i].children;
+                            for (var j = 0; j < child2.length; j++) {
+                                if (child2[j].type == "type3") {
+                                    if (searchString.length <= 0) {
+                                        searchString += "'" + child2[j].label.label + "'";
+                                    } else {
+                                        searchString += ", '" + child2[j].label.label + "'";
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (searchString.length > 0) {
+                        searchString = "(" + searchString + ")";
+                    }
+
+                    $.get("/Chat/getFailureCount",
+                        {
+                            nodeName: d.data.label.label,
+                            functionalLocation: searchString,
+                            typeLevel: d.data.type,
+                            chartType: "Pie"
+                        },
+                        function (data, status) {
+                            var obj = JSON.parse(data);
+                            loopPieChart(obj);
+                        }
+                    ).fail(function () {
+                        alert('Database Connection is hitting error.'); // or whatever
                     });
-                } else if (d.data.type == "type2") {
-                    $.getJSON("../json/Sample_Data-Histogram-Type2.json", function (json) {
-                        loopHistogram(json);
-                        loopPieChart(json);
-                        loopLineChart(json);
+
+                    $.get("/Chat/getFailureCount",
+                        {
+                            nodeName: d.data.label.label,
+                            functionalLocation: searchString,
+                            typeLevel: d.data.type,
+                            chartType: "Histogram"
+                        },
+                        function (data, status) {
+                            var obj = JSON.parse(data);
+                            loopHistogram(obj);
+                        }
+                    ).fail(function () {
+                        alert('Database Connection is hitting error.'); // or whatever
                     });
-                } else {
-                    $.getJSON("../json/Sample_Data-Histogram-Type3.json", function (json) {
-                        loopHistogram(json);
-                        loopPieChart(json);
-                        loopLineChart(json);
+
+                    $.get("/Chat/getFailureCount",
+                        {
+                            nodeName: d.data.label.label,
+                            functionalLocation: searchString,
+                            typeLevel: d.data.type,
+                            chartType: "Line"
+                        },
+                        function (data, status) {
+                            var obj = JSON.parse(data);
+                            loopLineChart(obj);
+                        }
+                    ).fail(function () {
+                        alert('Database Connection is hitting error.'); // or whatever
                     });
                 }
-
             })
             .on('mouseout', function (d) {
                 d3.select("#pie-chart-container-id").remove();

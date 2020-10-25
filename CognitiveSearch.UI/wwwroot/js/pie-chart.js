@@ -24,7 +24,7 @@
 
     var pie = d3.pie()
         .value(function (d) {
-            return d.Priority;
+            return d.FailureCount;
         })
         .sort(null);
 
@@ -34,7 +34,7 @@
         .append('path')
         .attr('d', arc)
         .attr('fill', function (d, i) {
-            return color(d.data.FunctionalLocation + " (" + d.data.Priority + ")");
+            return color(d.data.Priority + " (" + d.data.FailureCount + ")");
         });
 
     var legend = svg.selectAll('.legend')

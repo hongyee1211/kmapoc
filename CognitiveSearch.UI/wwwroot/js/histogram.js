@@ -29,7 +29,7 @@
     });
 
     // Scale the range of the data in the domains
-    x.domain(data.map(function (d) { return d.FunctionalLocation; }));
+    x.domain(data.map(function (d) { return d.ProblemID; }));
     y.domain([0, d3.max(data, function (d) { return d.FailureCount; })]);
 
     // append the rectangles for the bar chart
@@ -37,7 +37,7 @@
         .data(data)
         .enter().append("rect")
         .attr("class", "bar")
-        .attr("x", function (d) { return x(d.FunctionalLocation); })
+        .attr("x", function (d) { return x(d.ProblemID); })
         .attr("width", x.bandwidth())
         .attr("y", function (d) { return y(d.FailureCount); })
         .attr("height", function (d) { return height - y(d.FailureCount); });
@@ -46,12 +46,12 @@
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
         .append("g")
-        .call(d3.axisBottom(x).ticks(10))
-        .selectAll("text")
+        .call(d3.axisBottom(x).ticks(10));
+        /*.selectAll("text")
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
-        .attr("transform", "rotate(-65)");
+        .attr("transform", "rotate(-65)");*/
 
     // add the y Axis
     svg.append("g")

@@ -15,6 +15,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using Newtonsoft.Json.Linq;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -41,6 +44,54 @@ namespace CognitiveSearch.UI.Controllers
             {
                 _configurationError = $"The application settings are possibly incorrect. The server responded with this message: " + e.Message.ToString();
             }
+        }
+
+        [HttpGet]
+        /*static void getFailureCount(string[] args)*/
+        public IActionResult getFailureCount(string nodeName, string functionalLocation, string typeLevel, string chartType)
+        {
+            var result = "";
+            string connectionString = "Data Source=ptsg-5pekapocsqldb01.database.windows.net;Initial Catalog=kapoc-sql-db;"
+                 + "User ID=manager;Password=Poc@2020;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Integrated Security=False";
+           
+            string queryString = "";
+            string whereString = "";
+            if (typeLevel == "type1") {
+                whereString = "OPU = '" + nodeName + "' AND FunctionalLocation IN " + functionalLocation;
+            } else if (typeLevel == "type3") {
+                whereString = "FunctionalLocation LIKE '%" + nodeName + "%'";
+            }
+
+           if (chartType == "Pie") {
+                queryString = "SELECT Priority, COUNT(*) AS FailureCount FROM ProblemAnalysis WHERE " + whereString + " GROUP BY Priority ORDER BY Priority for JSON AUTO";
+            } else if (chartType == "Histogram") {
+                queryString = "SELECT ProblemID, COUNT(*) AS FailureCount FROM ProblemAnalysis WHERE "+ whereString + " GROUP BY ProblemID ORDER BY ProblemID for JSON AUTO";
+            } else if (chartType == "Line") {
+                queryString = "SELECT FailureDateYr, COUNT(*) AS FailureCount FROM ProblemAnalysis WHERE " + whereString + " GROUP BY FailureDateYr ORDER BY FailureDateYr for JSON AUTO";
+            }
+
+            using (SqlConnection connection = new SqlConnection(
+                       connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Connection.Open();
+                /*command.ExecuteNonQuery();*/
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data.
+
+                while (reader.Read())
+                {
+                    result = reader.GetValue(0).ToString();
+                }
+                
+                // Call Close when done reading.
+                reader.Close();
+                
+            }
+
+            return new JsonResult(result);
         }
 
         public async Task<ActionResult> Index()
