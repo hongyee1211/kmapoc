@@ -60,4 +60,12 @@
         .attr('x', legendRectSize + legendSpacing)              
         .attr('y', legendRectSize - legendSpacing)              
         .text(function (d) { return d; }); 
+
+    svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", "-5")
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "underline")
+        .text("Risk Prediction");
 }
