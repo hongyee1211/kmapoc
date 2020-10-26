@@ -7,5 +7,7 @@ namespace CognitiveSearch.UI.Models
     public class SubscribeViewModel
     {
         public List<SubscribeSearchModel> subscriptions { get; set; }
+        public List<RatingRow> feedbacks { get; set; }
     }
+
 }
