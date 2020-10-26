@@ -114,7 +114,8 @@ function ChatTriggerSearch(page = 1) {
             }
         }
     }
-    search += RemoveStopWords(lastChatMessage);
+
+    search += ", " + RemoveStopWords(lastChatMessage);
     chatSearchString = search
 
     ChatUpdateResultsView(search, disciplines);
