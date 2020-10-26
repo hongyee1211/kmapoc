@@ -100,13 +100,22 @@ function ChatTriggerSearch(page = 1) {
         if (key == "Discipline") {
             disciplines = values;
         }
+        else if (key == "Model" && untrackedFilterSelected["ModelGroup"].length > 0) {
+            for (let j = 0; j < untrackedFilterSelected["ModelGroup"].length; j++) {
+                search += `,"${untrackedFilterSelected["ModelGroup"][j]}"`;
+            }
+            if (values.includes("AN200")) {
+                search += `,AN200`;
+            }
+        }
         else {
             for (let j = 0; j < values.length; j++) {
                 search += `,"${values[j]}"`;
             }
         }
     }
-    //search += RemoveStopWords(lastChatMessage);
+
+    search += ", " + RemoveStopWords(lastChatMessage);
     chatSearchString = search
 
     ChatUpdateResultsView(search, disciplines);
@@ -178,6 +187,7 @@ var stopWords = [
     `his`,
     `how`,
     `how's`,
+    `give`,
     `i`,
     `i'd`,
     `i'll`,

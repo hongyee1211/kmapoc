@@ -316,6 +316,7 @@ function ChatHandleChannelData(filters) {
                     }
                 }
             }
+            untrackedFilterSelected[key] = filters[key];
         }
         else {
             if (untrackedFilterSelected[key] != null) {
