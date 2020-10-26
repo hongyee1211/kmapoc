@@ -143,6 +143,37 @@ namespace CognitiveSearch.UI.Helpers
             }
         }
 
+        public List<ReviewRow> GetAllReviewFeedback()
+        {
+            var output = this._context.Search
+                .Join(this._context.ReviewDocument,
+                    s => s.searchId,
+                    r => r.searchId,
+
+                    (s, r) => new ReviewRow
+                    {
+                        searchId = s.searchId,
+                        rating = r.rating,
+                        document = r.documentName,
+                        comment = r.comment,
+                        query = s.query,
+                        user = s.givenName,
+                        id = r.revFeedbackId,
+                    }).ToList();
+
+            return output;
+        }
+
+        public void DeleteReview(int id)
+        {
+            FBReviewDocumentModel entry = this._context.ReviewDocument.FirstOrDefault(x => x.revFeedbackId == id);
+            if (entry != null)
+            {
+                this._context.ReviewDocument.Remove(entry);
+                this._context.SaveChanges();
+            }
+        }
+
         public void SaveRatingFeedback(int searchId, string documentName, int rating)
         {
             var feedbackModel = new FBRatingDocumentModel();
@@ -168,6 +199,36 @@ namespace CognitiveSearch.UI.Helpers
             {
                 //Ignore as it will ignore err updates with same query+user id
                 //as opposed to searching first before adding
+            }
+        }
+
+        public List<RatingRow> GetUserBadRatingFeedback(string userId)
+        {
+            var output = this._context.Search.Where(x => x.userId == userId)
+                .Join(this._context.RatingDocument.Where(y=>y.rating == 1),
+                    s => s.searchId,
+                    r => r.searchId,
+
+                    (s, r) => new RatingRow
+                    {
+                        searchId = s.searchId,
+                        rating = r.rating,
+                        document = r.documentName,
+                        query = s.query,
+                        user = s.givenName,
+                        id = r.rateFeedbackId
+                    }).ToList();
+
+            return output;
+        }
+
+        public void DeleteRating(int id)
+        {
+            FBRatingDocumentModel entry = this._context.RatingDocument.FirstOrDefault(x => x.rateFeedbackId == id);
+            if (entry != null)
+            {
+                this._context.RatingDocument.Remove(entry);
+                this._context.SaveChanges();
             }
         }
 
@@ -259,7 +320,7 @@ namespace CognitiveSearch.UI.Helpers
             }
         }
 
-        public void ApproveCategoryTag(int tagId)
+        public FBCategoryTagAnnotationModel ApproveCategoryTag(int tagId)
         {
             FBCategoryTagAnnotationModel entry = this._context.CategoryTagAnnotations.FirstOrDefault(x => x.categoryAnnotationFeedbackId == tagId);
             if (entry != null)
@@ -267,6 +328,7 @@ namespace CognitiveSearch.UI.Helpers
                 this._context.Entry(entry).CurrentValues.SetValues(new { allow = 1});
                 this._context.SaveChanges();
             }
+            return entry;
         }
 
     }

@@ -1101,6 +1101,7 @@ b {
 /*Ratings page css*/
 .ratings-content {
     margin-top: 50px;
+    overflow: hidden;
 }
 
 .ratings-table-rows {

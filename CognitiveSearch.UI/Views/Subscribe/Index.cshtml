@@ -79,16 +79,18 @@
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 <div>
     <div class="content ratings-content">
-        <table class="table">
-            <thead class="ratings-table-header">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Query</th>
-                    <th class="ratings-table-column-align" scope="col"></th>
-                </tr>
-            </thead>
-            <tbody id="ratings-table-body">
-            </tbody>
-        </table>
+        <div style="overflow-y:scroll; height:80vh;">
+            <table class="table">
+                <thead class="ratings-table-header">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Query</th>
+                        <th class="ratings-table-column-align" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="ratings-table-body">
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

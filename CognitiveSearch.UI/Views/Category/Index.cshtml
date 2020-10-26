@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model CognitiveSearch.UI.Models.CategoryViewModel
+@model CognitiveSearch.UI.Models.AdminViewModel
 
 @{
     ViewData["Title"] = "Ratings";
@@ -9,16 +9,16 @@
 
 <script>
     categories = @Html.Raw(Json.Serialize(Model.categories));
-    console.log(categories);
+    reviews = @Html.Raw(Json.Serialize(Model.reviews));
     currentPage = 0;
 
-    function updateTable(query = null) {
-        var table = $("#ratings-table-body")
+    function updateCategoryTable(query = null) {
+        var table = $("#category-table-body")
         table.empty();
-        rowsHtml = '';
-        rowCount = 0;
+        var rowsHtml = '';
+        var rowCount = 0;
         for (i in categories) {
-            category = categories[i]
+            var category = categories[i]
             rowCount += 1
             rowsHtml += `<tr class="ratings-table-rows">
                                 <th scope="row">${rowCount}</th>
@@ -33,6 +33,42 @@
         table.html(rowsHtml);
     }
 
+    function updateRatingTable(query = null) {
+        var table = $("#ratings-table-body")
+        table.empty();
+        var rowsHtml = '';
+        var rowCount = 0;
+        for (i in reviews) {
+            var review = reviews[i]
+            if (query != null) {
+                if (!review.query.includes(query)) {
+                    continue
+                }
+            }
+            rowCount += 1
+            var starsDoms = ''
+            for (let i = 0; i < 5; i++) {
+                if (review.rating > i) {
+                    starsDoms += `<span class="fa fa-star ratings-star-checked"></span>`
+                }
+                else {
+                    starsDoms += `<span class="fa fa-star"></span>`
+                }
+            }
+            var ratingContent = `<td class="ratings-table-column-align">${starsDoms}</td>`
+
+            rowsHtml += `<tr class="ratings-table-rows">
+                                <th scope="row">${rowCount}</th>
+                                <td>${review.document}</td>
+                                <td>${review.comment}</td>
+                                <td>${review.user}</td>
+                                ${ratingContent}
+                                <td class="ratings-table-column-align ratings-table-delete" onclick="removeReview('${review.id}');"><span class="fa fa-trash"></span></td>
+                            </tr>`
+        }
+        table.html(rowsHtml);
+    }
+
     function removeCategory(id) {
         $.post("/Category/DeleteAnnotation",
             {
@@ -41,7 +77,21 @@
             function (data, status) {
                 if (status == "success") {
                     categories = data
-                    updateTable()
+                    updateCategoryTable()
+                }
+            }
+        );
+    };
+
+    function removeReview(id) {
+        $.post("/Category/DeleteReview",
+            {
+                id: id,
+            },
+            function (data, status) {
+                if (status == "success") {
+                    reviews = data
+                    updateRatingTable()
                 }
             }
         );
@@ -55,39 +105,55 @@
             function (data, status) {
                 if (status == "success") {
                     categories = data
-                    updateTable()
+                    updateCategoryTable()
                 }
             }
         );
     };
 
-    function handleFilter() {
-        var input = $("#rating-filter-input").val();
-        updateTable(input)
-    }
-
     $(function () {
-        updateTable()
+        updateCategoryTable()
+        updateRatingTable()
     });
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 <div>
     <div class="content ratings-content">
-        <table class="table">
-            <thead class="ratings-table-header">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Facet</th>
-                    <th scope="col">Current Tag</th>
-                    <th scope="col">Annotation</th>
-                    <th scope="col">User</th>
-                    <th class="ratings-table-column-align" style="width:50px" scope="col">Approve</th>
-                    <th class="ratings-table-column-align" style="width:50px" scope="col">Delete</th>
-                </tr>
-            </thead>
-            <tbody id="ratings-table-body">
-            </tbody>
-        </table>
+        <div id="category-table-container" style="overflow-y:scroll; height:40vh;">
+            <table class="table">
+                <thead class="ratings-table-header">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Facet</th>
+                        <th scope="col">Current Tag</th>
+                        <th scope="col">Annotation</th>
+                        <th scope="col">User</th>
+                        <th class="ratings-table-column-align" style="width:50px" scope="col">Approve</th>
+                        <th class="ratings-table-column-align" style="width:50px" scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="category-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="content ratings-content">
+        <div id="rating-table-container" style="overflow-y:scroll; height:40vh;">
+            <table class="table">
+                <thead class="ratings-table-header">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Document</th>
+                        <th scope="col">Review</th>
+                        <th scope="col">User</th>
+                        <th scope="col" style="width:120px;text-align: center;">Ratings</th>
+                        <th class="ratings-table-column-align" style="width:50px" scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="ratings-table-body">
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
