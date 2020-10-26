@@ -228,12 +228,38 @@
                     ).fail(function () {
                         alert('Database Connection is hitting error.'); // or whatever
                     });
+
+                    $.get("/Chat/getFailureCount",
+                        {
+                            nodeName: d.data.label.label,
+                            functionalLocation: searchString,
+                            typeLevel: d.data.type,
+                            chartType: "Top3"
+                        },
+                        function (data, status) {
+                            var pivotsHTML = '';
+                            if (data.length > 0) {
+                                var obj = JSON.parse(data);
+
+                                pivotsHTML += "<h5>Top " + obj.length + " Failures:</h5>";
+                                var j = 1;
+                                for (var i = 0; i < obj.length; i++) {
+                                    pivotsHTML += "<p>" + j + ") " + obj[i].ProblemID + " (" + obj[i].FailureCount + ")</p>";
+                                    j++;
+                                }
+                            }
+                            $('#top3-container').html(pivotsHTML);
+                        }
+                    ).fail(function () {
+                        alert('Database Connection is hitting error.'); // or whatever
+                    });
                 }
             })
             .on('mouseout', function (d) {
                 d3.select("#pie-chart-container-id").remove();
                 d3.select("#histogram-container-id").remove();
                 d3.select("#line-chart-container-id").remove(); 
+                document.getElementById("top3-container").innerHTML = "";
             });
 
 

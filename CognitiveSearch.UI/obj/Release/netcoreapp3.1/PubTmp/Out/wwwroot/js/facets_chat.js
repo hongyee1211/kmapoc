@@ -301,7 +301,10 @@ function ChatHandleChannelData(filters) {
             filterSelected[key] = filterSelected[key].concat(filters[key].filter((item) => filterSelected[key].indexOf(item) < 0))
         }
         else {
-            if (untrackedFilterSelected[key] != null) {
+            if (key == "ModelGroup"){
+                untrackedFilterSelected[key] = filters[key];
+            }
+            else if (untrackedFilterSelected[key] != null) {
                 untrackedFilterSelected[key] = untrackedFilterSelected[key].concat(filters[key].filter((item) => untrackedFilterSelected[key].indexOf(item) < 0))
             }
             else {
