@@ -37,7 +37,7 @@ namespace CognitiveSearch.UI.Models
                 "BAYLEY","BEGEMANN","BLACKMER","BLAGDON","BOSCH","BRAN & LUEBBE","BROWN & ROOT","BUGATTI","BURGESS","CARRIER","CATERPILLAR","CLYDE UNION",
                 "COOPER ENERGY SERVICES","CROMPTON","CUMMINS","DAVID BROWN","DAWSON & DOWNIE","DEMAG DELAVAL","DETROIT DIESEL","DOOSAN","DONGYANG",
                 "DONGHWA","DRESSER-ROOTS","EBARA","EDWARDS","ELLIOT","FAVCO","FLAKT","FLENDER","FLOWSERVE","FLOWGUARD","FMC","FUJI","GARDNER-DENVER",
-                "GE","Nuovo Pignone","GENERAL MOTORS","GOULDS","GRAFFENSTADEN","GRUNDFOS","HALBERG","HALIFAX","HAMILTON","HANSEN","HARBOUR MARINE",
+                "GE","NUOVO PIGNONE","GENERAL MOTORS","GOULDS","GRAFFENSTADEN","GRUNDFOS","HALBERG","HALIFAX","HAMILTON","HANSEN","HARBOUR MARINE",
                 "HASKEL","HITACHI","HITACHI HEAVY INDUSTRIES","TOSHIBA","MITSUBISHI","HOFFMAN","HOLTEC","HONDA","HOWDEN","HSL ENGINEERING","HYUNDAI",
                 "INGERSOLL-DRESSER","JAPAN STEEL","JAPAN AIRCRAFT","JAPAN MACHINERY COMPANY","JOHN DEERE","KAERCHER","KAESER","KAJI IRON WORKS","KATO",
                 "KOBELCO","KOBE STEEL","KONE","KRUGER","KRUPP","KUBOTA","LIGHTNIN","LINDE","LOHER","LUFKIN","MILTON ROY","MAN TURBO","MANNESMANN",
@@ -86,9 +86,9 @@ namespace CognitiveSearch.UI.Models
                 string parent = null;
                 if(value == "GE")
                 {
-                    children = new string[] { "Nuovo Pignone" };
+                    children = new string[] { "NUOVO PIGNONE" };
                 }
-                else if (value == "Nuovo Pignone")
+                else if (value == "NUOVO PIGNONE")
                 {
                     parent = "GE";
                     childLevel = 1;

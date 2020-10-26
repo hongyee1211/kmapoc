@@ -69,8 +69,17 @@
 
     <script>
         $(function () {
-            $('.advancedAutoComplete').autocomplete({
+            @*$('.advancedAutoComplete').autocomplete({
+                 source: "/home/Autocomplete",
                 source: "/home/suggest",
+                minLength: 2,
+                select: function (event, ui) {
+                    Search();
+                }
+            });*@
+
+            $('.advancedAutoComplete').autocomplete({
+                source: "/home/Autocomplete",
                 minLength: 2,
                 select: function (event, ui) {
                     Search();

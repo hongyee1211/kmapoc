@@ -79,12 +79,12 @@ function ChatUpdate(viewModel) {
         container.removeClass("hide");
         container.addClass("show");
     }
-    let subscribe = $("#subscribe-cb-container")
-    if (subscribe.hasClass("hide")) {
-        subscribe.removeClass("hide");
-        subscribe.addClass("show");
-    }
-    $('#search-subscribe-cb').prop('checked', subscribed);
+    //let subscribe = $("#subscribe-cb-container")
+    //if (subscribe.hasClass("hide")) {
+    //    subscribe.removeClass("hide");
+    //    subscribe.addClass("show");
+    //}
+    //$('#search-subscribe-cb').prop('checked', subscribed);
     $('html, body').animate({ scrollTop: 1000 }, 'fast');
 }
 
@@ -100,7 +100,7 @@ function ChatTriggerSearch(page = 1) {
         if (key == "Discipline") {
             disciplines = values;
         }
-        else if (key == "Model" && untrackedFilterSelected["ModelGroup"].length > 0) {
+        else if (key == "Model" && untrackedFilterSelected["ModelGroup"] != null && untrackedFilterSelected["ModelGroup"].length > 0) {
             for (let j = 0; j < untrackedFilterSelected["ModelGroup"].length; j++) {
                 search += `,"${untrackedFilterSelected["ModelGroup"][j]}"`;
             }
@@ -115,7 +115,7 @@ function ChatTriggerSearch(page = 1) {
         }
     }
 
-    search += ", " + RemoveStopWords(lastChatMessage);
+    //search += ", " + RemoveStopWords(lastChatMessage);
     chatSearchString = search
 
     ChatUpdateResultsView(search, disciplines);

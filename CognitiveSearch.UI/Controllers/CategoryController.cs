@@ -13,12 +13,15 @@ namespace CognitiveSearch.UI.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly FeedbackDBHelper dbHandler;
+        private readonly FeedbackDBHelper fbDbHandler;
+        private readonly TrainingDBHelper tDbHandler;
 
         public CategoryController(
-            FeedbackContext context)
+            FeedbackContext fbContext,
+            TrainingContext tContext)
         {
-            this.dbHandler = new FeedbackDBHelper(context);
+            this.fbDbHandler = new FeedbackDBHelper(fbContext);
+            this.tDbHandler = new TrainingDBHelper(tContext);
         }
 
         public IActionResult Index()
@@ -26,10 +29,12 @@ namespace CognitiveSearch.UI.Controllers
             var dept = Request.Cookies["discipline"];
             if (dept == "Knowledge Management")
             {
-                List<CategoryRow> categories = dbHandler.GetAllCategoryTags();
-                var viewModel = new CategoryViewModel
+                List<CategoryRow> categories = fbDbHandler.GetAllCategoryTags();
+                List<ReviewRow> reviews = fbDbHandler.GetAllReviewFeedback();
+                var viewModel = new AdminViewModel
                 {
                     categories = categories,
+                    reviews = reviews,
                 };
                 return View(viewModel);
             }
@@ -42,17 +47,26 @@ namespace CognitiveSearch.UI.Controllers
         [HttpPost]
         public List<CategoryRow> DeleteAnnotation([FromForm] int tagId)
         {
-            dbHandler.DeleteCategoryTag(tagId);
-            List<CategoryRow> categories = dbHandler.GetAllCategoryTags();
+            fbDbHandler.DeleteCategoryTag(tagId);
+            List<CategoryRow> categories = fbDbHandler.GetAllCategoryTags();
             return categories;
         }
 
         [HttpPost]
         public List<CategoryRow> ApproveAnnotation([FromForm] int tagId)
         {
-            dbHandler.ApproveCategoryTag(tagId);
-            List<CategoryRow> categories = dbHandler.GetAllCategoryTags();
+            var approved = fbDbHandler.ApproveCategoryTag(tagId);
+            tDbHandler.UpdateDBIndex(approved);
+            List<CategoryRow> categories = fbDbHandler.GetAllCategoryTags();
             return categories;
+        }
+
+        [HttpPost]
+        public List<ReviewRow> DeleteReview([FromForm] int id)
+        {
+            fbDbHandler.DeleteReview(id);
+            List<ReviewRow> reviews = fbDbHandler.GetAllReviewFeedback();
+            return reviews;
         }
 
     }
