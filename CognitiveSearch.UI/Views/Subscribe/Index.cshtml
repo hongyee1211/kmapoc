@@ -9,10 +9,11 @@
 
 <script>
     subscriptions = @Html.Raw(Json.Serialize(Model.subscriptions));
+    feedbacks = @Html.Raw(Json.Serialize(Model.feedbacks));
     currentPage = 0;
 
-    function updateTable(query = null) {
-        var table = $("#ratings-table-body")
+    function updateSubscriptionTable(query = null) {
+        var table = $("#subscriptions-table-body")
         table.empty();
         rowsHtml = '';
         rowCount = 0;
@@ -23,6 +24,8 @@
                     continue
                 }
             }
+            let squery = subscription.query.replace(/\"/g, "&quot;");
+            console.log(squery);
             rowCount += 1
             //var starsDoms = ''
             //for (let i = 0; i < 5; i++) {
@@ -46,7 +49,40 @@
             rowsHtml += `<tr class="ratings-table-rows">
                                 <th scope="row">${rowCount}</th>
                                 <td>${subscription.query}</td>
-                                <td class="ratings-table-column-align ratings-table-delete" onclick="remove('${subscription.query}');"><span class="fa fa-trash"></span></td>
+                                <td class="ratings-table-column-align ratings-table-delete" onclick="remove('${squery}');"><span class="fa fa-trash"></span></td>
+                            </tr>`
+        }
+        table.html(rowsHtml);
+    }
+
+    function updateRatingsTable(query = null) {
+        var table = $("#ratings-table-body")
+        table.empty();
+        rowsHtml = '';
+        rowCount = 0;
+        for (i in feedbacks) {
+            feedback = feedbacks[i]
+            if (query != null) {
+                if (!feedback.query.includes(query)) {
+                    continue
+                }
+            }
+            rowCount += 1
+
+            var ratingContent = '';
+            if (feedback.rating > 1) {
+                ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-up"></td>`
+            }
+            else {
+                //ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down" onclick="tdclick();"></td>`
+                ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down");"></td>`
+            }
+            rowsHtml += `<tr class="ratings-table-rows">
+                                <th scope="row">${rowCount}</th>
+                                <td>${feedback.document}</td>
+                                <td>${feedback.query}</td>
+                                ${ratingContent}
+                                <td class="ratings-table-column-align ratings-table-delete" onclick="removeRating('${feedback.id}');"><span class="fa fa-trash"></span></td>
                             </tr>`
         }
         table.html(rowsHtml);
@@ -60,7 +96,21 @@
             function (data, status) {
                 if (status == "success") {
                     subscriptions = data
-                    updateTable()
+                    updateSubscriptionTable()
+                }
+            }
+        );
+    };
+
+    function removeRating(id) {
+        $.post("/Subscribe/DeleteRating",
+            {
+                id: id,
+            },
+            function (data, status) {
+                if (status == "success") {
+                    feedbacks = data
+                    updateRatingsTable()
                 }
             }
         );
@@ -72,23 +122,43 @@
     }
 
     $(function () {
-        updateTable()
+        updateSubscriptionTable()
+        updateRatingsTable()
     });
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 <div>
     <div class="content ratings-content">
-        <table class="table">
-            <thead class="ratings-table-header">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Query</th>
-                    <th class="ratings-table-column-align" scope="col"></th>
-                </tr>
-            </thead>
-            <tbody id="ratings-table-body">
-            </tbody>
-        </table>
+        <div style="overflow-y:scroll; height:40vh;">
+            <table class="table">
+                <thead class="ratings-table-header">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Query</th>
+                        <th class="ratings-table-column-align" scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="subscriptions-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="content ratings-content">
+        <div style="overflow-y:scroll; height:40vh;">
+            <table class="table">
+                <thead class="ratings-table-header">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Document</th>
+                        <th scope="col">Query</th>
+                        <th class="ratings-table-column-align" style="width:50px" scope="col">Rating</th>
+                        <th class="ratings-table-column-align" style="width:50px" scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="ratings-table-body">
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

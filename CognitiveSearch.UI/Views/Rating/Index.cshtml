@@ -1,0 +1,89 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model CognitiveSearch.UI.Models.RatingViewModel
+
+@{
+    ViewData["Title"] = "Ratings";
+}
+
+<script>
+    feedbacks = @Html.Raw(Json.Serialize(Model.feedbacks));
+    currentPage = 0;
+    function updateTable(query = null) {
+        var table = $("#ratings-table-body")
+        table.empty();
+        rowsHtml = '';
+        rowCount = 0;
+        for (i in feedbacks) {
+            feedback = feedbacks[i]
+            if (query != null) {
+                if (!feedback.query.includes(query)) {
+                    continue
+                }
+            }
+            rowCount += 1
+
+            var ratingContent = '';
+            if (feedback.rating > 1) {
+                ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-up"></td>`
+            }
+            else {
+                //ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down" onclick="tdclick();"></td>`
+                ratingContent = `<td class="ratings-table-column-align ratings-table-thumbs-down");"></td>`
+            }
+            rowsHtml += `<tr class="ratings-table-rows">
+                                <th scope="row">${rowCount}</th>
+                                <td>${feedback.document}</td>
+                                <td>${feedback.query}</td>
+                                ${ratingContent}
+                                <td class="ratings-table-column-align ratings-table-delete" onclick="remove('${feedback.id}');"><span class="fa fa-trash"></span></td>
+                            </tr>`
+        }
+        table.html(rowsHtml);
+    }
+
+    function remove(id) {
+        $.post("/Rating/Delete",
+            {
+                id: id,
+            },
+            function (data, status) {
+                if (status == "success") {
+                    feedbacks = data
+                    updateTable()
+                }
+            }
+        );
+    };
+
+    function handleFilter() {
+        var input = $("#rating-filter-input").val();
+        updateTable(input)
+    }
+
+    $(function () {
+        updateTable()
+    });
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<div>
+    <div class="content ratings-content">
+        <div style="overflow-y:scroll; height:80vh;">
+            <table class="table">
+                <thead class="ratings-table-header">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Document</th>
+                        <th scope="col">Query</th>
+                        <th class="ratings-table-column-align" style="width:50px" scope="col">Rating</th>
+                        <th class="ratings-table-column-align" style="width:50px" scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="ratings-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

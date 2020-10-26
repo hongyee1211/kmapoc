@@ -231,3 +231,9 @@
     bottom: 20px;
     left: 20px;
 }
+
+.chat-typeahead-container {
+    position: absolute;
+    visibility: hidden;
+    display: block;
+}
