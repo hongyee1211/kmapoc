@@ -9,6 +9,7 @@
 <script src="~/js/results_chat.js"></script>
 <script src="~/js/facets_chat.js"></script>
 <script src="~/js/search_chat.js"></script>
+<script src="~/js/typeahead.js"></script>
 <script src="~/js/chat.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/tree-boxes.css">
 <link rel="stylesheet" type="text/css" href="~/css/pie-chart.css">
@@ -27,11 +28,11 @@
     //temporary workaround for entitymap
     isChat = true;
     $(function () {
-        $("#chatMessage").keyup(function (e) {
-            if (e.keyCode === 13) {
-                sendChatMessage();
-            }
-        });
+        //$("#chatMessage").keyup(function (e) {
+        //    if (e.keyCode === 13) {
+        //        sendChatMessage();
+        //    }
+        //});
         $("#mrc-search-input").keyup(function (e) {
             if (e.keyCode === 13) {
                 QueryMRC($("#mrc-search-input").val());
@@ -50,6 +51,7 @@
         });
         ChatUpdateGraphFilters(aspViewModel);
         ConnectToChatBot();
+        instantiateTypeAhead();
         setInitialDiscipline(aspViewModel.discipline)
     });
 </script>
@@ -298,5 +300,6 @@
         </div>*@
     </div>
 </div>
+<span id="chat-typeahead-container" style="visibility: hidden;"></span>
 <div class="hide-contextmenu" id="category-rating-menu">
 </div>
