@@ -186,8 +186,10 @@
                             chartType: "Pie"
                         },
                         function (data, status) {
-                            var obj = JSON.parse(data);
-                            loopPieChart(obj);
+                            if (data.length > 0) {
+                                var obj = JSON.parse(data);
+                                loopPieChart(obj);
+                            }
                         }
                     ).fail(function () {
                         alert('Database Connection is hitting error.'); // or whatever
@@ -201,8 +203,10 @@
                             chartType: "Histogram"
                         },
                         function (data, status) {
-                            var obj = JSON.parse(data);
-                            loopHistogram(obj);
+                            if (data.length > 0) {
+                                var obj = JSON.parse(data);
+                                loopHistogram(obj);
+                            }
                         }
                     ).fail(function () {
                         alert('Database Connection is hitting error.'); // or whatever
@@ -216,8 +220,10 @@
                             chartType: "Line"
                         },
                         function (data, status) {
-                            var obj = JSON.parse(data);
-                            loopLineChart(obj);
+                            if (data.length > 0) {
+                                var obj = JSON.parse(data);
+                                loopLineChart(obj);
+                            }
                         }
                     ).fail(function () {
                         alert('Database Connection is hitting error.'); // or whatever
