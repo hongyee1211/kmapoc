@@ -59,7 +59,7 @@ namespace CognitiveSearch.UI.Controllers
             if (typeLevel == "type1") {
                 whereString = "OPU = '" + nodeName + "' AND FunctionalLocation IN " + functionalLocation;
             } else if (typeLevel == "type3") {
-                whereString = "FunctionalLocation LIKE '%" + nodeName + "%'";
+                whereString = "FunctionalLocation = '" + nodeName + "'";
             }
 
            if (chartType == "Pie") {
