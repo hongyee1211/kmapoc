@@ -241,7 +241,7 @@
                             if (data.length > 0) {
                                 var obj = JSON.parse(data);
 
-                                pivotsHTML += "<h5>Top Recommendations"; // + obj.length + " Failures:</h5>";
+                                pivotsHTML += "<h5>Top Recommendations</h5>"; // + obj.length + " Failures:</h5>";
                                 var j = 1;
                                 for (var i = 0; i < obj.length; i++) {
                                     pivotsHTML += "<p>" + j + ") " + obj[i].ProblemID + " (" + obj[i].FailureCount + ")</p>";
