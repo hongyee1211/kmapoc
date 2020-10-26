@@ -13,7 +13,8 @@
     var svg = d3.select('#pie-chart-container').append('svg')
         .attr('id', 'pie-chart-container-id')
         .attr('width', width)
-        .attr('height', height)
+        .attr('height', 170)
+        .attr("class", "chartMargin")
         .append('g')
         .attr('transform', 'translate(' + (width / 2) +
             ',' + (height / 2) + ')');
@@ -60,4 +61,12 @@
         .attr('x', legendRectSize + legendSpacing)              
         .attr('y', legendRectSize - legendSpacing)              
         .text(function (d) { return d; }); 
+
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", "90")
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "underline")
+        .text("Risk Prediction");
 }

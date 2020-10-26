@@ -63,6 +63,6 @@
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("text-decoration", "underline")
-        .text("Histogram");
+        .text("Bad Actors");
 
 }
