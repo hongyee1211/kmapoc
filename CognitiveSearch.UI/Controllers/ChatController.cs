@@ -59,7 +59,7 @@ namespace CognitiveSearch.UI.Controllers
             if (typeLevel == "type1") {
                 whereString = "OPU = '" + nodeName + "' AND FunctionalLocation IN " + functionalLocation;
             } else if (typeLevel == "type3") {
-                whereString = "FunctionalLocation LIKE '%" + nodeName + "%'";
+                whereString = "FunctionalLocation = '" + nodeName + "'";
             }
 
            if (chartType == "Pie") {
@@ -68,6 +68,8 @@ namespace CognitiveSearch.UI.Controllers
                 queryString = "SELECT ProblemID, COUNT(*) AS FailureCount FROM ProblemAnalysis WHERE "+ whereString + " GROUP BY ProblemID ORDER BY ProblemID for JSON AUTO";
             } else if (chartType == "Line") {
                 queryString = "SELECT FailureDateYr, COUNT(*) AS FailureCount FROM ProblemAnalysis WHERE " + whereString + " GROUP BY FailureDateYr ORDER BY FailureDateYr for JSON AUTO";
+            } else if (chartType == "Top3") {
+                queryString = "SELECT TOP 3 FC.FailureCount, FC.ProblemID FROM (SELECT ProblemID, COUNT(*) AS FailureCount FROM ProblemAnalysis WHERE " + whereString + " GROUP BY ProblemID) AS FC ORDER BY FC.FailureCount Desc for JSON AUTO";
             }
 
             using (SqlConnection connection = new SqlConnection(
