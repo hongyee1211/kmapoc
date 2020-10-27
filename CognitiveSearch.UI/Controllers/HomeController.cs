@@ -20,6 +20,7 @@ using Microsoft.Azure.Search.Models;
 using Microsoft.Azure.Search;
 using CognitiveSearch.UI.Helpers;
 using CognitiveSearch.UI.Models.Data;
+using Microsoft.ApplicationInsights;
 
 namespace CognitiveSearch.UI.Controllers
 {
@@ -41,8 +42,15 @@ namespace CognitiveSearch.UI.Controllers
         private IConfiguration _configuration { get; set; }
         private DocumentSearchClient _docSearch { get; set; }
         private string _configurationError { get; set; }
+        private static SearchServiceClient _serviceClient;
         private static ISearchIndexClient _indexClient;
+        private string searchServiceName { get; set; }
+        private string apiKey { get; set; }
+        private string IndexName { get; set; }
+        private string IndexerName { get; set; }
 
+        private string idField { get; set; }
+        private static TelemetryClient telemetryClient = new TelemetryClient();
         public HomeController(
             IConfiguration configuration,
             ITokenAcquisition tokenAcquisition,
@@ -72,6 +80,18 @@ namespace CognitiveSearch.UI.Controllers
             try
             {
                 _docSearch = new DocumentSearchClient(_configuration);
+
+
+                searchServiceName = _configuration.GetSection("SearchServiceName")?.Value;
+                apiKey = _configuration.GetSection("SearchApiKey")?.Value;
+                IndexName = _configuration.GetSection("SearchIndexName")?.Value;
+                IndexerName = _configuration.GetSection("SearchIndexerName")?.Value;
+                idField = _configuration.GetSection("KeyField")?.Value;
+                telemetryClient.InstrumentationKey = _configuration.GetSection("InstrumentationKey")?.Value;
+
+                // Create a service and index client.
+                _serviceClient = new SearchServiceClient(searchServiceName, new SearchCredentials(apiKey));
+                _indexClient = _serviceClient.Indexes.GetClient(IndexName);
             }
             catch (Exception e)
             {
@@ -510,7 +530,7 @@ namespace CognitiveSearch.UI.Controllers
                 AutocompleteMode = AutocompleteMode.OneTermWithContext,
                 Top = 6
             };
-            AutocompleteResult autocompleteResult = await _indexClient.Documents.AutocompleteAsync(term, "ka-suggestor-03", ap);
+            AutocompleteResult autocompleteResult = await _indexClient.Documents.AutocompleteAsync(term, "sg", ap);
 
             // Convert the results to a list that can be displayed in the client.
             List<string> autocomplete = autocompleteResult.Results.Select(x => x.Text).ToList();
