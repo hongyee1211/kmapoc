@@ -1,9 +1,9 @@
 ﻿function loopPieChart(data) {
    
     var width = 400;
-    var height = 120;
+    var height = 100;
     var radius = Math.min(width, height) / 2;
-    var donutWidth = 60;
+    var donutWidth = 30;
     var legendRectSize = 18;
     var legendSpacing = 4;
 
@@ -19,9 +19,20 @@
         .attr('transform', 'translate(' + (width / 2) +
             ',' + 85 + ')');
 
+    //var arc = d3.arc()
+    //    .innerRadius(radius - donutWidth)
+    //    .outerRadius(radius);
     var arc = d3.arc()
         .innerRadius(radius - donutWidth)
         .outerRadius(radius);
+
+    var arcOutter = d3.arc()
+        .innerRadius(radius - donutWidth)
+        .outerRadius(radius + 4);
+
+    var arcPhantom = d3.arc()
+        .innerRadius(0)
+        .outerRadius(radius + 8);
 
     var pie = d3.pie()
         .value(function (d) {
@@ -29,14 +40,53 @@
         })
         .sort(null);
 
-    var path = svg.selectAll('path')
+    //Set up outter arc groups
+    var outterArcs = svg.selectAll("g.outter-arc")
         .data(pie(data))
         .enter()
-        .append('path')
-        .attr('d', arc)
+        .append("g")
+        .attr("class", "outter-arc")
+
+    var arcs = svg.selectAll("g.arc")
+        .data(pie(data))
+        .enter()
+        .append("g")
+        .attr("class", "arc")
+
+    //Set up phantom arc groups
+    var phantomArcs = svg.selectAll("g.phantom-arc")
+        .data(pie(data))
+        .enter()
+        .append("g")
+        .attr("class", "phantom-arc")
+
+    //Draw outter arc paths
+    outterArcs.append("path")
+        .attr("fill", 'orange')
+        .attr("d", arcOutter).style('stroke', '#666')
+        .style('stroke-width', 0);
+
+    //Draw arc paths
+    arcs.append("path")
         .attr('fill', function (d, i) {
             return color(d.data.Priority + " (" + d.data.FailureCount + ")");
-        });
+        }).attr("d", arc);
+
+    //Draw phantom arc paths
+    phantomArcs.append("path")
+        .attr("fill", '#666')
+        .attr("fill-opacity", 0.1)
+        .attr("d", arcPhantom).style('stroke', '#666')
+        .style('stroke-width', 5);
+
+    //var path = svg.selectAll('path')
+    //    .data(pie(data))
+    //    .enter()
+    //    .append('path')
+    //    .attr('d', arc)
+    //    .attr('fill', function (d, i) {
+    //        return color(d.data.Priority + " (" + d.data.FailureCount + ")");
+    //    });
 
     var legend = svg.selectAll('.legend')
         .data(color.domain())
