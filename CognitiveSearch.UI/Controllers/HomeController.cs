@@ -312,7 +312,7 @@ namespace CognitiveSearch.UI.Controllers
             public string polygonString { get; set; }
             public string groupFilter { get; set; }
             public int searchId { get; set; }
-            public string[] disciplines { get; set; }
+            public string[] disciplines { get; set; }            
         }
 
         [HttpPost]
@@ -332,13 +332,14 @@ namespace CognitiveSearch.UI.Controllers
             string userId = Request.Cookies["userId"];
             string userType = Request.Cookies["userType"];
             string givenName = Request.Cookies["givenName"];
-            string discipline = Request.Cookies["discipline"];
+            string discipline = Request.Cookies["discipline"];            
 
             var searchQuery = feedbackHandler.AddSearchQuery(userId, userType, givenName, searchParams.q);
 
             //var feedbacks = feedbackHandler._context.RatingDocument.Where(feedback => feedback.query.Equals(searchParams.q) && feedback.userId.Equals(Request.Cookies["userId"]));
             var documentResults = _docSearch.GetDocuments(searchParams.q, searchParams.searchFacets, searchParams.currentPage, searchParams.polygonString, null);
             var isSubscribed = subscribeHandler.CheckIfSubscribed(userId, searchParams.q);
+            int? originalCount = documentResults.Count;
 
             //to Extract merged-content to txt file - disable if not using
             //for (int i = 0; i < documentResults.Results.Count; i++)
@@ -346,38 +347,62 @@ namespace CognitiveSearch.UI.Controllers
             //    string fileName = documentResults.Results[i].Document["metadata_storage_name"].ToString() + ".txt";
             //    string fileContent = documentResults.Results[i].Document["merged_content"].ToString();
 
-                //change C:\Ashley\TxtDocuments\ to your local folder
+            //change C:\Ashley\TxtDocuments\ to your local folder
             //    System.IO.File.WriteAllText(@"C:\Ashley\TxtDocuments\" + fileName, fileContent);
             //}
-
-            ExpertsDisciplineModel[] filterDocuments = null;
-            if (searchParams.disciplines != null && searchParams.disciplines.Length > 0)
+            if (documentResults.Results != null)
             {
-                filterDocuments = this.disciplineHandler.GetAllDocuments(searchParams.disciplines);
-            }
-            if (filterDocuments != null)
-            {
-                List<int> sortedIndexes = new List<int>();
-                List<SearchResult<Document>> newResults = new List<SearchResult<Document>>();
-                for (int i = 0; i < documentResults.Results.Count; i++)
+                var toRemoveDocs = feedbackHandler.GetUserBadRatingFeedback(userId, searchParams.q);
+                List<int> removeIndex = new List<int>();
+                for (int i = 0; i < toRemoveDocs.Count; i++)
                 {
-                    string documentName = documentResults.Results[i].Document["metadata_storage_name"].ToString();
-                    for (int j = 0; j < filterDocuments.Length; j++)
+                    var curDoc = toRemoveDocs[i];
+                    for (int j = 0; j < documentResults.Results.Count; j++)
                     {
-                        string filterName = filterDocuments[j].myExperts_Filename;
-                        if (documentName == filterName)
+                        string documentName = documentResults.Results[j].Document["metadata_storage_name"].ToString();
+                        if (documentName == curDoc.document)
                         {
-                            newResults.Add(documentResults.Results[i]);
-                            sortedIndexes.Add(i);
+                            removeIndex.Add(j);
                             break;
                         }
                     }
                 }
-                for(int i = 0; i < sortedIndexes.Count; i++)
+                removeIndex.Sort();
+                for (int i = 0; i < removeIndex.Count; i++)
                 {
-                    documentResults.Results.RemoveAt(sortedIndexes[i]-i);
+                    documentResults.Results.RemoveAt(removeIndex[i] - i);
+                    documentResults.Count -= 1;
                 }
-                documentResults.Results = newResults.Concat(documentResults.Results).ToList();
+
+                ExpertsDisciplineModel[] filterDocuments = null;
+                if (searchParams.disciplines != null && searchParams.disciplines.Length > 0)
+                {
+                    filterDocuments = this.disciplineHandler.GetAllDocuments(searchParams.disciplines);
+                }
+                if (filterDocuments != null)
+                {
+                    List<int> sortedIndexes = new List<int>();
+                    List<SearchResult<Document>> newResults = new List<SearchResult<Document>>();
+                    for (int i = 0; i < documentResults.Results.Count; i++)
+                    {
+                        string documentName = documentResults.Results[i].Document["metadata_storage_name"].ToString();
+                        for (int j = 0; j < filterDocuments.Length; j++)
+                        {
+                            string filterName = filterDocuments[j].myExperts_Filename;
+                            if (documentName == filterName)
+                            {
+                                newResults.Add(documentResults.Results[i]);
+                                sortedIndexes.Add(i);
+                                break;
+                            }
+                        }
+                    }
+                    for (int i = 0; i < sortedIndexes.Count; i++)
+                    {
+                        documentResults.Results.RemoveAt(sortedIndexes[i] - i);
+                    }
+                    documentResults.Results = newResults.Concat(documentResults.Results).ToList();
+                }
             }
 
             string text = searchParams.q.ToLower().Replace(",", " ");
@@ -410,7 +435,8 @@ namespace CognitiveSearch.UI.Controllers
                 applicationInstrumentationKey = _configuration.GetSection("InstrumentationKey")?.Value,
                 facetableFields = _docSearch.Model.Facets.Select(k => k.Name).ToArray(),
                 standards = standards,
-                discipline = discipline
+                discipline = discipline,
+                originalCount = originalCount
             };
             return viewModel;
         }

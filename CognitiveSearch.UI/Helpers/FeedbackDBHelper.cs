@@ -222,6 +222,26 @@ namespace CognitiveSearch.UI.Helpers
             return output;
         }
 
+        public List<RatingRow> GetUserBadRatingFeedback(string userId, string query)
+        {
+            var output = this._context.Search.Where(x => x.userId == userId && x.query == query)
+                .Join(this._context.RatingDocument.Where(y => y.rating == 1),
+                    s => s.searchId,
+                    r => r.searchId,
+
+                    (s, r) => new RatingRow
+                    {
+                        searchId = s.searchId,
+                        rating = r.rating,
+                        document = r.documentName,
+                        query = s.query,
+                        user = s.givenName,
+                        id = r.rateFeedbackId
+                    }).ToList();
+
+            return output;
+        }
+
         public void DeleteRating(int id)
         {
             FBRatingDocumentModel entry = this._context.RatingDocument.FirstOrDefault(x => x.rateFeedbackId == id);

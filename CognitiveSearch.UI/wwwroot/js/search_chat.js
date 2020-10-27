@@ -1,6 +1,6 @@
 ﻿var chatSelectedFacets = [];
 var tempSelectedFacets = [];
-var chatSearchString = "*";
+var chatSearchString = "";
 var chatCurrentPage = 1;
 var chatDocumentCount = 0;
 var chatResults = [];
@@ -8,6 +8,7 @@ var chatFacets = [];
 var chatTags;
 var chatDocumentToken = "";
 var chatSearchId;
+var originalDocumentCount;
 
 function ChatUpdateResultsView(searchString, disciplines) {
     // Get center of map to use to score the search results
@@ -47,6 +48,7 @@ function ChatUpdate(viewModel) {
     var data = viewModel.documentResult;
     var standards = viewModel.standards;
     documentCount = data.count;
+    originalDocumentCount = viewModel.originalCount;
     results = data.results;
     chatFacets = data.facets;
     tags = data.tags;
