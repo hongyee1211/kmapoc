@@ -7,8 +7,7 @@
         },
         function (data) {
             console.log(data);
-            let resultHtml = `<p style="color:white">Answer: ${data.answer}</p>
-                <p style="color:white">From: ${data.paragraph}</p>`
+            let resultHtml = `<p style="color:white">Answer: ${data.answer}</p>`
             $("#mrc-answer-body").html(resultHtml);
         }
     )
