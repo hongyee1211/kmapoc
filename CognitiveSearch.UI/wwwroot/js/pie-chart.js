@@ -64,7 +64,7 @@
 
     svg.append("text")
         .attr("x", 0)
-        .attr("y", "90")
+        .attr("y", 90)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("text-decoration", "underline")
