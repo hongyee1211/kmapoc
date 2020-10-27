@@ -3,3 +3,13 @@
     stroke: steelblue;
     stroke-width: 2px;
 }
+
+.hist-bar {
+    fill: #228B22;
+    stroke: #006400;
+}
+
+.hist-tick{
+    fill:#cccccc;
+    stroke: #aaaaaa;
+}
