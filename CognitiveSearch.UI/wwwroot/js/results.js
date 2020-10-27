@@ -233,6 +233,36 @@ function UpdateResults(data, countDom = "#doc-count", detailsDom ="#doc-details-
         var result = data.results[i];
         var azDocument = result.document;
         azDocument.idx = i;
+        let lowerCaseContent = azDocument.content.toLowerCase();
+        let esIndex = getLastIndex(lowerCaseContent, 'executive summary',null)
+
+        function getLastIndex(sentence, find, currentIndex) {
+            let newIdx = -1;
+            if (currentIndex == null) {
+                newIdx = sentence.indexOf(find);
+            }
+            else {
+                newIdx = sentence.indexOf(find, (currentIndex + 1))
+            }
+            if (newIdx > -1) {
+                return getLastIndex(sentence, find, newIdx)
+            }
+            else {
+                return currentIndex;
+            }
+
+        }
+
+        let summary = null
+        if (esIndex != null && esIndex > -1) {
+            summary = azDocument.content.substring(esIndex+17, esIndex + 167)
+        }
+        else {
+            let iIndex = getLastIndex(lowerCaseContent, 'introduction', null)
+            if (iIndex != null && iIndex > -1) {
+                summary = azDocument.content.substring(iIndex + 12, iIndex + 162)
+            }
+        }
 
         var score = parseInt(result.score) + "%";
         var scoreCSS = "";
@@ -358,6 +388,7 @@ function UpdateResults(data, countDom = "#doc-count", detailsDom ="#doc-details-
             // <div class="col-md-1"><img id="tagimg${i}" src="/images/expand.png" height="30px" onclick="event.stopPropagation(); ShowHideTags(${i});"></div>
 
             // <div class="results-icon col-md-1 menuIcon" onclick="ShowFeedback('${i}');"></div>
+            var summaryPreview = summary ? `<p class="max-lines">SUMMARY: ${summary}...</p>` : "";
             var contentPreview = content ? `<p class="max-lines">${content}</p>` : "";
 
             resultsHtml += `<div id="resultdiv${i}" class="${classList}" >
@@ -405,6 +436,7 @@ function UpdateResults(data, countDom = "#doc-count", detailsDom ="#doc-details-
                                             <div class="row">
                                                 <div class="search-result">
                                                     <div class="col-md-6 col-search-details-padding">
+                                                        ${summaryPreview}
                                                         ${contentPreview}
                                                     </div>
                                                     <div class="col-md-6 col-search-details-padding">

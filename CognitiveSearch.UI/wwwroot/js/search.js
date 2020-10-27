@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 // Initialize global properties
-var q, sortType, tempdata, instrumentationKey, documentCount;
+var q, sortType, tempdata, instrumentationKey, documentCount, originalDocumentCount;
 var results = [];
 var facets = [];
 var selectedFacets = [];
@@ -90,6 +90,7 @@ function Update(viewModel) {
     var data = viewModel.documentResult;
     var standards = viewModel.standards;
     documentCount = data.count;
+    originalDocumentCount = viewModel.originalCount;
     results = data.results;
     facets = data.facets;
     tags = data.tags;
