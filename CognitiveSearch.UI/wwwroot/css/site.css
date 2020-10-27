@@ -1228,3 +1228,43 @@ b {
 .cm-element:hover {
     cursor: pointer !important;
 }
+
+.loader {
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #00a19c;
+    width: 50px;
+    height: 50px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 1.5s linear infinite;
+    margin-left: 42%;
+    margin-top: 35%;
+    position: absolute;
+    display: none;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.tmpImg {
+    display: none;
+    width: 99%;
+}

@@ -327,7 +327,7 @@ function ChatHandleChannelData(filters) {
             }
         }
     }
-
+    $('#loading-spinner').show();
     QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer, function (data) {
         //let tree = { tree: data[0] };
         treeBoxes(data)

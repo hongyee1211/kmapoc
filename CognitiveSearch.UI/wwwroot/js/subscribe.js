@@ -9,7 +9,7 @@
         query = q;
     }
     if (subscribeAction == true) {
-        AddSubscription(query, documentCount)
+        AddSubscription(query, originalDocumentCount)
     }
     else {
         RemoveSubscription(query)

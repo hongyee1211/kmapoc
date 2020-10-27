@@ -13,6 +13,7 @@
     q = @Html.Raw(Json.Serialize(Model.query));
     subscribed = @Html.Raw(Json.Serialize(Model.subscribed))
     documentCount = @Html.Raw(Json.Serialize(Model.documentResult.Count))
+    originalDocumentCount = @Html.Raw(Json.Serialize(Model.originalCount))
     searchId = @Html.Raw(Json.Serialize((Model.searchId)));
     searchFbId = @Html.Raw(Json.Serialize((Model.searchFbId)));
     applicationInstrumentationKey = @Html.Raw(Json.Serialize(Model.applicationInstrumentationKey));

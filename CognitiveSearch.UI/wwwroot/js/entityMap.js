@@ -37,17 +37,19 @@ function SearchEntities() {
     //temporary workaround for chat entity map
     if (isChat) {
         if (chatSearchString == null || chatSearchString == "") {
-            let keys = Object.keys(filterSelected);
-            for (let i = 0; i < keys.length; i++) {
-                let key = keys[i]
-                let values = filterSelected[key]
-                for (let j = 0; j < values.length; j++) {
-                    search += `,"${values[j]}"`;
-                }
-            }
+            //let keys = Object.keys(filterSelected);
+            //for (let i = 0; i < keys.length; i++) {
+            //    let key = keys[i]
+            //    let values = filterSelected[key]
+            //    for (let j = 0; j < values.length; j++) {
+            //        search += `,"${values[j]}"`;
+            //    }
+            //}
         }
-        document.getElementById("entity-loading-indicator").style.display = "block";
-        GetGraph(chatSearchString);
+        else {
+            document.getElementById("entity-loading-indicator").style.display = "block";
+            GetGraph(chatSearchString);
+        }
     }
     else {
         if (currentPage > 1) {

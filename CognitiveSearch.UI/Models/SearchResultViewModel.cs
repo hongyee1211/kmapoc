@@ -26,5 +26,6 @@ namespace CognitiveSearch.UI.Models
         public string[] standards { get; set; }
 
         public string discipline { get; set; }
+        public int? originalCount { get; set; }
     }
 }

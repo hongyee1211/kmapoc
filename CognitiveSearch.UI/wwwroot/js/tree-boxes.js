@@ -1,5 +1,5 @@
 ﻿function treeBoxes(treeData) {
-	// Set the dimensions and margins of the diagram
+    // Set the dimensions and margins of the diagram
     var margin = { top: 20, right: 90, bottom: 30, left: 90 },
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -112,7 +112,14 @@
                 return d.children || d._children ? "end" : "start";
             })
             .text(function (d) { return d.data.label.label; })
-            .style("fill","#fff");
+            .style("fill", "#fff")
+            .on('mouseover', function (d) {
+                
+                $('#' + d.data.label.label).show();
+            })
+            .on('mouseout', function (d) {
+                $('#' + d.data.label.label).hide();
+            });
 
         // UPDATE
         var nodeUpdate = nodeEnter.merge(node);
@@ -339,4 +346,6 @@
             update(d);
         }
     }
+
+    $('#loading-spinner').hide();
 }
