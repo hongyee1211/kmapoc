@@ -1,9 +1,9 @@
 ﻿function loopPieChart(data) {
    
     var width = 400;
-    var height = 130;
+    var height = 120;
     var radius = Math.min(width, height) / 2;
-    var donutWidth = 75;
+    var donutWidth = 60;
     var legendRectSize = 18;
     var legendSpacing = 4;
 
