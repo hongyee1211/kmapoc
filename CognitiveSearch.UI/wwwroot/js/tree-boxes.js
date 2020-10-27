@@ -1,5 +1,5 @@
 ﻿function treeBoxes(treeData) {
-	// Set the dimensions and margins of the diagram
+    // Set the dimensions and margins of the diagram
     var margin = { top: 20, right: 90, bottom: 30, left: 90 },
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -256,10 +256,10 @@
                 }
             })
             .on('mouseout', function (d) {
-                /*d3.select("#pie-chart-container-id").remove();
+                d3.select("#pie-chart-container-id").remove();
                 d3.select("#histogram-container-id").remove();
                 d3.select("#line-chart-container-id").remove(); 
-                document.getElementById("top3-container").innerHTML = "";*/
+                document.getElementById("top3-container").innerHTML = "";
             });
 
 
@@ -339,4 +339,6 @@
             update(d);
         }
     }
+
+    $('#loading-spinner').hide();
 }

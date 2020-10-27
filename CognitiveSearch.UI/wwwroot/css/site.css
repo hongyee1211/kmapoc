@@ -1232,13 +1232,14 @@ b {
 .loader {
     border: 10px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 10px solid #3498db;
+    border-top: 10px solid #00a19c;
     width: 50px;
     height: 50px;
     -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-    margin-left: 48%;
-    margin-top: 24%;
+    animation: spin 1.5s linear infinite;
+    margin-left: 42%;
+    margin-top: 35%;
+    position: absolute;
     display: none;
 }
 
