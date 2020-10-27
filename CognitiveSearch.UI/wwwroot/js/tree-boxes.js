@@ -112,7 +112,14 @@
                 return d.children || d._children ? "end" : "start";
             })
             .text(function (d) { return d.data.label.label; })
-            .style("fill","#fff");
+            .style("fill", "#fff")
+            .on('mouseover', function (d) {
+                
+                $('#' + d.data.label.label).show();
+            })
+            .on('mouseout', function (d) {
+                $('#' + d.data.label.label).hide();
+            });
 
         // UPDATE
         var nodeUpdate = nodeEnter.merge(node);
