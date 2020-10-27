@@ -1263,3 +1263,8 @@ b {
         transform: rotate(360deg);
     }
 }
+
+.tmpImg {
+    display: none;
+    width: 99%;
+}
