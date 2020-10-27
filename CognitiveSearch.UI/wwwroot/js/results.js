@@ -255,12 +255,13 @@ function UpdateResults(data, countDom = "#doc-count", detailsDom ="#doc-details-
 
         let summary = null
         if (esIndex != null && esIndex > -1) {
-            summary = azDocument.content.substring(esIndex+17, esIndex + 167)
-        }
-        else {
-            let iIndex = getLastIndex(lowerCaseContent, 'introduction', null)
-            if (iIndex != null && iIndex > -1) {
-                summary = azDocument.content.substring(iIndex + 12, iIndex + 162)
+            summary = azDocument.content.substring(esIndex + 17, esIndex + 167)
+            if (summary.toLowerCase().includes("introduction")) {
+                let tempWorkAround = lowerCaseContent.indexOf("executive summary")
+                summary = azDocument.content.substring(tempWorkAround + 17, tempWorkAround + 167)
+                if (summary.toLowerCase().includes("introduction")) {
+                    summary = null;
+                }
             }
         }
 

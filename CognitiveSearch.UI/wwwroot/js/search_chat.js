@@ -104,10 +104,15 @@ function ChatTriggerSearch(page = 1) {
         }
         else if (key == "Model" && untrackedFilterSelected["ModelGroup"] != null && untrackedFilterSelected["ModelGroup"].length > 0) {
             for (let j = 0; j < untrackedFilterSelected["ModelGroup"].length; j++) {
-                search += `,"${untrackedFilterSelected["ModelGroup"][j]}"`;
+                search += ` OR "${untrackedFilterSelected["ModelGroup"][j]}"`;
             }
             if (values.includes("AN200")) {
-                search += `,AN200`;
+                search += ` OR "AN200"`;
+            }
+        }
+        else if (key == "Model") {
+            for (let j = 0; j < values.length; j++) {
+                search += ` OR "${values[j]}"`;
             }
         }
         else {
