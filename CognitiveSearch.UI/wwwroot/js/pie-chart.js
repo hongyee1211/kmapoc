@@ -1,7 +1,7 @@
 ﻿function loopPieChart(data) {
    
     var width = 400;
-    var height = 150;
+    var height = 130;
     var radius = Math.min(width, height) / 2;
     var donutWidth = 75;
     var legendRectSize = 18;
@@ -13,11 +13,11 @@
     var svg = d3.select('#pie-chart-container').append('svg')
         .attr('id', 'pie-chart-container-id')
         .attr('width', width)
-        .attr('height', 170)
+        .attr('height', 150)
         .attr("class", "chartMargin")
         .append('g')
         .attr('transform', 'translate(' + (width / 2) +
-            ',' + (height / 2) + ')');
+            ',' + 85 + ')');
 
     var arc = d3.arc()
         .innerRadius(radius - donutWidth)
@@ -64,7 +64,7 @@
 
     svg.append("text")
         .attr("x", 0)
-        .attr("y", "90")
+        .attr("y", "-70")
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("text-decoration", "underline")
