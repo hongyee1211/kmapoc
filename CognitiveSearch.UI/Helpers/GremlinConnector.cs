@@ -18,10 +18,6 @@ namespace CognitiveSearch.UI.Helpers
             this.config = ConfigurationHandler.getGremlinConfig();
             string dbCollection = "/dbs/" + config.DatabaseName + "/colls/" + config.CollectionName;
             gremlinServer = new GremlinServer(config.Host, 443, true, dbCollection, config.PrimaryKey);
-
-            var gremlinClient = new GremlinClient(gremlinServer, new GraphSONReader(), new GraphSONWriter());
-            var resultSet = gremlinClient.SubmitAsync<dynamic>("g.V().hasLabel('OPU')").Result;
-            Console.WriteLine("Connection Successful");
         }
 
         public string getPlantCodeDetails(string[] plantCode)

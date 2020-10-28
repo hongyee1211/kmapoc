@@ -107,8 +107,8 @@ namespace CognitiveSearch.UI
             SearchParameters sp = new SearchParameters()
             {
                 SearchMode = SearchMode.All,
-                Top = 10,
-                Skip = (currentPage - 1) * 10,
+                Top = 100,
+                Skip = ((int)Math.Ceiling((decimal)currentPage /10) - 1) * 100,
                 IncludeTotalResultCount = true,
                 QueryType = QueryType.Full,
                 Select = selectFilter,
@@ -347,7 +347,6 @@ namespace CognitiveSearch.UI
             var facetResults = new List<object>();
             var tagsResults = new List<object>();
             int i = 0;
-            var resultTemp = Search(q, searchFacets, selectFilter, currentPage, polygonString);
 
             if (response != null && response.Facets != null)
             {
@@ -373,80 +372,22 @@ namespace CognitiveSearch.UI
                         value = cleanValues
                     });
                 }
-
-                //exclude thumbs down document
-                resultTemp.Results.Clear();
-                
-                foreach (var resultDoc in response.Results)
-                {
-                    foreach (var document in resultDoc.Document)
-                    {
-
-                        if (document.Key == "metadata_storage_name")
-                        {
-                            if (feedbacks == null)
-                            {
-                                if (HomeController.feedbackModels.Count() > 0)
-                                {
-                                    Boolean matchedFileName = HomeController.feedbackModels.Any(x => x.documentName == document.Value.ToString() && x.feedbackRating <= 1);
-                                    if (!matchedFileName)
-                                    {
-                                        resultTemp.Results.Add(resultDoc);
-                                    }
-                                    else
-                                    {
-                                        i++;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Boolean matchedFileName = feedbacks.Any(x => x.documentName == document.Value.ToString() && x.feedbackRating <= 1);
-                                if (!matchedFileName)
-                                {
-                                    resultTemp.Results.Add(resultDoc);
-                                }
-                                else
-                                {
-                                    i++;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
             }
 
-            if (resultTemp == null || resultTemp.Results.Count == 0)
+            
+            var result = new DocumentResult
             {
-                var result = new DocumentResult
-                {
-                    Results = (response == null ? null : response.Results),
-                    Facets = facetResults,
-                    Tags = tagsResults,
-                    Count = (response == null ? 0 : Convert.ToInt32(response.Count)),
-                    SearchId = searchId,
-                    IdField = idField,
-                    Token = tokens[0],
-                    IsPathBase64Encoded = _isPathBase64Encoded
-                };
-                return result;
-            }
-            else
-            {
-                var result = new DocumentResult
-                {
-                    Results = (resultTemp == null ? null : resultTemp.Results),
-                    Facets = facetResults,
-                    Tags = tagsResults,
-                    Count = (response == null ? 0 : Convert.ToInt32(response.Count - i)),
-                    SearchId = searchId,
-                    IdField = idField,
-                    Token = tokens[0],
-                    IsPathBase64Encoded = _isPathBase64Encoded
-                };
-                return result;
-            }
+                Results = (response == null ? null : response.Results),
+                Facets = facetResults,
+                Tags = tagsResults,
+                Count = (response == null ? 0 : Convert.ToInt32(response.Count)),
+                SearchId = searchId,
+                IdField = idField,
+                Token = tokens[0],
+                IsPathBase64Encoded = _isPathBase64Encoded
+            };
+            return result;
+            
         }
 
         /// <summary>

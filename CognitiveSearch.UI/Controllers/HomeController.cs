@@ -324,7 +324,6 @@ namespace CognitiveSearch.UI.Controllers
                 searchParams.searchFacets = new SearchFacet[0];
             if (searchParams.currentPage == 0)
                 searchParams.currentPage = 1;
-
             string searchidId = null;
 
             if (CheckDocSearchInitialized())
@@ -422,6 +421,9 @@ namespace CognitiveSearch.UI.Controllers
 
 
             string[] standards = standardHandler.FindAllStandard(stringFacetsArray, searchParams.searchFacets);
+            if(documentResults.Results != null) {
+                documentResults.Results = documentResults.Results.Skip((int)(searchParams.currentPage % 10 - 1) * 10).Take(10).ToList();
+            }
 
             var viewModel = new SearchResultViewModel
             {
