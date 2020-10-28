@@ -142,3 +142,4 @@ C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Release\netcoreapp3.1\Razor\Views\S
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\bin\Release\netcoreapp3.1\Gremlin.Net.dll
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Release\netcoreapp3.1\Razor\Views\Category\Index.cshtml.g.cs
 C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Release\netcoreapp3.1\Razor\Views\Chat\Index.cshtml.g.cs
+C:\Ashley\Code\kmapoc\CognitiveSearch.UI\obj\Release\netcoreapp3.1\Razor\Views\Rating\Index.cshtml.g.cs

@@ -158,8 +158,9 @@ function GetReferences(searchText, allowMultiple, monitor = true) {
     var contentHeight = $('.ms-Pivot-content').innerHeight();
     var tagViewerHeight = $('#tag-viewer').innerHeight();
     var detailsViewerHeight = $('#details-viewer').innerHeight();
+    var askViewerHeight = $('#ask-row').innerHeight();
 
-    $('#reference-viewer').css("height", contentHeight - tagViewerHeight - detailsViewerHeight - 110)
+    $('#reference-viewer').css("height", contentHeight - tagViewerHeight - detailsViewerHeight - askViewerHeight - 110)
 
 
     $.each(transcriptCopy.match(regex), function (index, value) {

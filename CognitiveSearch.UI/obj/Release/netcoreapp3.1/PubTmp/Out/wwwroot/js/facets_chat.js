@@ -146,7 +146,7 @@ function ChatUpdateFacets() {
                                                     ${data[j].value} (${data[j].count})
                                                 </span> 
                                             </label>
-                                            <div class="chat-facet-thumbs-up menuThumbsDown" style="margin: 7px 3px 7px 7px;" onclick="ShowCategoryContextMenu(event,'${name}','${data[j].value}');"></div>
+                                            <div class="chat-facet-thumbs-up menuThumbsDown" style="margin: 7px 3px 7px 7px;" onclick="ShowCategoryContextMenu(event,'${name}','${data[j].value}', '${title}');"></div>
                                         </div>`;
                     }
                 }
@@ -298,13 +298,28 @@ function ChatHandleChannelData(filters) {
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i]
         if (filterSelected.hasOwnProperty(key)) {
+            if (key == "EquipmentClass" || key == "PlantCode") {
+                if (filters[key].length > 0) {
+                    filterSelected[key] = [filters[key][filters[key].length - 1]]
+                }
+            }
             filterSelected[key] = filterSelected[key].concat(filters[key].filter((item) => filterSelected[key].indexOf(item) < 0))
         }
-        else {
-            if (key == "ModelGroup"){
-                untrackedFilterSelected[key] = filters[key];
+        else if (key == "ModelGroup") {
+            parentList = parentsFilters[key];
+            parentKeys = Object.keys(parentList);
+            for (let j = 0; j < parentKeys.length; j++) {
+                if (filters[key].includes(parentKeys[j])) {
+                    if (parentList[parentKeys[j]].hasOwnProperty(filterSelected["PlantCode"][0]))
+                    {
+                        filterSelected["Model"] = parentList[parentKeys[j]][filterSelected["PlantCode"][0]].filter((item) => filterSelected["Model"].indexOf(item) < 0)
+                    }
+                }
             }
-            else if (untrackedFilterSelected[key] != null) {
+            untrackedFilterSelected[key] = filters[key];
+        }
+        else {
+            if (untrackedFilterSelected[key] != null) {
                 untrackedFilterSelected[key] = untrackedFilterSelected[key].concat(filters[key].filter((item) => untrackedFilterSelected[key].indexOf(item) < 0))
             }
             else {
@@ -312,7 +327,7 @@ function ChatHandleChannelData(filters) {
             }
         }
     }
-
+    $('#loading-spinner').show();
     QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer, function (data) {
         //let tree = { tree: data[0] };
         treeBoxes(data)

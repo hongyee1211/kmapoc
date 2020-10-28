@@ -1,5 +1,5 @@
 ﻿var chatContext = null;
-var categoryTypeList = ["Abbreviation", "Component", "Equipment Class", "Manufacturer", "People", "Plant Code"];
+var categoryTypeList = ["Abbreviation", "Component", "Equipment Class", "Manufacturer", "People", "Plant Code","Failure Mode"];
 var chatbotSocket = null;
 var conversationId = null;
 
@@ -10,14 +10,14 @@ $(document).bind("click", function (event) {
     }
 });
 
-function ShowCategoryContextMenu(event, category, value) {
+function ShowCategoryContextMenu(event, category, value, current) {
     let contextmenu = document.getElementById('category-rating-menu');
     let resultHTML = '';
     for (let i = 0; i < categoryTypeList.length; i++) {
         let checkMatch = categoryTypeList[i].replace(/\s/g, '');
-        if (!(category == checkMatch)) {
+        if (!(category.toLowerCase() == checkMatch.toLowerCase())) {
             resultHTML += `<div class="cm-row">
-                <span class="cm-element" onclick="CategoryLabeling('${checkMatch}','${category}','${value}');">Mark as ${categoryTypeList[i]}</span>
+                <span class="cm-element" onclick="CategoryLabeling('${checkMatch}','${category}','${value}','${current}');">Mark as ${categoryTypeList[i]}</span>
             </div>`
         }
     }
@@ -50,12 +50,13 @@ function ShowCategoryContextMenu(event, category, value) {
     monitorCategoryTags(category, value, 2);
 }
 
-function CategoryLabeling(category, currentCategory, value) {
+function CategoryLabeling(category, currentCategory, value, current) {
     $.post('/api/feedback/annotateCategoryTags',
         {
             searchFbId: searchFbId,
             annotation: category,
             tag: value,
+            current: current
         },
         function (data) {
             //do nothing
@@ -97,10 +98,11 @@ function ConnectToChatBot() {
     });
 }
 
+var lastChatMessage = ""
 function sendChatMessage() {
     if (chatbotSocket != null) {
         let message = $('#chatMessage').val();
-
+        lastChatMessage = message;
         // tmp set cookies
         var d = new Date();
         d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
@@ -179,13 +181,16 @@ function ChatUpdateGraphFilters(test) {
         if (data !== null && data.length > 0) {
             var title = name.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) { return str.toUpperCase(); })
             var cssClass = "others";
+            var multiple = "multiple";
             if (name == "EquipmentClass") {
                 cssClass = "EquipmentClass";
+                multiple = `multiple data-max-options="1"`;
             } else if (name == "Manufacturer") {
                 cssClass = "Manufacturer";
             } else if (name == "PlantCode") {
                 cssClass = "PlantCode";
                 title = "OPU";
+                multiple = `multiple data-max-options="1"`;
             } else if (name == "Model") {
                 cssClass = "Model";
             } else if (name == "Discipline") {
@@ -195,7 +200,7 @@ function ChatUpdateGraphFilters(test) {
             if (cssClass != "others") {
 
                 facetResultsHTML += `<div class="filter-category-container" oncontextmenu="trialContext(event)">
-                <select onchange="filterSelectionChanged(event,'${name}')" id="select-${name}" oncontextmenu="trialContext(event)" class="filter-select" data-live-search="true" multiple data-selected-text-format="static" title="${title}">`
+                <select onchange="filterSelectionChanged(event,'${name}')" id="select-${name}" oncontextmenu="trialContext(event)" class="filter-select" data-live-search="true" ${multiple} data-selected-text-format="static" title="${title}">`
 
                 if (data !== null) {
                     for (var j = 0; j < data.length; j++) {
@@ -234,24 +239,48 @@ parentsFilters = {
     "Component": {},
     "PlantCode": {},
     "Model": {},
-    "Discipline": {}
+    "Discipline": {},
+    "ModelGroup": {
+        "Frame 5": {
+            "MRCSB": ["GTG-59101", "GTG-59201", "GTG-59301", "GTG-59401", "GTG-59501"],
+            "MLNG": ["GT4010", "GT4020", "GT-94010", "GT-94020",
+                "GT-94030", "GT-94040", "GT-94050", "40-QRA-600", "40-QRA-700", "9GT940910", "9GT940920", "9GT940930", "9GT940940",
+                "9GT940950"],
+            },
+        "Frame 6": {
+            "PGB": ["G1T-211B01", "G1T-211C01", "G1T-211D01", "G1T-211E01",
+                    "G1T-211F01", "G1T-211G01", "G1T-211A01", "G2T-211A01", "G2T-211B01", "G2T-211C01", "G2T-211E01"],
+            "MLNG":["4KG-2440", "5KG-2440", "6KG-2440"]
+        }
+    }
 }
 function filterSelectionChanged(event, key) {
     let selectionDropdown = $("#select-" + key)
     let parentList = parentsFilters[key];
     let parentKeys = Object.keys(parentList);
     let currentVal = selectionDropdown.val();
-    let newlyMarked = currentVal.filter(value => !filterSelected[key].includes(value))
-    for (let i = 0; i < newlyMarked.length; i++) {
-        if (parentKeys.includes(newlyMarked[i])) {
-            let values = parentList[newlyMarked[i]]
-            currentVal = currentVal.concat(values);
-        }
+    if (key == "EquipmentClass" || key == "PlantCode") {
+        filterSelected[key] = currentVal;
     }
-    selectionDropdown.selectpicker('val', currentVal);
-    filterSelected[key] = currentVal;
+    else {
+        let newlyMarked = currentVal.filter(value => !filterSelected[key].includes(value))
+        for (let i = 0; i < newlyMarked.length; i++) {
+            if (parentKeys.includes(newlyMarked[i])) {
+                let values = parentList[newlyMarked[i]]
+                currentVal = currentVal.concat(values);
+            }
+        }
+        selectionDropdown.selectpicker('val', currentVal);
+        filterSelected[key] = currentVal;
+    }
 
     QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer, function (data) {
         treeBoxes(data)
     });
+}
+
+function setInitialDiscipline(discipline) {
+    let selectionDropdown = $("#select-Discipline")
+    selectionDropdown.selectpicker('val', [discipline]);
+    filterSelected["Discipline"] = [discipline];
 }

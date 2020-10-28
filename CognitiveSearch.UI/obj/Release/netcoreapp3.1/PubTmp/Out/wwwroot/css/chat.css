@@ -151,6 +151,7 @@
     top:20px;
     right:3%;
     position: absolute;
+    z-index: 1000;
 }
 
 .chat-checkbox{
@@ -229,4 +230,10 @@
     position: absolute;
     bottom: 20px;
     left: 20px;
+}
+
+.chat-typeahead-container {
+    position: absolute;
+    visibility: hidden;
+    display: block;
 }

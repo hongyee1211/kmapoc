@@ -5,3 +5,7 @@
 rect {
     stroke-width: 2;
 }
+
+.chartMargin {
+    margin: 10px 0px;
+}

@@ -63,11 +63,11 @@ namespace CognitiveSearch.UI.Controllers
             }
 
            if (chartType == "Pie") {
-                queryString = "SELECT Priority, COUNT(ProblemID) AS FailureCount FROM ProblemAnalysis2 WHERE " + whereString + " GROUP BY Priority ORDER BY Priority for JSON AUTO";
+                queryString = "SELECT Priority, COUNT(*) AS FailureCount FROM ProblemAnalysis2 WHERE " + whereString + " GROUP BY Priority ORDER BY Priority for JSON AUTO";
             } else if (chartType == "Histogram") {
-                queryString = "SELECT ProblemID, COUNT(ProblemID) AS FailureCount FROM ProblemAnalysis2 WHERE "+ whereString + " GROUP BY ProblemID ORDER BY ProblemID for JSON AUTO";
+                queryString = "SELECT TOP 30 ProblemID, COUNT(*) AS FailureCount FROM ProblemAnalysis2 WHERE "+ whereString + " GROUP BY ProblemID ORDER BY ProblemID for JSON AUTO";
             } else if (chartType == "Line") {
-                queryString = "SELECT FailureDateYr, COUNT(ProblemID) AS FailureCount FROM ProblemAnalysis2 WHERE " + whereString + " GROUP BY FailureDateYr ORDER BY FailureDateYr for JSON AUTO";
+                queryString = "SELECT FailureDateYr, COUNT(*) AS FailureCount FROM ProblemAnalysis2 WHERE " + whereString + " GROUP BY FailureDateYr ORDER BY FailureDateYr for JSON AUTO";
             } else if (chartType == "Top3") {
                 queryString = "SELECT TOP 3 FC.FailureCount, FC.ProblemID FROM (SELECT ProblemID, COUNT(*) AS FailureCount FROM ProblemAnalysis2 WHERE " + whereString + " GROUP BY ProblemID) AS FC ORDER BY FC.FailureCount Desc for JSON AUTO";
             }

@@ -179,6 +179,9 @@ namespace CognitiveSearch.UI
                     case "Process":
                         documentGroupId = "e46c7dfb-c25a-4f1f-8034-16338f03a324";
                         break;
+                    /*case "Group Technical Solutions":
+                        documentGroupId = "Gas Turbine Performance.pdf";
+                        break;*/
                     default:
                         documentGroupId = "";
                         break;
@@ -186,6 +189,7 @@ namespace CognitiveSearch.UI
 
                 if (documentGroupId != "")
                 {
+                    /*filter = String.Format("metadata_storage_name/any(p:search.in(p, '{0}'))", string.Join(",", documentGroupId));*/
                     if (string.IsNullOrEmpty(filter))
                         filter = String.Format("document_group/any(p:search.in(p, '{0}'))", string.Join(",", documentGroupId));
                     else
