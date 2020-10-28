@@ -312,7 +312,7 @@ function ChatHandleChannelData(filters) {
                 if (filters[key].includes(parentKeys[j])) {
                     if (parentList[parentKeys[j]].hasOwnProperty(filterSelected["PlantCode"][0]))
                     {
-                        filterSelected["Model"] = parentList[parentKeys[j]][filterSelected["PlantCode"][0]].filter((item) => filterSelected["Model"].indexOf(item) < 0)
+                        filterSelected["Model"] = parentList[parentKeys[j]][filterSelected["PlantCode"][0]]
                     }
                 }
             }
@@ -327,6 +327,7 @@ function ChatHandleChannelData(filters) {
             }
         }
     }
+    
     $('#loading-spinner').show();
     QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer, function (data) {
         //let tree = { tree: data[0] };
