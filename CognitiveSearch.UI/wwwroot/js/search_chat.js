@@ -9,6 +9,7 @@ var chatTags;
 var chatDocumentToken = "";
 var chatSearchId;
 var originalDocumentCount;
+var currentDisciplines = [];
 
 function ChatUpdateResultsView(searchString, disciplines) {
     // Get center of map to use to score the search results
@@ -124,6 +125,7 @@ function ChatTriggerSearch(page = 1) {
 
     //search += ", " + RemoveStopWords(lastChatMessage);
     chatSearchString = search
+    currentDisciplines = disciplines
 
     ChatUpdateResultsView(search, disciplines);
     SearchEntities(search)

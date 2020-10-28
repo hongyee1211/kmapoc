@@ -259,7 +259,7 @@ function ChatChooseFacet(facet, value, position) {
         }
     }
 
-    ChatUpdateFilterReset();
+    ChatUpdateResultsView(chatSearchString, currentDisciplines);
 }
 
 //function ChatHandleMultipleFacets(filters) {
