@@ -1,11 +1,18 @@
 ﻿function HandleSubscribe(event) {
     let checkbox = event.target
     let subscribeAction = checkbox.checked
-    if (subscribeAction == true) {
-        AddSubscription(q, documentCount)
+    let query = ""
+    if (isChat) {
+        query = chatSearchString;
     }
     else {
-        RemoveSubscription(q)
+        query = q;
+    }
+    if (subscribeAction == true) {
+        AddSubscription(query, originalDocumentCount)
+    }
+    else {
+        RemoveSubscription(query)
     }
 }
 

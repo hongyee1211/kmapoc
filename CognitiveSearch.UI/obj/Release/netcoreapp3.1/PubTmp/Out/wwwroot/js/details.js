@@ -10,6 +10,7 @@ function ShowDocument(id) {
             searchFbId: searchFbId,
         },
         function (data) {
+            $("#mrc-answer-body").html("*Ask a question regarding the document such as: who is the author?");
             result = data.result;
 
             var pivotLinksHTML = "";
@@ -342,7 +343,7 @@ function GetMapsHTML(result) {
     return mapsContainerHTML;
 }
 
-
+var transcriptFullContent = ""
 // this function will get a table with the text content of the file, 
 function GetTranscriptHTML(result) {
 
@@ -361,7 +362,7 @@ function GetTranscriptHTML(result) {
         // otherwise, let's try getting the content -- although it won't have any image data.
         full_content = result.content.trim();
     }
-
+    transcriptFullContent = full_content;
     if (full_content === null || full_content === "")
     {
       // not much to display

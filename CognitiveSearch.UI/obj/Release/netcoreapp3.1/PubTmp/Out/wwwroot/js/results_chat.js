@@ -46,6 +46,37 @@ function ChatUpdateResults(data, countDom = "#doc-count", detailsDom = "#doc-det
             var result = data.results[i];
             var azDocument = result.document;
             azDocument.idx = i;
+            let lowerCaseContent = azDocument.content.toLowerCase();
+            let esIndex = getLastIndex(lowerCaseContent, 'executive summary', null)
+
+            function getLastIndex(sentence, find, currentIndex) {
+                let newIdx = -1;
+                if (currentIndex == null) {
+                    newIdx = sentence.indexOf(find);
+                }
+                else {
+                    newIdx = sentence.indexOf(find, (currentIndex + 1))
+                }
+                if (newIdx > -1) {
+                    return getLastIndex(sentence, find, newIdx)
+                }
+                else {
+                    return currentIndex;
+                }
+
+            }
+
+            let summary = null
+            if (esIndex != null && esIndex > -1) {
+                summary = azDocument.content.substring(esIndex + 17, esIndex + 167)
+                if (summary.toLowerCase().includes("introduction")) {
+                    let tempWorkAround = lowerCaseContent.indexOf("executive summary")
+                    summary = azDocument.content.substring(tempWorkAround + 17, tempWorkAround + 167)
+                    if (summary.toLowerCase().includes("introduction")) {
+                        summary = null;
+                    }
+                }
+            }
 
             var score = parseInt(result.score) + "%";
             var scoreCSS = "";
@@ -80,6 +111,7 @@ function ChatUpdateResults(data, countDom = "#doc-count", detailsDom = "#doc-det
             } else {
                 content = "";
             }
+            content = content.replace(/\[[\w: ]*((\.jpg)|(\.png))\]/g," ")
 
             var pathURL = Base64Decode(azDocument.metadata_storage_path);
             var isSKILL = pathURL.split("/").length - 1 - (pathURL.indexOf("http://") == -1 ? 0 : 2);
@@ -171,6 +203,7 @@ function ChatUpdateResults(data, countDom = "#doc-count", detailsDom = "#doc-det
                 // <div class="col-md-1"><img id="tagimg${i}" src="/images/expand.png" height="30px" onclick="event.stopPropagation(); ShowHideTags(${i});"></div>
 
                 // <div class="results-icon col-md-1 menuIcon" onclick="ShowFeedback('${i}');"></div>
+                var summaryPreview = summary ? `<p class="max-lines">SUMMARY: ${summary}...</p>` : "";
                 var contentPreview = content ? `<p class="max-lines">${content}</p>` : "";
 
                 resultsHtml += `<div id="resultdiv${i}" class="${classList}" >
@@ -218,6 +251,7 @@ function ChatUpdateResults(data, countDom = "#doc-count", detailsDom = "#doc-det
                                             <div class="row">
                                                 <div class="search-result">
                                                     <div class="col-md-6 col-search-details-padding">
+                                                        ${summaryPreview}
                                                         ${contentPreview}
                                                     </div>
                                                     <div class="col-md-6 col-search-details-padding">
@@ -279,7 +313,6 @@ function ChatUpdatePagination(docCount) {
 }
 
 function ChatGoToPage(page) {
-    chatCurrentPage = page;
-    ChatUpdateResultsView();
+    ChatTriggerSearch(page);
 }
 
