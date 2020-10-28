@@ -264,14 +264,23 @@ function filterSelectionChanged(event, key) {
     }
     else {
         let newlyMarked = currentVal.filter(value => !filterSelected[key].includes(value))
-        for (let i = 0; i < newlyMarked.length; i++) {
-            if (parentKeys.includes(newlyMarked[i])) {
-                let values = parentList[newlyMarked[i]]
-                currentVal = currentVal.concat(values);
-            }
+        if (key == "Model" && newlyMarked.includes("AN200")) {
+            selectionDropdown.selectpicker('val', ["AN200"]);
+            filterSelected[key] = ["AN200"]
         }
-        selectionDropdown.selectpicker('val', currentVal);
-        filterSelected[key] = currentVal;
+        else {
+            if (key == "Model" && currentVal.includes("AN200")) {
+                currentVal = currentVal.filter(x => x != "AN200");
+            }
+            for (let i = 0; i < newlyMarked.length; i++) {
+                if (parentKeys.includes(newlyMarked[i])) {
+                    let values = parentList[newlyMarked[i]]
+                    currentVal = currentVal.concat(values);
+                }
+            }
+            selectionDropdown.selectpicker('val', currentVal);
+            filterSelected[key] = currentVal;
+        }
     }
 
     QueryGraph(filterSelected.PlantCode, filterSelected.Model, filterSelected.EquipmentClass, filterSelected.Manufacturer, function (data) {
